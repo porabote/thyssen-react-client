@@ -3,7 +3,7 @@ const path = require('path')
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-// const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = webpackEnv => {
 
@@ -21,7 +21,11 @@ module.exports = webpackEnv => {
             path: path.join(__dirname, '../dist'),
             filename: '[name].[fullhash].bundle.js'
         },
+        resolve: {
+
+        },
         plugins: [
+            new CleanWebpackPlugin(),
             new HtmlWebpackPlugin({
                 title: 'webpack Boilerplate',
                 template: path.resolve(__dirname, '../public/index.html'),
@@ -29,7 +33,9 @@ module.exports = webpackEnv => {
             }),
             // применять изменения только при горячей перезагрузке
             new webpack.HotModuleReplacementPlugin(),
-            new CleanWebpackPlugin(),
+            new MiniCssExtractPlugin({
+                filename: '[name].[fullhash].bundle.css'
+            }),
         ],
         module: {
             rules: [
@@ -43,44 +49,44 @@ module.exports = webpackEnv => {
                         }
                     }
                 },
-        //         {
-        //             test: /\.js$/,
-        //             exclude: /node_modules/,
-        //             use: ['babel-loader'],
-        //         },
-        //         {
-        //             test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
-        //             type: 'asset/resource',
-        //         },
-        //         {
-        //             test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
-        //             type: 'asset/inline',
-        //         },
+                {
+                    test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
+                    type: 'asset/resource',
+                },
+                {
+                    test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
+                    type: 'asset/inline',
+                },
                 {
                     test: /\.less$/i,
-                    //importLoaders: 3,
-                    //loader: require.resolve('less-loader'),
                     use: [
-                        // compiles Less to CSS
-                        "style-loader",
-                        "css-loader",
+                        {
+                            loader: MiniCssExtractPlugin.loader,
+                            options: {
+                                //hmr: isEnvProduction,
+                               // reloadAll: isEnvDevelopment
+                            },
+                        },
+                       // "style-loader",
+
+                        'css-loader',
                         "less-loader",
                     ],
                 },
             ],
         },
-        // devServer: {
-        //     stats: 'errors-only',
-        //     historyApiFallback: true,
-        //     contentBase: path.resolve(__dirname, '../dist'),
-        //     open: true,
-        //     compress: true,
-        //     hot: true,
-        //     https: true,
-        //     allowedHosts: [
-        //         'app.porabote.ru',
-        //     ],
-        //     port: 3000,
-        // },
+        devServer: {
+            stats: 'errors-only',
+            historyApiFallback: true,
+            contentBase: path.resolve(__dirname, '../dist'),
+            open: true,
+            compress: true,
+            hot: isEnvDevelopment,
+            https: true,
+            allowedHosts: [
+                'app.porabote.ru',
+            ],
+            port: 3000,
+        },
     }
 }

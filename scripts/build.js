@@ -1,49 +1,58 @@
 'use strict';
 
-// Do this as the first thing so that any code reading it knows the right env.
 process.env.BABEL_ENV = 'production';
 process.env.NODE_ENV = 'production';
 
 const path = require('path');
 const webpack = require('webpack');
-const webpackConf = require('../config/webpack.config.js');
+const configFactory = require('../config/webpack.config.js');
+const WebpackDevServer = require('webpack-dev-server');
 
-function build(previousFileSizes) {
-    console.log('Creating an optimized production build...');
+function build() {
 
-    const compiler = webpack(webpackConf);
+    console.log('Compile start...');
 
-    let buildPromise = new Promise((resolve, reject) => {
+    const config = configFactory('development');
+    const compiler = webpack(config);
+
+    return new Promise((resolve, reject) => {
 
         compiler.run((err, stats) => {
 
-            stats.compilation.errors;
+            if (stats.hasErrors()) {
 
-            let messages;
+                console.log(stats.toString({
+                    chunks: false,  // Makes the build much quieter
+                    colors: true    // Shows colors in the console
+                }));
+
+                return reject(stats.compilation.errors)
+            }
             if (err) {
-                console.log(err);
+                return reject(err)
             }
 
-           // return resolve(resolveArgs);
-        });
-    });
+            compiler.close((closeErr) => {
+                if(closeErr) {
+                    reject(closeErr)
+                }
+            });
 
-    function buildSuccess()
-    {
-        console.log();
-    }
+        })
 
-// onFulfilled сработает при успешном выполнении
-    buildPromise.then(res => {
-        console.log('ok');
+        return resolve('ok');
     })
-// onRejected сработает при ошибке
-    buildPromise.then(null, err => {
-        console.log('err');
-        console.log(err)
-    })
-
 
 }
 
-build()
+
+let buildPromise = build()
+
+buildPromise.then(res => {
+    console.log('Compiling done!');
+})
+
+buildPromise.then(null, err => {
+    console.log('Compiling error');
+
+})

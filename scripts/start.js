@@ -10,7 +10,7 @@ const WebpackDevServer = require('webpack-dev-server');
 
 function build() {
 
-    console.log('Creating an optimized production build...');
+    console.log('Compile start...');
 
     const config = configFactory('development');
     const compiler = webpack(config);
@@ -32,7 +32,6 @@ function build() {
                 return reject(err)
             }
 
-
             const devServer = new WebpackDevServer(compiler, {
                 https: true,
                 host: 'app.porabote.ru',
@@ -47,7 +46,9 @@ function build() {
             });
 
             compiler.close((closeErr) => {
-                console.log(closeErr)
+                if(closeErr) {
+                    reject(closeErr)
+                }
             });
 
         })
@@ -60,12 +61,12 @@ function build() {
 
 
 let buildPromise = build()
-//
-// buildPromise.then(res => {
-//     console.log('ok');
-// })
-// // onRejected сработает при ошибке
-// buildPromise.then(null, err => {
-//     console.log('err');
-//     // console.log(err)
-// })
+
+buildPromise.then(res => {
+    console.log('Server was started!');
+})
+
+buildPromise.then(null, err => {
+    console.log('Server hasn`t start');
+
+})
