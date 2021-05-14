@@ -19,7 +19,7 @@ module.exports = webpackEnv => {
         },
         output: {
             path: path.join(__dirname, '../dist'),
-            filename: '[name].bundle.js'
+            filename: '[name].[fullhash].bundle.js'
         },
         plugins: [
             new HtmlWebpackPlugin({
