@@ -1,5 +1,4 @@
 const path = require('path')
-//const paths = require('./paths')
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
@@ -18,7 +17,7 @@ module.exports = webpackEnv => {
             main: './src/index.js',
         },
         output: {
-            path: path.join(__dirname, '../dist'),
+            path: isEnvProduction ? path.join(__dirname, '../dist') : undefined,
             filename: '[name].[fullhash].bundle.js'
         },
         resolve: {
@@ -67,8 +66,7 @@ module.exports = webpackEnv => {
                                // reloadAll: isEnvDevelopment
                             },
                         },
-                       // "style-loader",
-
+                        //"style-loader",
                         'css-loader',
                         "less-loader",
                     ],
@@ -78,15 +76,18 @@ module.exports = webpackEnv => {
         devServer: {
             stats: 'errors-only',
             historyApiFallback: true,
-            contentBase: path.resolve(__dirname, '../dist'),
+            contentBase: path.resolve(__dirname, '../dist/build'),
             open: true,
             compress: true,
             hot: isEnvDevelopment,
-            https: true,
             allowedHosts: [
                 'app.porabote.ru',
             ],
-            port: 3000,
+            https: true,
+            host: 'app.porabote.ru',
+            cert: './.cert/cert.crt',
+            key: './.cert/key.key',
+            writeToDisk: false,
         },
     }
 }

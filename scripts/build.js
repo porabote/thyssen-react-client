@@ -3,6 +3,10 @@
 process.env.BABEL_ENV = 'production';
 process.env.NODE_ENV = 'production';
 
+process.on('unhandledRejection', err => {
+    throw err;
+});
+
 const path = require('path');
 const webpack = require('webpack');
 const configFactory = require('../config/webpack.config.js');
@@ -31,6 +35,13 @@ function build() {
             if (err) {
                 return reject(err)
             }
+
+            ['SIGINT', 'SIGTERM'].forEach(function (sig) {
+                process.on(sig, function () {
+                    devServer.close();
+                    process.exit();
+                });
+            });
 
             compiler.close((closeErr) => {
                 if(closeErr) {

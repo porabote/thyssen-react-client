@@ -4,6 +4,8 @@ process.env.BABEL_ENV = 'development';
 process.env.NODE_ENV = 'development';
 
 const path = require('path');
+const http = require('http')
+//const process = require('process');
 const webpack = require('webpack');
 const configFactory = require('../config/webpack.config.js');
 const WebpackDevServer = require('webpack-dev-server');
@@ -12,58 +14,77 @@ function build() {
 
     console.log('Compile start...');
 
-    const config = configFactory('development');
-    const compiler = webpack(config);
+    const webpackConfig = configFactory('development');
+    const compiler = webpack(webpackConfig);
 
     return new Promise((resolve, reject) => {
+        // checkPort()
+        // compiler.run((err, stats) => {
+        //
+        //     if (stats.hasErrors()) {
+        //
+        //         console.log(stats.toString({
+        //             chunks: false,  // Makes the build much quieter
+        //             colors: true    // Shows colors in the console
+        //         }));
+        //
+        //         return reject(stats.compilation.errors)
+        //     }
+        //     if (err) {
+        //         return reject(err)
+        //     }
 
-        compiler.run((err, stats) => {
+            try {
 
-            if (stats.hasErrors()) {
+                const devServerOptions = Object.assign({}, webpackConfig.devServer, {
+                    open: true,
+                });
 
-                console.log(stats.toString({
-                    chunks: false,  // Makes the build much quieter
-                    colors: true    // Shows colors in the console
-                }));
+                const devServer = new WebpackDevServer(compiler, devServerOptions);
 
-                return reject(stats.compilation.errors)
+                // Launch WebpackDevServer.
+                devServer.listen('3000', 'app.porabote.ru', err => {
+                    if (err) {
+                        return console.log(err);
+                    }
+                });
+                // devServer.listen('SIGTERM', (err) => {
+                //     console.log(77)
+                //     console.log(err)
+                // })
+                // devServer.listen('uncaughtException', (err) => {
+                //     console.log(177)
+                //     console.log(err)
+                // })
+
+                return resolve('Compiled successfully.');
+
+            } catch (e) {
+                return reject(e)
+
             }
-            if (err) {
-                return reject(err)
-            }
 
-            const devServer = new WebpackDevServer(compiler, {
-                https: true,
-                host: 'app.porabote.ru',
-                cert: './.cert/cert.crt',
-                key: './.cert/key.key'
-            });
-            // Launch WebpackDevServer.
-            devServer.listen('3000', 'app.porabote.ru', err => {
-                if (err) {
-                    return console.log(err);
-                }
-            });
-
-            compiler.close((closeErr) => {
-                if(closeErr) {
-                    reject(closeErr)
-                }
-            });
-
-        })
+        //})
 
 
-        return resolve('ok');
     })
 
 }
 
+let checkPort = () => {
+    //console.log(process)
+}
 
 let buildPromise = build()
 
 buildPromise.then(res => {
     console.log('Server was started!');
+    console.log(res)
+    // compiler.close((closeErr) => {
+    //     if(closeErr) {
+    //         reject(closeErr)
+    //     }
+    // });
 })
 
 buildPromise.then(null, err => {
