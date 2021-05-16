@@ -17,14 +17,13 @@ module.exports = webpackEnv => {
             main: './src/index.js',
         },
         output: {
-            path: isEnvProduction ? path.join(__dirname, '../dist') : undefined,
+            path: (isEnvProduction) ? path.join(__dirname, '../dist') : undefined,
             filename: '[name].[fullhash].bundle.js'
         },
         resolve: {
 
         },
         plugins: [
-            new CleanWebpackPlugin(),
             new HtmlWebpackPlugin({
                 title: 'webpack Boilerplate',
                 template: path.resolve(__dirname, '../public/index.html'),
@@ -35,6 +34,7 @@ module.exports = webpackEnv => {
             new MiniCssExtractPlugin({
                 filename: '[name].[fullhash].bundle.css'
             }),
+            new CleanWebpackPlugin(),
         ],
         module: {
             rules: [
