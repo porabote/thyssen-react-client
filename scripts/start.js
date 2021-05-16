@@ -37,7 +37,6 @@ function build() {
 
         } catch (e) {
             return reject(e)
-
         }
 
     })
