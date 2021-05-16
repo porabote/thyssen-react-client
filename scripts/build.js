@@ -16,7 +16,7 @@ function build() {
 
     console.log('Compile start...');
 
-    const config = configFactory('production');console.log(config);
+    const config = configFactory('production');
     const compiler = webpack(config);
 
     return new Promise((resolve, reject) => {
