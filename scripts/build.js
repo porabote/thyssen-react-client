@@ -14,6 +14,8 @@ const WebpackDevServer = require('webpack-dev-server');
 
 function build() {
 
+    console.log('Compile start...');
+    
     const config = configFactory('production');
     const compiler = webpack(config);
 
