@@ -14,16 +14,21 @@ const WebpackDevServer = require('webpack-dev-server');
 
 function build() {
 
-    console.log('Compile start...');
-
-    const config = configFactory('production');console.log(config);
+    const config = configFactory('production');
     const compiler = webpack(config);
+
+
+    console.log('Compile starting...');
 
     return new Promise((resolve, reject) => {
 
         compiler.run((err, stats) => {
-
-            if (stats.hasErrors()) {
+            console.log(77777);
+            console.log(stats.toString({
+                chunks: false,  // Makes the build much quieter
+                colors: true    // Shows colors in the console
+            }));
+            if (stats !== undefined && stats.hasErrors()) {
 
                 console.log(stats.toString({
                     chunks: false,  // Makes the build much quieter
@@ -43,11 +48,11 @@ function build() {
                 });
             });
 
-            compiler.close((closeErr) => {
-                if(closeErr) {
-                    reject(closeErr)
-                }
-            });
+            // compiler.close((closeErr) => {
+            //     if(closeErr) {
+            //         reject(closeErr)
+            //     }
+            // });
 
         })
 
@@ -60,7 +65,7 @@ function build() {
 let buildPromise = build()
 
 buildPromise.then(res => {
-    console.log('Compiling done!');
+    console.log('Compiling successfull!');
 })
 
 buildPromise.then(null, err => {
