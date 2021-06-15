@@ -41,6 +41,7 @@
     "@babel/plugin-syntax-jsx": "^7.12.13",
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-react": "^7.13.13",
+    "@material-ui/icons": "^4.11.2",
     "clean-webpack-plugin": "^4.0.0-alpha.0",
     "core-js": "3",
     "react": "^17.0.2",
