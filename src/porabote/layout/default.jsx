@@ -1,10 +1,11 @@
 import React from 'react'
 import Modal from '../modal'
-import AppRouter from '../router'
+import AppRouter from '@components/app-router'
 import Header from '../header'
 import { Sidebar } from '@porabote'
+import '@styles/style.less'
 
-const Layout = ({content}) => {
+const Layout = () => {
 
     return(
         <div className="main">
@@ -14,6 +15,7 @@ const Layout = ({content}) => {
             <div className="content">
                 <section className="main-section">
                     <div className="container">
+                        <AppRouter/>
                     </div>
                 </section>
             </div>

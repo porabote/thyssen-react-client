@@ -1,11 +1,6 @@
+import { API_URL } from '@configs'
+
 class ApiService {
-
-    // constructor() {
-    //     console.log(process.env)
-    // }
-
-    #apiUrl = '';//process.env.apiURL;
-    #access_token = '';// process.env.apiToken;
 
     post = async (url, data, params) => {
 
@@ -55,7 +50,7 @@ class ApiService {
     }
 
     getUrl = (uri) => {
-        return `${this.#apiUrl}${uri}`
+        return `${API_URL}/${uri}`
     }
 
     getToken = () => {

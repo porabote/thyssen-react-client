@@ -27,10 +27,11 @@ module.exports = webpackEnv => {
         resolve: {
             extensions: ['.js', '.jsx', '.json', '.wasm', '.ttf'],
             alias: {
+                '@components': path.resolve(__dirname, '../src/components/'),
                 '@porabote': path.resolve(__dirname, '../src/porabote/'),
                 '@services': path.resolve(__dirname, '../src/services/'),
-                fonts: path.resolve(__dirname, '../src/fonts/'),
-                styles: path.resolve(__dirname, '../src/styles/'),
+                '@configs': path.resolve(__dirname, '../src/configs/'),
+                '@styles': path.resolve(__dirname, '../src/styles/'),
             }
         },
         module: {
