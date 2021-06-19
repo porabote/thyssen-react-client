@@ -1,22 +1,23 @@
 import ApiService from '@services/api-service'
+import { API_URL } from '@configs'
 
 class authService {
 
     check = () => {
-        return ApiService.post(`/users/check/`)
+        return ApiService.post(`${API_URL}/api/users/check/`)
     }
 
-    login = (login, psw, account_alias = 'porabote') => {
+    login = ({username, password, account_alias = 'porabote'} = {}) => {
 
         const authData = {
             data: {
-                username: login,
-                password: psw,
+                username: username,
+                password: password,
                 account_alias: account_alias
             }
         };
-
-        return ApiService.post(`/users/login/`, authData);
+console.log(authData)
+        return ApiService.post(`${API_URL}/api/users/login`, authData);
 
     }
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
+import authService from './auth-service'
 import { Form, Field, InputHidden, Input, Button, Checkbox, SubmitButton } from '@porabote/form'
 import  './auth.less'
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
@@ -20,6 +21,11 @@ class LoginForm extends Component {
         }
     }
 
+    submitForm = (values) => {
+
+        authService.login(values)
+    }
+
     render() {
 
 
@@ -34,8 +40,8 @@ class LoginForm extends Component {
                 <div className="box-body">
 
                     <Form
+                        submitForm={this.submitForm}
                         defaultValues={this.state.values}
-                        action="/users/login"
                     >
 
                         <Field>

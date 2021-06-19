@@ -24,11 +24,11 @@ class Form extends Component {
     _submitForm = (e) => {
 
         let values = { ...this.state.values }
-console.log(values)
+
         if(typeof this.props.submitForm === "function") {
             return this.props.submitForm(values);
         }
-
+      
         if(typeof this.props.beforeSave === "function") {
             values =  this.props.beforeSave(values);
         }
