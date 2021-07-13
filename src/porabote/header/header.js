@@ -17,26 +17,35 @@ import '@porabote/form/button.less'
 // import './select.less'
 
 import Profile from './profile'
-import TopMenu from './main-menu'
+import TopMenu from './top-menu'
 import TopIcons from './top-icons'
+import { AuthConsumer } from '@porabote/auth'
 
 var Header = props =>
 {
 
-    const auth = useSelector(state => state.auth)
-    const bgColor = (auth.isAuth) ? '#fff' : ''
-
     return (
-        <header style={{'background' : bgColor}}>
-            <div className="header-panel">
+        <AuthConsumer>
+            {
+                authState => {
 
-                <NavLink className="header-panel__logo" to={"/feed"}></NavLink>
-                <TopMenu auth={auth} />
-                <TopIcons auth={auth} />
-                <Profile auth={auth} />
+                    const bgColor = (authState.state.isAuth) ? '#fff' : ''
 
-            </div>
-        </header>
+                    return(
+                        <header style={{'background' : bgColor}}>
+                            <div className="header-panel">
+
+                                <NavLink className="header-panel__logo" to={"/feed"}></NavLink>
+                                <TopMenu auth={authState} auth={authState} />
+                                <TopIcons auth={authState} />
+                                <Profile auth={authState} />
+
+                            </div>
+                        </header>
+                    )
+                }
+            }
+        </AuthConsumer>
     )
 }
 export default Header

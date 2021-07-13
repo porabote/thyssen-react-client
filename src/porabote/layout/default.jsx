@@ -3,7 +3,6 @@ import Modal from '../modal'
 import AppRouter from '@components/app-router'
 import Header from '../header'
 import { Sidebar } from '@porabote'
-import '@styles/style.less'
 
 const Layout = () => {
 
@@ -12,13 +11,11 @@ const Layout = () => {
             <div className="header">
                 <Header/>
             </div>
-            <div className="content">
-                <section className="main-section">
-                    <div className="container">
-                        <AppRouter/>
-                    </div>
-                </section>
-            </div>
+
+            <section className="main-section">
+                <AppRouter/>
+            </section>
+
             <div className="sidebar-container">
                 <Sidebar/>
             </div>

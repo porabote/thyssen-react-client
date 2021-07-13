@@ -1,6 +1,9 @@
 import React from 'react'
 import Option from './option'
-import selectService from './select-service'
+import SelectTags from './select-tags'
+import { post, get } from '@services/api-service'
+import Datas from '@porabote/datas'
+import './select.less'
 
 export default class Select extends React.Component {
 
@@ -11,96 +14,114 @@ export default class Select extends React.Component {
         this.state = {
             options: [],
             empty: (props.empty === undefined) ? 'Не выбрано' : props.empty,
-            url: (props.url) ? props.url : null,
-            uri: (props.uri) ? props.uri : null,
-            limit : (props.limit) ? props.limit : 50,
-            value : '',
-            valueInit: null,            
-            valueInput: '',
-            searchPhrase: '',
-            firstLoaded: null,
+            seekValue: '',
             seekDelay: 300,
-            isAjaxCompleted: false,
-            isOpened: false,
-            isFirstLoad: true
+            seekMode: (typeof props.seekMode === "undefined") ? 'static' : props.seekMode,
+            mode: (typeof props.mode === "undefined") ? 'default' : props.mode,
+            inputValue: '',
+            searchPhrase: '',
+            url: (props.url) ? props.url : null,
+            setOption: (typeof props.setOption === 'function') ? props.setOption : null
+            // uri: (props.uri) ? props.uri : null,
+            // limit : (props.limit) ? props.limit : 50,
+            // valueInit: null,
+            // inputValue: '',
+            // firstLoaded: null,
+            // isAjaxCompleted: false,
+            // isOpened: false,
+            // isFirstLoad: true
         }
 
         this.textInput = React.createRef();
         this.dropPanel = React.createRef();
-        this.focusTextInput = this.focusTextInput.bind(this);
         this.toggleDropList = this.toggleDropList.bind(this);
 
     }
 
     componentDidMount() {
-
         this.setDropPanelWidth();
         this.setElementPositions();
 
-        if(this.state.url) this.setDataByApi()
-        else this.setOptions(this.props.children)
+        if (!this.state.url) {
+            this.setOptions();
+        } else {
+            this.getOptionsByApi()
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(prevProps.updated !== this.props.updated) {
+            this.setOptions()
+        }
+    }
+
+
+    getOptionsByApi()
+    {
+        // this.setState({
+        //     isAjaxCompleted: false
+        // })
+
+        get(this.state.url)
+            .then( resp => {
+                if (resp.response.status === 200) {
+
+                    const options = resp.data.map((item, index) => {
+                        return this.state.setOption(item)
+                    })
+                    this.setOptions(options)
+                }
+
+            });
+    }
+
+    /*
+    * Set Options
+    * */
+    setOptions(OptionsApi = {}) {
+
+        let Options = [];
+
+        if (Object.keys(OptionsApi).length === 0) {
+            //If only one Option, put to array
+            Options = (Array.isArray(this.props.children)) ? [...this.props.children] : [this.props.children]
+        } else {
+            Options = OptionsApi
+        }
+
+        this.setEmptyOption(Options);
+
+        let selectedOption = null;
+
+        let currentValue = Datas.getValueByPath(this.props.name, this.props.formContext.values);
+
+        let options = Options.map( child => {
+            if (typeof child === 'undefined') return
+
+            if (child.props.value === currentValue) {
+                selectedOption = child
+            }
+            return child;
+        });
+        
+        let inputValue = (selectedOption && this.state.mode !== 'tags')
+            ? selectedOption.props.children : this.state.empty
+
+        this.setState({
+            options,
+            inputValue
+        })
 
     }
 
     /*
     * Set Default Option
     * */
-    getEmptyOption = () => {
+    setEmptyOption = (options) => {
         if(this.state.empty) {
-            this.setState({valueInput: this.state.empty})
-            return <Option key={Math.random()} value>{this.state.empty}</Option>;
-        } else {
-            return null
+            options.unshift(<Option key={Math.random()} value=''>{this.state.empty}</Option>)
         }
-    }
-
-    /*
-    * Set Options
-    * */
-
-    setOptions(Options) {
-
-        let options = Options.map( (child, key) => {
-            return child
-        });
-
-        let emptyOption = this.getEmptyOption()
-        if(emptyOption) options = [this.getEmptyOption()].concat(options)
-
-        this.setState({
-            options: options,
-        })
-
-        this.setInitSelectValue()
-        this.setInitvalueInput()
-    }
-
-    setInitSelectValue()
-    {
-        //console.log(this.state.options)
-    }
-
-    setInitvalueInput()
-    {
-
-    }
-
-    setOptionsApi(data) {
-
-        let options = [];
-        for (const [key, option] of Object.entries(data)) {
-            options.push(<Option key={key} value={option.id}>{option.name}</Option>)
-        }
-
-        this.setOptions(options)
-    }
-
-    focusTextInput(e) {
-
-        // this.textInput.current.focus();
-        //
-        // this.dropPanel.current.style.visibility = 'visible';
-        // this.dropPanel.current.style.zIndex = 301;
+        return options
     }
 
     clickByLinkOption = (e) => {
@@ -108,65 +129,39 @@ export default class Select extends React.Component {
         this.setState({
             isOpened: false,
             value: e.target.getAttribute('value'),
-            valueInput: e.target.innerText
+            inputValue: e.target.innerText,
+            seekValue: ''
         })
+
+        this.props.formContext.setFieldValue(this.props.name, e.target.getAttribute('value'))
+
+        if (typeof this.props.afterSelectCallback === 'function') this.props.afterSelectCallback(e)
 
         e.preventDefault();
     }
 
-    setElementPositions() {
+    clickByLinkOptionTagsMode = (e) => {
 
-        this.dropPanel.current.style.width = this.refs.wrap.offsetWidth + 'px';
-        this.dropPanel.current.style.top = this.refs.select.offsetHeight + 34 + "px";
-    }
+        if (e.target.getAttribute('value').length === 0) return
 
-    setDataByApi = () => {
+        let value = [...this.props.values[this.props.name], e.target.getAttribute('value')]
 
-        var Select = this;
-
-        setTimeout(function(e){
-//console.log(Select.textInput.current);
-            if(Select.textInput.current.value === Select.state.searchPhrase) {
-
-                if(!Select.state.isFirstLoad && Select.dropPanel.current.style.visibility === 'hidden') {
-                    Select.showDropPanel();
-                }
-
-                Select._loadDataByApi();
-            }
-
-        }, Select.seekDelay);
-    }
-
-    _loadDataByApi()
-    {
-        let Select = this;
-
-        let url = this._setUrl();
-        this.setState({
-            isAjaxCompleted: false
+        value = value.filter((value, index, self) => {
+            return self.indexOf(value) === index;
         })
 
-        selectService.fetch(url, {access_token: localStorage.getItem('access_token')}, {validateStatus: false})
-            .then( resp => {
-                if (resp.status === 200) {
+        this.setState({
+            value
+        })
 
-                    Select.setOptionsApi(resp.data)
+        this.props.setFieldValue(this.props.name, value)
 
-                    Select.setState({
-                        isAjaxCompleted: true,
-                        isFirstLoad: false
-                    })
-                }
-
-            });
     }
 
-    _setUrl = () => {
-
-        let url = this.state.url
-        return url
+    setElementPositions() {
+        this.dropPanel.current.style.top = "34px";
     }
+
 
     toggleDropList(el)
     {
@@ -206,6 +201,30 @@ export default class Select extends React.Component {
         }
     }
 
+    buildOptions = () => {
+
+        return this.state.options.map((option, index) => {
+
+            if (typeof option === 'undefined' || typeof option.props === 'undefined') return
+
+            let isMatch = (
+                option.props.children
+                && option.props.children.length > 0
+                && !option.props.children.toLowerCase().includes(this.state.seekValue)
+            ) ? false : true
+
+            if (!isMatch) return
+
+            let afterSelectCallback = this.clickByLinkOption
+
+            if (this.state.mode === 'tags') afterSelectCallback = this.clickByLinkOptionTagsMode
+
+            return React.cloneElement(option, {...option.props, afterSelectCallback})
+
+        })
+
+    }
+
     render() {
 
         let dropStyle = { visibility: "hidden" }
@@ -214,48 +233,48 @@ export default class Select extends React.Component {
             dropStyle = { visibility: "visible" }
         }
 
+        const options = this.buildOptions()
+
+        const tags = (this.state.mode === 'tags') ?
+            <SelectTags
+                name={this.props.name}
+                modalContext={this.props.modalContext}
+            /> : '';
+
+        let disabled = (typeof this.props.desabled !== 'undefined' && this.props.disabled) ? true : false
+
         return(
             <div className="form-item flex no_padding">
                 <label className="form-item__label">{this.props.label}</label>
                 <div className="form-item__select-wrap" ref="wrap">
-                    <span className="form-item__select-custom on_wrap">
-
-                        <select
-                            ref="select"
-                            value={this.state.value}
-                            id={`select_${Math.random()}`}
-                            name={this.props.name}
-                            empty="Не выбрано"
-                            placeholder=""
-                            className="on-select__finder"
-                            type="select"
-                            onChange={ () => {} }
-                        >
-                           {this.state.options.map((option, index) => {
-                               return option
-                           })}
-
-                        </select>
+                    <span className="form-item__select-custom">
 
                         <input
+                            disabled={disabled}
                             ref={this.textInput}
-                            className="form-item__select-custom__input on_listener"
+                            className="form-item__select-custom__input"
                             type="text"
-                            //onKeyUp={() => {}}
-                            onChange={() => {
-
+                            onChange={(e) => {
+                                this.setState({
+                                    inputValue: e.target.value,
+                                    seekValue: e.target.value.toLowerCase()
+                                })
+                            }}
+                            onClick={(e) => {
+                                e.target.select();
                             }}
                             onFocus={this.showDropPanel}
                             onBlur={ e => {
                                 this.hideDropPanel();
                             }}
-                            value={this.state.valueInput}
+                            value={(this.state.inputValue) ? this.state.inputValue : ''}
                         />
 
                         <span
                             ref="toggle"
                             className="form-item__select-custom__toggle"
                             onMouseDown={(e) => {
+                                if (disabled) return;
                                 e.preventDefault();
                                 this.toggleDropList()
                             }}
@@ -266,40 +285,21 @@ export default class Select extends React.Component {
                         <div
                             style={dropStyle}
                             ref={this.dropPanel}
-                            className="form-item__select__drop-blok on_drop"
+                            className="form-item__select__drop-blok"
                         >
                             <span>
-                               {this.state.options.map((option, index) => {
-
-                                   return <p
-                                       href="/test/"
-                                       onClick={this.clickByLinkOption}
-                                       value={(option.props.value) ? option.props.value : ''}
-                                       key={index}
-                                       className="form-item__select__drop-link on_drop_link"
-                                   >
-                                       {option.props.children}
-                                   </p>
-                               })}
+                                {options}
                             </span>
 
                         </div>
                     </span>
                 </div>
-
+                {tags}
             </div>
         )
     }
 
 }
-// onClick={modalOpen("/peoples/add/")}
-
-// <Button
-//     type="button"
-//     className="form-item__icon-plus tooltip js-open-modal"
-//
-// />
-
 
 
 // _setUri()
@@ -359,4 +359,14 @@ export default class Select extends React.Component {
 //         this.textInput.current.value = selectedOption.innerHTML;
 //         this.refs.select.value = selectedOption.getAttribute('value');
 //     }
+// }
+
+// setOptionsApi(data) {
+//
+//     let options = [];
+//     for (const [key, option] of Object.entries(data)) {
+//         options.push(<Option key={key} value={option.id}>{option.name}</Option>)
+//     }
+//
+//     this.setOptions(options)
 // }

@@ -26,23 +26,19 @@ class FeedListBodyRow extends Component {
 
     render() {
 
-        if(this.state.rows === null) return(<div>3</div>)
-        let checkbar = (this.props.ckeckbar) ? <span className="list-grid__head">{this.props.ckeckbar}</span> : ''
-
         return(
             <Link
-                to={this.props.linkTo}
-                className="list-grid"
+                to={this.props.to}
+                className="feed-list"
                 key={this.props.data.id}
-                style={{gridTemplateColumns: this.props.cellWidths}}
+                style={{gridTemplateColumns: this.props.flexWidths}}
             >
-                {checkbar}
-                {this.state.schema.map((schema) => {
+                {this.state.schema.map((schema, index) => {
 
                     let value = this.setValue(this.state.rows[schema.field], schema)
 
                     return (
-                        <FeedListCell key={schema.field}>{value}</FeedListCell>
+                        <FeedListCell element={schema.element} key={index}>{value}</FeedListCell>
                     )
                 })}
 

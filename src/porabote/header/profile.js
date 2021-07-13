@@ -10,10 +10,10 @@ function Profile(props)
     if(!props.auth.isAuth) {
         return (
             <div className="header__panel__auth">
-                <NavLink className="header__panel__auth__link" to={"/registration"}>
-                    <AccountCircleOutlinedIcon style={{ fontSize: 22, color: "#737A80", marginRight: '4px' }} />
-                    Иван
-                </NavLink>
+                {/*<NavLink className="header__panel__auth__link" to={"/registration"}>*/}
+                {/*    <AccountCircleOutlinedIcon style={{ fontSize: 22, color: "#737A80", marginRight: '4px' }} />*/}
+                {/*    Иван*/}
+                {/*</NavLink>*/}
             </div>
         )
     }

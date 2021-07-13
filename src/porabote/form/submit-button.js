@@ -1,12 +1,12 @@
 import React, { cloneElement } from 'react'
-import { SubmitContext } from './form-context'
+import { FormConsumer } from './form-context'
 
 const SubmitButton = props => {
 
     return(
-        <SubmitContext.Consumer>
+        <FormConsumer>
             { submitForm => cloneElement(props.children, { submitForm, ...props })}
-        </SubmitContext.Consumer>
+        </FormConsumer>
     )
 
 }

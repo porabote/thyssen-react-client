@@ -1,8 +1,17 @@
 import React from 'react'
 
 const Option = (props) => {
+
     return(
-        <option {...props}>{props.children}</option>
+        <div
+            onMouseDown={(e) => {
+                props.afterSelectCallback(e)
+            }}
+            value={props.value}
+            className="form-item__select__drop-link"
+        >
+            {props.children}
+        </div>
     )
 }
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import LoginForm from './auth-login-form'
 
-export default class Auth extends Component {
+class Auth extends Component {
     
     render(){
         return(
@@ -11,3 +11,5 @@ export default class Auth extends Component {
         )
     }
 }
+
+export default Auth

@@ -1,5 +1,5 @@
 import Auth from './auth'
-import authReducer from './auth-reducer'
+import { AuthProvider, AuthConsumer } from './auth-context'
+import AuthState from './auth-state'
 
-export { authReducer }
-export default Auth
+export { Auth, AuthProvider, AuthConsumer, AuthState }

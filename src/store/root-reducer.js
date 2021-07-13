@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
-import { authReducer } from '@porabote/auth'
+//import { authReducer } from '@porabote/auth'
 import { modalReducer } from '@porabote/modal'
 
 export const rootReducer = combineReducers({
-    auth: authReducer,
+  //  auth: authReducer,
     modal: modalReducer
 })
 

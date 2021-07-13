@@ -19,8 +19,8 @@ module.exports = webpackEnv => {
             main: './src/index.js'
         },
         output: {
-            //path: (isEnvProduction) ? path.join(__dirname, '../dist') : undefined,
-            path: path.join(__dirname, '../dist'),
+            path: (isEnvProduction) ? path.join(__dirname, '../build') : path.join(__dirname, '../dist'),
+            //path: path.join(__dirname, '../build'),
                 filename: '[name].[fullhash].bundle.js',
             publicPath: '/',
         },

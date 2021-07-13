@@ -1,13 +1,10 @@
 import React, { createContext } from 'react'
 
-const ValuesContext = createContext({});
-const ErrorsContext = createContext({});
-const SetFieldValueContext = createContext(() => {});
-const SubmitContext = createContext(() => {})
+const FormContext = createContext(() => {})
+
+const { Provider: FormProvider, Consumer: FormConsumer } = FormContext
 
 export {
-    ValuesContext,
-    ErrorsContext,
-    SetFieldValueContext,
-    SubmitContext
+    FormProvider,
+    FormConsumer
 }

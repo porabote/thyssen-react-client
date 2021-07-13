@@ -1,62 +1,58 @@
 import { API_URL } from '@configs'
 
-class ApiService {
+const getToken = () => {
+    return localStorage.getItem('access_token');
+}
 
-    post = async (url, data, params) => {
+const post = async (uri, params = {}) => {
 
-        const response = await fetch(this.getUrl(url), {
-            method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache',
-            credentials: 'omit',
-            headers: {
-                'Access-Control-Allow-Credentials': false,
-                'Authorization': 'JWT ' + this.getToken(),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json;charset=UTF-8',
-                'Api-Version': 2
-            },
-            redirect: 'follow',
-            referrerPolicy: 'no-referrer',
-            body: JSON.stringify(data)
-        });
+    let url = (typeof params.url !== "undefined") ? params.url : API_URL
 
-        let responseJSON = await response.json();
-        return {...responseJSON, ...{response: {status: response.status}}};
+    const response = await fetch(`${url}${uri}`, {
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'omit',
+        headers: {
+            'Access-Control-Allow-Credentials': false,
+            'Authorization': 'JWT ' + getToken(),
+            'Accept': 'application/json',
+            'Content-Type': 'application/json;charset=UTF-8',
+            'Api-Version': 2
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+        body: JSON.stringify(params.body)
+    });
 
-    }
-
-    get = async (url, data, params) => {
-
-        const response = await fetch(this.getUrl(url), {
-            method: 'GET',
-            mode: 'cors',
-            cache: 'no-cache',
-            credentials: 'omit',
-            headers: {
-                'Access-Control-Allow-Credentials': false,
-                'Authorization': 'JWT ' + this.getToken(),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json;charset=UTF-8',
-                'Api-Version': 2
-            },
-            redirect: 'follow',
-            referrerPolicy: 'no-referrer'
-        });
-
-        let responseJSON = await response.json();
-        return {...responseJSON, ...{response: {status: response.status}}};
-
-    }
-
-    getUrl = (uri) => {
-        return `${API_URL}/${uri}`
-    }
-
-    getToken = () => {
-        return localStorage.getItem('access_token');
-    }
+    let responseJSON = await response.json();
+    return {...responseJSON, ...{response: {status: response.status}}};
 
 }
 
-export default new ApiService()
+const get = async (uri, params = {}) => {
+
+    let url = (typeof params.url !== "undefined") ? params.url : API_URL
+
+    const response = await fetch(`${url}${uri}`, {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'omit',
+        headers: {
+            'Access-Control-Allow-Credentials': false,
+            'Authorization': 'JWT ' + getToken(),
+            'Accept': 'application/json',
+            'Content-Type': 'application/json;charset=UTF-8',
+            'Api-Version': 2
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer'
+    });
+
+    let responseJSON = await response.json();
+    return {...responseJSON, ...{response: {status: response.status}}};
+
+}
+
+export { post, get }
