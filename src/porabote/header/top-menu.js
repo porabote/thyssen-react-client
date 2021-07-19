@@ -24,8 +24,8 @@ class TopMenu extends React.Component
                     <NavLink className="navbar-horizontal__item navbar-horizontal__item__link" to="/payments-sets/feed/">
                         План счетов
                     </NavLink>
-                    <NavLink className="navbar-horizontal__item navbar-horizontal__item__link" to="/docs/list/">
-                        Документы
+                    <NavLink className="navbar-horizontal__item navbar-horizontal__item__link" to="/store/feed/">
+                        Склад
                     </NavLink>
                     <NavLink className="navbar-horizontal__item navbar-horizontal__item__link" to="/contractors/index/">
                         Контрагенты
@@ -33,11 +33,6 @@ class TopMenu extends React.Component
                     <NavLink className="navbar-horizontal__item navbar-horizontal__item__link" to="/dictionaries/index/">
                         Справочники
                     </NavLink>
-                    <div className="navbar-horizontal__extended">
-                        <div className="navbar-horizontal__extended__items">
-
-                        </div>
-                    </div>
                 </ul>
             </div>
 

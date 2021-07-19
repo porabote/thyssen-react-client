@@ -12,9 +12,8 @@ const Input = props => {
     if(props.defaultValue !== undefined) {
         defaultValue = props.defaultValue
     } else {
-
-        if(typeof props.values[props.name] != "undefined") {
-            defaultValue = props.values[props.name]
+        if(typeof props.formContext.values[props.name] != "undefined") {
+            defaultValue = props.formContext.values[props.name]
         }
     }
 
