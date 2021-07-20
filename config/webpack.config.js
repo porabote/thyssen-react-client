@@ -22,7 +22,7 @@ module.exports = webpackEnv => {
             path: (isEnvProduction) ? path.join(__dirname, '../build') : path.join(__dirname, '../dist'),
             //path: path.join(__dirname, '../build'),
                 filename: '[name].[fullhash].bundle.js',
-            publicPath: '/',
+            publicPath: (isEnvProduction) ? '/prb/' : '/',
         },
         resolve: {
             extensions: ['.js', '.jsx', '.json', '.wasm', '.ttf'],
@@ -111,10 +111,10 @@ module.exports = webpackEnv => {
             compress: true,
             hot: isEnvDevelopment,
             allowedHosts: [
-                'app.porabote.ru',
+                'rutsb.ru',
             ],
             https: true,
-            host: 'app.porabote.ru',
+            host: 'rutsb.ru',
             cert: './.cert/cert.crt',
             key: './.cert/key.key',
             writeToDisk: false,

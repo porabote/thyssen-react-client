@@ -33,7 +33,7 @@ function build() {
         const devServer = new webpackDevServer(compiler, devServerOptions)
 
         // Launch webpackDevServer.
-        devServer.listen('3000', 'app.porabote.ru', err => {
+        devServer.listen('3000', 'rutsb.ru', err => {
             console.log('dev server listening on port 3000');
 
             if (err) {

@@ -25,11 +25,11 @@ function build() {
     return new Promise((resolve, reject) => {
 
         compiler.run((err, stats) => {
-            console.log(77777);
-            console.log(stats.toString({
-                chunks: false,  // Makes the build much quieter
-                colors: true    // Shows colors in the console
-            }));
+            console.log(err);
+            // console.log(stats.toString({
+            //     chunks: false,  // Makes the build much quieter
+            //     colors: true    // Shows colors in the console
+            // }));
             if (stats !== undefined && stats.hasErrors()) {
 
                 console.log(stats.toString({
