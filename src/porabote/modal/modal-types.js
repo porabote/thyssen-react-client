@@ -1,4 +1,4 @@
-export const SHOW_MODAL = 'SHOW_MODAL'
+export const OPEN_MODAL = 'OPEN_MODAL'
 export const CLOSE_MODAL = 'CLOSE_MODAL'
-export const PUSH_TO_MODAL = 'PUSH_TO_MODAL'
-export const REMOVE_ITEM = 'REMOVE_ITEM_MODAL'
+export const PUSH_MODAL_ITEM = 'PUSH_MODAL_ITEM'
+export const REMOVE_MODAL_ITEM = 'REMOVE_MODAL_ITEM'

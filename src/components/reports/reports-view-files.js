@@ -1,77 +1,61 @@
 import React, { Component } from 'react'
-import { ButtonUpload } from '@porabote/uploader'
+import { ButtonUpload } from '@porabote/form'
 import { StripedList, StripedListRow, StripedListCell } from '@porabote/striped-list'
 
-class PaymentsSetViewFiles extends Component {
-
-    state = {
-        files: null
-    }
-
-    componentDidMount() {
-
-        // paymentsSetService.getFiles(1)
-        //     .then((resp) => {
-        //         this.setState({
-        //             files: resp.data
-        //         })
-        //     })
-
-    }
-
-    getRows = () => {
-        if(this.state.files) {
-            return this.state.files.map((file) => {
-                return(
-                    <StripedListRow key={file.id}>
-                        <StripedListCell>
-                            <a
-                                href={`https://api.porabote.ru${file.uri}`}
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                {file.basename}
-                            </a>
-                        </StripedListCell>
-                        <StripedListCell>
-                            {file.date_created}
-                        </StripedListCell>
-                        <StripedListCell>
-                            {file.title}
-                        </StripedListCell>
-                    </StripedListRow>
-                )
-            })
-        }
-
-    }
+class ReportsViewFiles extends Component {
 
     render() {
 
-        const rows = this.getRows()
-
         return(
             <div>
-                <ButtonUpload
-                    target-path="/payments-set/"
-                    title="Отчет"
-                    dscr=""
-                    label="report"
-                    main="none"
-                    model_alias="App.PaymentsSet"
-                    record_id="1"
-                />
-
-                <div style={{paddingBottom: '20px'}}></div>
 
                 <StripedList style={{gridTemplateColumns: '250px 200px 1fr'}}>
-                    {rows}
+                    {this.props.files.data.map((file, index) => {
+                        return(
+                            <StripedListRow key={index}>
+                                <StripedListCell>
+                                    <a
+                                        href={`https://api.porabote.ru${file.attributes.uri}`}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                    >
+                                        {file.attributes.basename}
+                                    </a>
+                                </StripedListCell>
+                                <StripedListCell>
+                                    {file.attributes.date_created}
+                                </StripedListCell>
+                                <StripedListCell>
+                                    {file.title}
+                                </StripedListCell>
+                            </StripedListRow>
+                        )
+                    })}
                 </StripedList>
 
+                <div style={{marginTop: '50px'}}></div>
+                <ButtonUpload
+                    progressBar={true}
+                    uri='/api/reports/uploadReportFile/'
+                    data={{
+                        record_id: this.props.data.id,
+                        model_alias: 'reports'
+                    }}
+                    afterUpload={response => {
+                        console.log(response);
+                        // this.setState({
+                        //     files: e.target.files
+                        // })
+                    }}
+                >
+                    <span>Загрузить отчет</span>
+                </ButtonUpload>
+                
+                <div style={{paddingBottom: '20px'}}></div>
 
             </div>
         )
     }
 }
 
-export default PaymentsSetViewFiles
+export default ReportsViewFiles

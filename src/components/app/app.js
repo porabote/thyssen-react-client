@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux'
 import { ApiService, ApiServiceProvider } from '@porabote/services'
-import { AuthState, AuthProvider } from '@porabote/auth'
+import { AuthState, AuthProvider } from '../auth'
 import store from '../../store'
 
-import Layout from '@porabote/layout'
+import Layout from '../layout'
 
 export default class App extends Component {
 
@@ -15,7 +15,7 @@ export default class App extends Component {
             <Provider store={store}>
                 <ApiServiceProvider value={ApiService}>
                     <AuthProvider value={AuthState}>
-                        <BrowserRouter>
+                        <BrowserRouter basename="/prb">
                             <Layout />
                         </BrowserRouter>
                     </AuthProvider>

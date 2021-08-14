@@ -1,30 +1,41 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { closeModal } from './modal-actions'
-
-import ModalItem from './modal-item'
 import ModalTab from './modal-tab'
+import ModalItem from './modal-item'
+import './modal.less'
 
-class Modal extends Component {
+class Modal extends React.Component {
 
     render() {
-        console.log(this.props.items);
+
+        const items = (typeof this.props.modal.items != "undefined") ? this.props.modal.items : []
+
         return(
-            <div className={this.props.isOpen ? "modal active" : "modal"}  onClick={this.props.closeModal}>
-                <div className={this.props.isOpen ? "modal-box-wrap active" : "modal-box-wrap"} onClick={e => {e.stopPropagation()}}>
+            <div className={this.props.modal.isOpen ? "modal active" : "modal"}  onClick={this.props.closeModal}>
+                <div
+                    className={this.props.modal.isOpen ? "modal-box-wrap active" : "modal-box-wrap"}
+                    onClick={e => {e.stopPropagation()}}
+                >
                     <div id="modal-tabs">
-                        {this.props.items.map((data, key) => {
-                            return <ModalTab data={data} itemkey={key} key={key}/>
+                        {items.map((data, index) => {
+                            return <ModalTab data={data} itemkey={index} key={index}/>
                         })}
                     </div>
-                        {this.props.items.map((data, itemKey) => { return <ModalItem data={data} key={itemKey} /> })}
+
+                    {items.map((data, index) => {
+                        return <ModalItem data={data} itemkey={index} key={index}/>
+                    })}
+                    
                 </div>
             </div>
         )
     }
+
 }
 
-const mapStateToProps = store => (store.modal)
-const mapDispatchToProps = { closeModal }
-
-export default connect(mapStateToProps, mapDispatchToProps)(Modal)
+const mapStateToProps = (state) => {
+    return({
+        modal: state.modal
+    })
+}
+export default connect(mapStateToProps)(Modal)

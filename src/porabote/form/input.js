@@ -30,7 +30,7 @@ const Input = props => {
                     id={htmlFor}
                     name={props.name}
                     onChange={ e => {
-                         props.setFieldValue(props.name, e.target.value);
+                         props.formContext.setFieldValue(props.name, e.target.value);
                     }}
                     className={inputClass}
                     autoComplete="off"

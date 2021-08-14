@@ -1,7 +1,7 @@
 import React from 'react'
 import Option from './option'
 import SelectTags from './select-tags'
-import { post, get } from '@services/api-service'
+import Api from '@services/api-service'
 import Datas from '@porabote/datas'
 import './select.less'
 
@@ -21,8 +21,9 @@ export default class Select extends React.Component {
             inputValue: '',
             searchPhrase: '',
             url: (props.url) ? props.url : null,
+            uri: (props.uri) ? this.objectToQuerystring(props.uri) : null,
             setOption: (typeof props.setOption === 'function') ? props.setOption : null
-            // uri: (props.uri) ? props.uri : null,
+
             // limit : (props.limit) ? props.limit : 50,
             // valueInit: null,
             // inputValue: '',
@@ -62,7 +63,8 @@ export default class Select extends React.Component {
         //     isAjaxCompleted: false
         // })
 
-        get(this.state.url)
+        let url = (this.state.uri) ? `${this.state.url}?${this.state.uri}` : this.state.url
+        Api.get(url)
             .then( resp => {
                 if (resp.response.status === 200) {
 
@@ -73,6 +75,24 @@ export default class Select extends React.Component {
                 }
 
             });
+    }
+
+    /**
+     * Parsing Object to URI
+     */
+    objectToQuerystring(obj, prefix) {
+        var str = [],
+            p;
+        for (p in obj) {
+            if (obj.hasOwnProperty(p)) {
+                var k = prefix ? prefix + "[" + p + "]" : p,
+                    v = obj[p];
+                str.push((v !== null && typeof v === "object") ?
+                    this.objectToQuerystring(v, k) :
+                    encodeURIComponent(k) + "=" + encodeURIComponent(v));
+            }
+        }
+        return str.join("&");
     }
 
     /*
@@ -135,7 +155,7 @@ export default class Select extends React.Component {
 
         this.props.formContext.setFieldValue(this.props.name, e.target.getAttribute('value'))
 
-        if (typeof this.props.afterSelectCallback === 'function') this.props.afterSelectCallback(e)
+        if (typeof this.props.afterSelectCallback === 'function') this.props.afterSelectCallback(e, this.props.formContext)
 
         e.preventDefault();
     }

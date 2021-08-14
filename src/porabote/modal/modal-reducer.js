@@ -1,4 +1,4 @@
-import { SHOW_MODAL, CLOSE_MODAL, PUSH_TO_MODAL, REMOVE_ITEM } from './modal-types'
+import { OPEN_MODAL, CLOSE_MODAL, PUSH_MODAL_ITEM, REMOVE_MODAL_ITEM } from './modal-types'
 
 const initialState = {
     isOpen: false,
@@ -8,7 +8,7 @@ const initialState = {
 const modalReducer = (state = initialState, action) => {
 
     switch (action.type) {
-        case PUSH_TO_MODAL:
+        case PUSH_MODAL_ITEM:
             return {...state,
                 isOpen: true,
                 items: [
@@ -19,11 +19,11 @@ const modalReducer = (state = initialState, action) => {
                     }
                 ]
             }
-        case SHOW_MODAL:
+        case OPEN_MODAL:
             return {...state, isOpen: true}
         case CLOSE_MODAL:
             return {...state, isOpen: false}
-        case REMOVE_ITEM:
+        case REMOVE_MODAL_ITEM:
             return {
                 ...state,
                 items: [

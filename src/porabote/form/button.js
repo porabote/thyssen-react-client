@@ -19,8 +19,8 @@ const Button = props => {
             style={props.style}
             disabled={!state.formValid}
             onClick={ e => {
-                if(typeof props.submitForm === "function") {
-                    return props.submitForm()
+                if(typeof props.onClick === "function") {
+                    return props.onClick()
                 }
             }}
             >

@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { StripedList, StripedListRow, StripedListCell } from '../app/striped-list'
-import reportsService from './reports-service';
+import { StripedList, StripedListRow, StripedListCell } from '@porabote/striped-list'
 
-class ReportStripedList extends Component {
+class ReportData extends Component {
 
     constructor(props) {
         super(props);
@@ -12,18 +11,9 @@ class ReportStripedList extends Component {
         }
     }
 
-    componentDidMount() {
-        reportsService.get(1)
-            .then((resp) => {
-                this.setState({
-                    data: resp.data
-                })
-            })
-    }
-
     render() {
 
-        const { data } = this.state
+        const { data, dicts } = this.props
 
         if(data === null) {
             return(
@@ -39,31 +29,29 @@ class ReportStripedList extends Component {
             <StripedList style={{gridTemplateColumns: '150px 1fr'}}>
                 <StripedListRow>
                     <StripedListCell>Объект</StripedListCell>
-                    <StripedListCell>СКРУ</StripedListCell>
+                    <StripedListCell>{data.relationships.departments.attributes.name}</StripedListCell>
                 </StripedListRow>
                 <StripedListRow>
                     <StripedListCell>Представительство</StripedListCell>
                     <StripedListCell>
-                        {typeof data.department !== "undefined" &&
-                            <span> {data.department} </span>
-                        }
+                        {data.relationships.departments.attributes.name}
                     </StripedListCell>
                 </StripedListRow>
                 <StripedListRow>
                     <StripedListCell>Тип отчета</StripedListCell>
-                    <StripedListCell>Еженедельный</StripedListCell>
+                    <StripedListCell>{data.relationships.types.attributes.name}</StripedListCell>
                 </StripedListRow>
                 <StripedListRow>
                     <StripedListCell>На дату</StripedListCell>
-                    <StripedListCell>{data.date_period}</StripedListCell>
+                    <StripedListCell>{data.attributes.date_created}</StripedListCell>
                 </StripedListRow>
                 <StripedListRow>
                     <StripedListCell>Комментарий</StripedListCell>
-                    <StripedListCell>{data.comment}</StripedListCell>
+                    <StripedListCell>{data.attributes.comment}</StripedListCell>
                 </StripedListRow>
                 <StripedListRow>
                     <StripedListCell>Дата загрузки</StripedListCell>
-                    <StripedListCell>{data.date_created}</StripedListCell>
+                    <StripedListCell>{data.attributes.date_created}</StripedListCell>
                 </StripedListRow>
             </StripedList>
         )
@@ -71,4 +59,4 @@ class ReportStripedList extends Component {
 
 }
 
-export default ReportStripedList
+export default ReportData

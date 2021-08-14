@@ -9,8 +9,14 @@ import Comments from '@porabote/comments'
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import ArrowBackIosRoundedIcon from '@material-ui/icons/ArrowBackIosRounded';
 import ArrowRightRoundedIcon from '@material-ui/icons/ArrowRightRounded';
+import { fetchRecord } from './service'
 
 class PaymentsSetsView extends React.Component {
+
+    componentDidMount() {
+        const data = fetchRecord(this.props.id)
+        console.log(data)
+    }
 
     render() {
 

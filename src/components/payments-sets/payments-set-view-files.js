@@ -9,13 +9,8 @@ class PaymentsSetViewFiles extends Component {
     }
 
     componentDidMount() {
-
-        // paymentsSetService.getFiles(1)
-        //     .then((resp) => {
-        //         this.setState({
-        //             files: resp.data
-        //         })
-        //     })
+//console.log(this.props)
+        //this.fetchFiles()
 
     }
 

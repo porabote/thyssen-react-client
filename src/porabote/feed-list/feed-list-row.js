@@ -7,11 +7,8 @@ class FeedListBodyRow extends Component {
 
     constructor(props) {
         super(props);
-        
-        const data = this.props.data
 
         this.state = {
-            rows: data,
             schema: props.schema
 
         }
@@ -35,7 +32,7 @@ class FeedListBodyRow extends Component {
             >
                 {this.state.schema.map((schema, index) => {
 
-                    let value = this.setValue(this.state.rows[schema.field], schema)
+                    let value = this.setValue(this.props.data[schema.field], schema)
 
                     return (
                         <FeedListCell element={schema.element} key={index}>{value}</FeedListCell>

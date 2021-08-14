@@ -77,7 +77,6 @@ class Datas {
 
         return target
     }
-
 }
 
 export default new Datas()

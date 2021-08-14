@@ -7,7 +7,7 @@ class Form extends Component {
         super(props);
 
         this.state = {
-            values: this.props.values,
+            values: props.values,
             errors: []
         }
     }
@@ -27,7 +27,7 @@ class Form extends Component {
             if (index == 0) {
                 target[key] = value
             } else {
-                let arr = isNan(parseInt(key)) ? {} : []
+                let arr = isNaN(parseInt(key)) ? {} : []
                 arr[key] = target
                 target = arr
             }
@@ -166,7 +166,6 @@ class Form extends Component {
     }
 
     render() {
-
         return(
             <FormProvider value={{
                 values: this.props.values,

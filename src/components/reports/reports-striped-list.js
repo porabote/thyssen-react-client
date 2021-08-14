@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { StripedList, StripedListRow, StripedListCell } from '@porabote/striped-list'
 
-class PaymentsSetStripedList extends Component {
+class ReportsStripedList extends Component {
 
     constructor(props) {
         super(props);
@@ -70,4 +70,4 @@ class PaymentsSetStripedList extends Component {
 
 }
 
-export default PaymentsSetStripedList
+export default ReportsStripedList

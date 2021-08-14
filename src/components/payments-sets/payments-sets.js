@@ -95,9 +95,9 @@ class PaymentsSets extends Component {
     }
 
     render() {
-
         if (this.props.match.params.action === 'view') {
-            return <PaymentsSetsView/>
+            const id = this.props.location.pathname.split('/')[3]
+            return <PaymentsSetsView id={id}/>
         }
 
         return(
@@ -120,7 +120,7 @@ class PaymentsSets extends Component {
                         <FeedList schema={this.state.schema}>
                             {this.state.data.map((row, index) => {
                                 return(
-                                    <FeedListRow key={index} to={`/payments-sets/view/${row.id}`} schema={this.state.schema} data={row}></FeedListRow>
+                                    <FeedListRow key={index} to={`/payments-sets/view/${row.id}`} params={{id: row.id}} schema={this.state.schema} data={row}></FeedListRow>
                                 )
                             })}
                         </FeedList>

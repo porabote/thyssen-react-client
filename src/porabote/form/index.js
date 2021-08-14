@@ -8,6 +8,8 @@ import InputHidden from './input-hidden'
 import Option from './select/option'
 import Select from './select/select'
 import SubmitButton from './submit-button'
+import Textarea from './textarea'
+import ButtonUpload from './button-upload/button-upload'
 
 export {
     Checkbox,
@@ -19,5 +21,7 @@ export {
     InputHidden,
     Option,
     Select,
-    SubmitButton
+    SubmitButton,
+    Textarea,
+    ButtonUpload
 }
