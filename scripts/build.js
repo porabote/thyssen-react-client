@@ -71,6 +71,6 @@ buildPromise.then(res => {
 })
 
 buildPromise.then(null, err => {
-    console.log('Compiling error');
+  console.log('Compiling error');
 
 })
