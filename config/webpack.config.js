@@ -63,7 +63,7 @@ module.exports = webpackEnv => {
           type: 'asset/inline',
         },
         {
-          test: /\.(less)$/,
+          test: /\.(less|css)$/,
           use: [
             {
               loader: MiniCssExtractPlugin.loader,

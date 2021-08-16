@@ -8,17 +8,18 @@ const SubmitButton = props => {
         <FormConsumer>
             { formContext => {
 
+                const submitHandler = (e) => {
+                    if(typeof props.submitForm == 'function') {
+                        props.submitForm(formContext)
+                    } else {
+                        formContext.submitForm()
+                    }
+                }
+
                 return(
-                    <Button
-                        {...props}
-                        onClick={(e) => {
-                            if(typeof props.submitForm == 'function') {
-                                props.submitForm(formContext)
-                            } else {
-                                formContext.submitForm()
-                            }
-                        }}
-                    ></Button>
+                    React.Children.map(props.children, (child, key) => {
+                        return React.cloneElement(child, { onClick: submitHandler, ...props });
+                    })
                 )
             }}
         </FormConsumer>

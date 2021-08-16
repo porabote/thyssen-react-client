@@ -16,11 +16,14 @@ class Reports extends Component {
                 name: 'Тип отчета',
                 width: '140px',
                 field: 'type_id',
-                element: (item) => {
+                element: (value) => {
+                    let name = 'Не указано';
                     if (this.state.dicts) {
-                        item = this.state.dicts[0].list[item]['name']
+                        if (typeof this.state.dicts[0].list[value] !== "undefined") {
+                            name  = this.state.dicts[0].list[value]['name']
+                        }
                     }
-                    return item;
+                    return name;
                 }
             },
             {
@@ -37,17 +40,20 @@ class Reports extends Component {
                 name: 'Объект',
                 width: '140px',
                 field: 'object_id',
-                element: (item) => {
+                element: (value) => {
+                    let name = 'Не указано';
                     if (this.state.dicts) {
-                        item = this.state.dicts[1].list[item]['name']
+                        if (typeof this.state.dicts[1].list[value] !== "undefined") {
+                            name  = this.state.dicts[1].list[value]['name']
+                        }
                     }
-                    return item;
+                    return name;
                 }
             },
             {
                 name: 'Дата добавления',
                 width: '140px',
-                field: 'date_created'
+                field: 'created_at'
             }
         ],
         data: [],

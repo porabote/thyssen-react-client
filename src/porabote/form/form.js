@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { FormProvider } from './form-context'
+import Api from '@services/api-service'
 
 class Form extends Component {
 
@@ -136,31 +137,23 @@ class Form extends Component {
             values =  this.props.beforeSave(values);
         }
 
-        fetch(this.props.action, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(values)
+        Api.post(this.props.action, {
+            body: values
         })
-            .then( response => {
-                return response.json()
-            })
-            .then( response => {
+        .then( response => {
 
-                if(typeof this.props.afterSave == "function") {
+            if(typeof this.props.afterSave == "function") {
 
-                    if( response.errors ) {
-                        this.setState({
-                            errors: response.errors
-                        })
-                    }
-
-                    this.props.afterSave(response)
+                if( response.errors ) {
+                    this.setState({
+                        errors: response.errors
+                    })
                 }
 
-            })
+                this.props.afterSave(response)
+            }
+
+        })
 
 
     }

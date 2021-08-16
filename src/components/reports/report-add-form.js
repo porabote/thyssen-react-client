@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Form, Field, InputHidden, Input, Button, SubmitButton, Select, Option } from '@porabote/form'
+import DatePicker from 'react-date-picker';
 
 class ReportAddForm extends Component {
 
@@ -10,11 +11,20 @@ class ReportAddForm extends Component {
 
         return (
             <div>
+
+                <div>
+                    <DatePicker
+                    
+
+                    />
+                </div>
+
                 <Form
                     values={{
                         id: null,
                         comment: ''
                     }}
+                    action="/api/reports/add/"
                 >
 
                     <Field>
@@ -32,7 +42,7 @@ class ReportAddForm extends Component {
 
                     <Field>
                         <Select
-                            name="left.type_id"
+                            name="type_id"
                             label="Тип отчета:"
                         >
                             {Object.keys(types).map((id) => {
@@ -43,7 +53,7 @@ class ReportAddForm extends Component {
 
                     <Field>
                         <Select
-                            name="left.object_id"
+                            name="object_id"
                             label="Обьект"
                         >
                             {Object.keys(departments).map((id) => {
@@ -54,10 +64,15 @@ class ReportAddForm extends Component {
                         </Select>
                     </Field>
 
+
+
                     <SubmitButton>
-                        <Button color="primary" variant="contained" fullWidth type="submit">
-                            Submit
-                        </Button>
+                        <Button
+                            text="Сохранить"
+                            className="on-button grey-stroke_x_yellow-fill icon-login-auth__grey_x_white"
+                            type="button"
+                            style={{width: '140px', marginTop: '20px'}}
+                        />
                     </SubmitButton>
                 </Form>
             </div>
