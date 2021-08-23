@@ -9,7 +9,11 @@ class ReportsViewFiles extends Component {
         return(
             <div>
 
-                <StripedList style={{gridTemplateColumns: '250px 200px 1fr'}}>
+                {this.props.files.data.length == 0 &&
+                    <p className="no_records">Записи не найдены</p>
+                }
+
+                <StripedList style={{gridTemplateColumns: '500px 200px 1fr'}}>
                     {this.props.files.data.map((file, index) => {
                         return(
                             <StripedListRow key={index}>
@@ -23,7 +27,7 @@ class ReportsViewFiles extends Component {
                                     </a>
                                 </StripedListCell>
                                 <StripedListCell>
-                                    {file.attributes.date_created}
+                                    {file.attributes.created_at}
                                 </StripedListCell>
                                 <StripedListCell>
                                     {file.title}
@@ -35,13 +39,14 @@ class ReportsViewFiles extends Component {
 
                 <div style={{marginTop: '50px'}}></div>
                 <ButtonUpload
-                    progressBar={true}
+                    progressBar={false}
                     uri='/api/reports/uploadReportFile/'
                     data={{
                         record_id: this.props.data.id,
                         model_alias: 'reports'
                     }}
                     afterUpload={response => {
+                        this.props.fetchRecord()
                         console.log(response);
                         // this.setState({
                         //     files: e.target.files

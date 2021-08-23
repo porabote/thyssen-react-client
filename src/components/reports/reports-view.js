@@ -17,7 +17,10 @@ class ReportsView extends React.Component {
     }
 
     componentDidMount() {
+        this.fetchRecord();
+    }
 
+    fetchRecord = () => {
         let splits = window.location.pathname.split('/')
         const id = splits[splits.length - 1]
 
@@ -60,7 +63,11 @@ class ReportsView extends React.Component {
 
 
                     <TabPanel>
-                        <ReportsViewFiles files={this.state.data.relationships.files} data={this.state.data} />
+                        <ReportsViewFiles
+                            fetchRecord={this.fetchRecord}
+                            files={this.state.data.relationships.files}
+                            data={this.state.data}
+                        />
                     </TabPanel>
                     <TabPanel>
                         <ReportsData dicts={this.state.dicts} data={this.state.data} />

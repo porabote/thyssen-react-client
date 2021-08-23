@@ -10,7 +10,7 @@ class ContentPanel extends React.Component {
             <div>
                 <span
                     onClick={() => {
-                        this.props.pushModalItem(this.props.dicts);
+                        this.props.pushModalItem(this.props.dicts, this.props.fetchData);
                     }}
                     className="content__tools_panel__item plus"
                             >
@@ -23,11 +23,11 @@ class ContentPanel extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        pushModalItem: (dicts) => dispatch({
+        pushModalItem: (dicts, fetchData) => dispatch({
             type: 'PUSH_MODAL_ITEM',
             payload: {
                 title: 'Создать отчет',
-                content: React.createElement(ReportAddForm, {dicts: dicts})
+                content: React.createElement(ReportAddForm, {dicts, fetchData})
             }
         }),
     }

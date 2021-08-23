@@ -4,6 +4,7 @@ import Field from './field'
 import Button from './button'
 import Input from './input'
 import InputBare from './input-bare'
+import InputDate from './input-date'
 import InputHidden from './input-hidden'
 import Option from './select/option'
 import Select from './select/select'
@@ -18,6 +19,7 @@ export {
     Button,
     Input,
     InputBare,
+    InputDate,
     InputHidden,
     Option,
     Select,

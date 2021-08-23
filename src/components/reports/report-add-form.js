@@ -1,31 +1,56 @@
 import React, { Component } from 'react'
-import { Form, Field, InputHidden, Input, Button, SubmitButton, Select, Option } from '@porabote/form'
-import DatePicker from 'react-date-picker';
+import {
+    Form,
+    Field,
+    InputHidden,
+    Input,
+    Button,
+    SubmitButton,
+    Select,
+    Option,
+    InputDate
+} from '@porabote/form'
 
 class ReportAddForm extends Component {
 
+    state = {
+        dicts: []
+    }
+
+    componentDidMount() {
+
+        const dicts = {}
+
+        this.props.dicts.map(data => {
+            dicts[data.attributes.assoc_table] = data.list
+        })
+
+        this.setState({
+            dicts: dicts
+        })
+    }
+
     render() {
 
-        const types = this.props.dicts[0].list;
-        const departments = this.props.dicts[1].list;
+        if (this.state.dicts.length == 0) return <p>Данные загружаются...</p>;
+
+        const { departments, report_types } = this.state.dicts
 
         return (
             <div>
 
-                <div>
-                    <DatePicker
-                    
-
-                    />
-                </div>
-
                 <Form
                     values={{
                         id: null,
-                        comment: ''
+                        comment: '',
+                        date_period: null
                     }}
                     action="/api/reports/add/"
                 >
+                    
+                    <Field>
+                        <InputDate name="date_period" label="На дату" />
+                    </Field>
 
                     <Field>
                         <InputHidden
@@ -45,8 +70,8 @@ class ReportAddForm extends Component {
                             name="type_id"
                             label="Тип отчета:"
                         >
-                            {Object.keys(types).map((id) => {
-                                return <Option key={id} value={id}>{types[id].name}</Option>
+                            {Object.keys(report_types).map((id) => {
+                                return <Option key={id} value={id}>{report_types[id].name}</Option>
                             })}
                         </Select>
                     </Field>
@@ -71,6 +96,10 @@ class ReportAddForm extends Component {
                             text="Сохранить"
                             className="on-button grey-stroke_x_yellow-fill icon-login-auth__grey_x_white"
                             type="button"
+                            onClick={() => {
+                                this.props.removeModalItem(this.props.itemkey)
+                                this.props.fetchData()
+                            }}
                             style={{width: '140px', marginTop: '20px'}}
                         />
                     </SubmitButton>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 class ModalItem extends Component {
 
@@ -13,7 +14,11 @@ class ModalItem extends Component {
                     </div>
 
                     <div className="modal-box-center">
-                        {this.props.data.content}
+                        {React.cloneElement(this.props.data.content, {
+                            itemkey: this.props.itemkey,
+                            removeModalItem: this.props.removeModalItem
+                        })}
+
                     </div>
 
                 </div>
@@ -23,4 +28,14 @@ class ModalItem extends Component {
 
 }
 
-export default ModalItem
+const mapDispatchToProps = (dispatch) => {
+    return {
+        removeModalItem: (tabKey) => dispatch({
+            type: 'REMOVE_MODAL_ITEM',
+            payload: {
+                tabKey
+            }
+        }),
+    }
+}
+export default connect(null, mapDispatchToProps)(ModalItem)

@@ -6,16 +6,31 @@ class FilterLeft extends Component {
 
     constructor(props) {
         super(props);
-
         this.weeksList = DateTime.getWeeksList();
+
+        this.state = {
+            dicts: []
+        }
+    }
+
+    componentDidMount() {
+
+        const dicts = {}
+
+        this.props.dicts.map(data => {
+            dicts[data.attributes.assoc_table] = data.list
+        })
+
+        this.setState({
+            dicts: dicts
+        })
     }
 
     render() {
 
-        if (!this.props.dicts) return <p>Данные загружаются...</p>;
+        if (this.state.dicts.length == 0) return <p>Данные загружаются...</p>;
 
-        const types = this.props.dicts[0].list;
-        const departments = this.props.dicts[1].list;
+        const { departments, report_types } = this.state.dicts
 
         return (
 
@@ -28,8 +43,8 @@ class FilterLeft extends Component {
                             formContext.submitForm()
                         }}
                     >
-                        {Object.keys(types).map((id) => {
-                            return <Option key={id} value={id}>{types[id].name}</Option>
+                        {Object.keys(report_types).map((id) => {
+                            return <Option key={id} value={id}>{report_types[id].name}</Option>
                         })}
                     </Select>
                 </Field>

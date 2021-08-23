@@ -13,6 +13,11 @@ class Reports extends Component {
     state = {
         schema: [
             {
+                name: 'ID',
+                width: '60px',
+                field: 'id'
+            },
+            {
                 name: 'Тип отчета',
                 width: '140px',
                 field: 'type_id',
@@ -131,7 +136,7 @@ class Reports extends Component {
                     </div>
 
                     <div className="content__tools_panel">
-                        <ContentPanel dicts={dicts} />
+                        <ContentPanel fetchData={this.fetchData} dicts={dicts} />
                     </div>
 
                     <div className="content__body">

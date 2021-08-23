@@ -14,6 +14,10 @@ const SubmitButton = props => {
                     } else {
                         formContext.submitForm()
                     }
+
+                    if (typeof props.children.props.onClick == "function") {
+                        props.children.props.onClick(e);
+                    }
                 }
 
                 return(
