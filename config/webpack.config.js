@@ -22,7 +22,7 @@ module.exports = webpackEnv => {
       path: (isEnvProduction) ? path.join(__dirname, '../build') : path.join(__dirname, '../dist'),
       //path: path.join(__dirname, '../build'),
       filename: '[name].[fullhash].bundle.js',
-      publicPath: (isEnvProduction) ? '/prb/' : '/',
+      publicPath: (isEnvProduction) ? process.env.BASENAME : '/',
     },
     resolve: {
       extensions: ['.js', '.jsx', '.json', '.wasm', '.ttf'],
@@ -81,6 +81,11 @@ module.exports = webpackEnv => {
       ],
     },
     plugins: [
+      new webpack.DefinePlugin({
+        'process.env.BASENAME': JSON.stringify(process.env.DOMAIN),
+        'process.env.API_URL': JSON.stringify(process.env.API_URL),
+        'process.env.AUTH_URL': JSON.stringify(process.env.AUTH_URL)
+      }),
       new HtmlWebpackPlugin({
         title: 'webpack Boilerplate',
         template: path.resolve(__dirname, '../public/index.html'),
@@ -111,12 +116,12 @@ module.exports = webpackEnv => {
       compress: true,
       hot: isEnvDevelopment,
       allowedHosts: [
-        'rutsb.ru',
+        process.env.DOMAIN,
       ],
       https: true,
-      host: 'rutsb.ru',
-      cert: './.cert/cert.crt',
-      key: './.cert/key.key',
+      host: process.env.DOMAIN,
+      cert: process.env.CERT_PATH,
+      key: process.env.KEY_PATH,
       writeToDisk: false,
       before: function (app, server, compiler) {
         console.log('Webpack Server is start...');

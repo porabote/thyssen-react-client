@@ -1,5 +1,5 @@
 import { LOGOUT, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from './auth-types';
-import authService from './auth-service';
+import AuthService from './auth-service';
 //import { ROUTING } from '../router/router-types'
 
 const checkAuth = () => {

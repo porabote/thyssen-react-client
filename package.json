@@ -45,6 +45,7 @@
     "@material-ui/icons": "^4.11.2",
     "clean-webpack-plugin": "^4.0.0-alpha.0",
     "core-js": "3",
+    "dotenv": "^10.0.0",
     "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-date-picker": "^8.3.2",

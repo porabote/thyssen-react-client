@@ -1,5 +1,3 @@
-import { API_URL } from '@configs'
-
 class ApiService {
 
     post = async (url, data, params) => {
@@ -50,7 +48,7 @@ class ApiService {
     }
 
     getUrl = (uri) => {
-        return `${API_URL}${uri}`
+        return `${process.env.API_URL}${uri}`
     }
 
     getToken = () => {

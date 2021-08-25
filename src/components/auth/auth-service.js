@@ -1,7 +1,7 @@
-import { get, post } from '@services/auth-service'
+import AuthService from '@services/auth-service'
 
 const check = () => {
-    return post(`/api/users/check/`)
+    return AuthService.post(`/api/users/check/`)
 }
 
 const login = ({username, password, account_alias = 'porabote'} = {}) => {
@@ -14,7 +14,7 @@ const login = ({username, password, account_alias = 'porabote'} = {}) => {
         }
     };
 
-    return post(`/api/users/login`, authData);
+    return AuthService.post(`/api/users/login`, authData);
 
 }
 

@@ -1,5 +1,6 @@
 'use strict';
 
+require('dotenv').config();
 process.env.BABEL_ENV = 'development';
 process.env.NODE_ENV = 'development';
 
@@ -27,7 +28,9 @@ function build() {
         const devServer = new webpackDevServer(compiler, devServerOptions)
 
         // Launch webpackDevServer.
-        devServer.listen('3000', 'rutsb.ru', err => {
+        const PORT = process.env.PORT || 3000;
+
+        devServer.listen(PORT, process.env.DOMAIN, err => {
             console.log('dev server listening on port 3000');
 
             if (err) {
