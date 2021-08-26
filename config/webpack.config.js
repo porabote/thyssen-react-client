@@ -124,7 +124,7 @@ module.exports = webpackEnv => {
       key: process.env.KEY_PATH,
       writeToDisk: false,
       before: function (app, server, compiler) {
-        console.log('Webpack Server is start...');
+        console.log('Webpack Server is starting...');
       },
       onListening: function (server) {
         const port = server.listeningApp.address().port;

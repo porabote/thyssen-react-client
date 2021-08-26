@@ -34,15 +34,15 @@ function build() {
             console.log('dev server listening on port 3000');
 
             if (err) {
-              //  console.log(err)
-                //return console.log(err);
+              console.log(err)
             }
         });
 
         return resolve('Compiled successfully.');
 
     }).catch(err => {
-        console.log('Error !!!!')
+        console.log('Error!')
+        console.log(err);
     })
 
 }
