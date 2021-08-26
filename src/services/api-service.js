@@ -1,3 +1,5 @@
+import { API_URL } from './constants'
+
 class Api {
 
     getToken = () => {
@@ -6,7 +8,7 @@ class Api {
 
     post = async (uri, params, exclude = {}) => {
 
-        let url = (typeof params.url !== "undefined") ? params.url : process.env.API_URL
+        let url = (typeof params.url !== "undefined") ? params.url : API_URL
 
         let headersDefault = {
             'Access-Control-Allow-Credentials': false,
@@ -45,7 +47,7 @@ class Api {
 
     get = async (uri, params = {}) => {
 
-        let url = (typeof params.url !== "undefined") ? params.url : process.env.API_URL
+        let url = (typeof params.url !== "undefined") ? params.url : API_URL
 
         if (typeof params.query !== "undefined") {
             let query = this.objectToQuerystring(params.query);
