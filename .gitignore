@@ -29,3 +29,5 @@ yarn-error.log*
 /config/.env
 /dist/*
 /src/configs/*
+
+/src/services/constants.js
