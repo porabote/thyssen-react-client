@@ -40,7 +40,7 @@ class ReportsViewFiles extends Component {
                 <div style={{marginTop: '50px'}}></div>
                 <ButtonUpload
                     progressBar={false}
-                    uri='/api/reports/uploadReportFile/'
+                    uri='/api/files/upload/'
                     data={{
                         record_id: this.props.data.id,
                         model_alias: 'reports'

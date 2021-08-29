@@ -11,7 +11,7 @@ import {
     InputDate
 } from '@porabote/form'
 
-class ReportAddForm extends Component {
+class ReportsAddForm extends Component {
 
     state = {
         dicts: []
@@ -111,4 +111,4 @@ class ReportAddForm extends Component {
 
 }
 
-export default ReportAddForm
+export default ReportsAddForm

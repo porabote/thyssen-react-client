@@ -1,5 +1,5 @@
 import React from 'react'
-import ReportAddForm from './report-add-form'
+import ReportsAddForm from './reports-add-form'
 import { connect } from 'react-redux'
 
 class ContentPanel extends React.Component {
@@ -27,7 +27,7 @@ const mapDispatchToProps = (dispatch) => {
             type: 'PUSH_MODAL_ITEM',
             payload: {
                 title: 'Создать отчет',
-                content: React.createElement(ReportAddForm, {dicts, fetchData})
+                content: React.createElement(ReportsAddForm, {dicts, fetchData})
             }
         }),
     }

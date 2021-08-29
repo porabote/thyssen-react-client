@@ -10,6 +10,7 @@ import './header.less'
 import '@porabote/form/form.less'
 import '@porabote/form/input.less'
 import '@porabote/form/button.less'
+import PRBLogo from '@porabote/layout/svg/prb_logo.svg'
 
 class Header extends React.Component {
 
@@ -39,7 +40,9 @@ class Header extends React.Component {
                             <header style={{'background' : bgColor}}>
                                 <div className="header-panel">
 
-                                    <NavLink className="header-panel__logo" to={"/feed"}></NavLink>
+                                    <NavLink className="header-panel__logo" to={"/"}>
+                                        <img style={{width: '32px'}} src={PRBLogo}/>
+                                    </NavLink>
                                     <Navbar data={this.state.menuTree}/>
                                     <Profile auth={authState} />
 
