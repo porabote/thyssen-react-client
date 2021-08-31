@@ -22,7 +22,7 @@ module.exports = webpackEnv => {
       path: (isEnvProduction) ? path.join(__dirname, '../build') : path.join(__dirname, '../dist'),
       //path: path.join(__dirname, '../build'),
       filename: '[name].[fullhash].bundle.js',
-      publicPath: (isEnvProduction) ? process.env.BASENAME : '/',
+      publicPath: (isEnvProduction) ? `/porabote` : '/',
     },
     resolve: {
       extensions: ['.js', '.jsx', '.json', '.wasm', '.ttf'],

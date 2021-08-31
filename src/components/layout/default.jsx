@@ -17,9 +17,9 @@ const Layout = () => {
                 <AppRouter/>
             </section>
 
-            <div className="sidebar-container">
-                <Sidebar/>
-            </div>
+            {/*<div className="sidebar-container">*/}
+            {/*    <Sidebar/>*/}
+            {/*</div>*/}
 
             <Modal/>
 

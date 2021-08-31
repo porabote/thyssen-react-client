@@ -9,11 +9,16 @@ export default class App extends Component {
 
     render() {
 
+        const auth = {
+            isAuth: true,
+            userData: JSON.parse(localStorage.getItem('user'))
+        }
+
         return (
             <Provider store={store}>
                 <ApiServiceProvider value={ApiService}>
-                    <AuthProvider value={AuthState}>
-                        <BrowserRouter basename={process.env.BASENAME}>
+                    <AuthProvider value={auth}>
+                        <BrowserRouter basename="/porabote">
                             <Layout />
                         </BrowserRouter>
                     </AuthProvider>

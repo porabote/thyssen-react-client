@@ -5,14 +5,14 @@ import {connect} from 'react-redux'
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 
-function Profile(props)
-{
+function Profile(props) {
+
     if(!props.auth.isAuth) {
         return (
             <div className="header__panel__auth">
                 {/*<NavLink className="header__panel__auth__link" to={"/registration"}>*/}
                 {/*    <AccountCircleOutlinedIcon style={{ fontSize: 22, color: "#737A80", marginRight: '4px' }} />*/}
-                {/*    Иван*/}
+                {/*    {props.auth.userData.name}*/}
                 {/*</NavLink>*/}
             </div>
         )
@@ -24,7 +24,11 @@ function Profile(props)
 
             <div className="header-panel__profile__data">
 
-                <span className="header-panel__profile__data__rights" onClick={props.logout}>Выход | {props.auth.account_alias}</span>
+                <span className="header-panel__profile__data__rights" onClick={props.logout}>
+                    <a href="/users/logout">Выход</a> |
+                    <a href="/users/profile">{props.auth.userData.name}</a>
+
+                </span>
             </div>
 
             <div className="header-panel__profile__photo"></div>

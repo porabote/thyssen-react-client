@@ -4,7 +4,7 @@ import { Tab, Tabs, TabList, TabPanel } from '@porabote/tabs'
 import Api from '@services/api-service'
 import ReportsViewFiles from './reports-view-files'
 import ReportsData from './reports-data'
-import ReportsHistory from './reports-history'
+import History, { HistoryItem } from '@porabote/history'
 import Comments from '@porabote/comments'
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import ArrowBackIosRoundedIcon from '@material-ui/icons/ArrowBackIosRounded';
@@ -41,6 +41,19 @@ class ReportsView extends React.Component {
 
         if (typeof this.state.data.id == "undefined") return <p>Данные записи загружаются</p>
 
+        const hist = [
+            {
+                date_created: '2019-02-14 06:34:00',
+                user_name: 'Коваленко  Александр',
+                msg: 'Статус Заявки изменился на «Исполнено»'
+            },
+            {
+                date_created: '2019-02-14 06:34:00',
+                user_name: 'Коваленко  Александр',
+                msg: 'Статус Заявки изменился на «Не Исполнено»'
+            }
+        ]
+        
         return(
             <div className="content" style={{padding: '40px'}}>
 
@@ -73,7 +86,17 @@ class ReportsView extends React.Component {
                         <ReportsData dicts={this.state.dicts} data={this.state.data} />
                     </TabPanel>
                     <TabPanel>
-                        <ReportsHistory/>
+                        <History>
+                            {hist.map((item, index) => {
+                                return(
+                                    <HistoryItem
+                                        msg={item.msg}
+                                        user={item.user_name}
+                                        datetime={item.date_created}
+                                    />
+                                )
+                            })}
+                        </History>
                     </TabPanel>
                     <TabPanel>
                         <Comments/>

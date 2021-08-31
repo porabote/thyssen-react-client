@@ -16,7 +16,7 @@ export const ProtectedRoute = ({component: Component, ...rest}) => {
                             {...rest}
                             render={props => {
 
-                                if (authState.state.isAuth) {
+                                if (authState.isAuth) {
                                     return <Component {...props} />;
                                 } else {
                                     return <Redirect to={

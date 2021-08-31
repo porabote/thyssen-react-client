@@ -24,7 +24,7 @@ class ReportData extends Component {
                 </StripedList>
             )
         }
-console.log(data.relationships)
+
         return(
             <StripedList style={{gridTemplateColumns: '150px 1fr'}}>
                 <StripedListRow>

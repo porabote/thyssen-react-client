@@ -34,7 +34,7 @@ class Header extends React.Component {
                 {
                     authState => {
 
-                        const bgColor = (authState.state.isAuth) ? '#fff' : ''
+                        const bgColor = (authState.id) ? '#fff' : ''
 
                         return(
                             <header style={{'background' : bgColor}}>

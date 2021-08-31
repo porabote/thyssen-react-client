@@ -12,7 +12,7 @@ class Api {
 
         let headersDefault = {
             'Access-Control-Allow-Credentials': false,
-            'Authorization': 'JWT ' + this.getToken(),
+            'Authorization': 'bearer ' + this.getToken(),
             'Accept': 'application/json',
             'Content-Type': 'application/json;charset=UTF-8',
             'Api-Version': 2
@@ -61,7 +61,7 @@ class Api {
             credentials: 'omit',
             headers: {
                 'Access-Control-Allow-Credentials': false,
-                'Authorization': 'JWT ' + this.getToken(),
+                'Authorization': 'bearer ' + this.getToken(),
                 'Accept': 'application/json',
                 'Content-Type': 'application/json;charset=UTF-8',
                 'Api-Version': 2
