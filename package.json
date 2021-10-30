@@ -1,11 +1,6 @@
 {
-<<<<<<< HEAD
   "name": "porabote",
   "version": "1.0.3",
-=======
-  "name": "Porabote",
-  "version": "1.0.0",
->>>>>>> 3c85d3d0032092a35976c73dea0f20484141a9c7
   "author": "Denis Maksimov",
   "license": "MIT",
   "description": "Env for react",
@@ -38,10 +33,7 @@
     "mini-css-extract-plugin": "^1.6.2",
     "react-dev-utils": "^5.0.3",
     "style-loader": "^2.0.0",
-<<<<<<< HEAD
     "typescript": "^4.4.4",
-=======
->>>>>>> 3c85d3d0032092a35976c73dea0f20484141a9c7
     "webpack-cli": "^4.7.2",
     "webpack-dev-middleware": "^3.7.3",
     "webpack-dev-server": "^3.11.2"
@@ -60,10 +52,7 @@
     "core-js": "3",
     "dotenv": "^10.0.0",
     "moment": "^2.29.1",
-<<<<<<< HEAD
     "porabote": "^1.0.4",
-=======
->>>>>>> 3c85d3d0032092a35976c73dea0f20484141a9c7
     "react": "^17.0.2",
     "react-date-picker": "^8.3.2",
     "react-dom": "^17.0.2",
