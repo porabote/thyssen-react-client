@@ -94,6 +94,5 @@ function create {
     renameFiles $targetFolder
 }
 
-
 "$@"
 #bash ./.bin/creator.sh create Tor
