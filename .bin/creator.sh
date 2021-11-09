@@ -77,8 +77,9 @@ function create {
 
     #set global variables
     export APP_ROOT="$( cd "$(dirname "../${BASH_SOURCE[0]}")" ; pwd -P )";
-    export sourceName="Reports";
-    export sourceNameLowerCase=${sourceName,,};
+    export sourceName="SampleComponent";
+    sourceNameLowerCase=$(echo ${sourceName} | sed -r 's/([a-z0-9])([A-Z])/\1-\L\2/g')
+    export sourceNameLowerCase=${sourceNameLowerCase,,};
 
     export targetName=${1}
     targetNameLowerCase=$(echo ${targetName} | sed -r 's/([a-z0-9])([A-Z])/\1-\L\2/g')
