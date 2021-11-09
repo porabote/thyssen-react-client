@@ -25,17 +25,10 @@ class Reports extends Component {
                 field: 'type_id',
                 element: (value) => {
                     let name = 'Не указано';
+                    let report_types_dict = this.state.dicts.report_types;
                     if (this.state.dicts) {
-
-                        let report_types_dict = this.state.dicts.filter(dict => {
-                            return dict.attributes.assoc_table == "report_types";
-                        })
-
-                        if (typeof report_types_dict[0].list[value] !== "undefined") {
-                            name  = report_types_dict[0].list[value]['name']
-                        }
+                        name  = report_types_dict[value]['name']
                     }
-
                     return name;
                 }
             },
@@ -53,15 +46,10 @@ class Reports extends Component {
                 field: 'object_id',
                 element: (value) => {
                     let name = 'Не указано';
+                
+                    let departments_dict = this.state.dicts.departments;
                     if (this.state.dicts) {
-
-                        let departments_dict = this.state.dicts.filter(dict => {
-                            return dict.attributes.assoc_table == "departments";
-                        })
-
-                        if (typeof departments_dict[0].list[value] !== "undefined") {
-                            name  = departments_dict[0].list[value]['name']
-                        }
+                        name  = departments_dict[value]['name']
                     }
                     return name;
                 }
@@ -78,13 +66,8 @@ class Reports extends Component {
                 element: (value) => {
                     let name = 'Не указано';
                     if (this.state.dicts) {
-
-                        let users_dict = this.state.dicts.filter(dict => {
-                            return dict.attributes.assoc_table == "users";
-                        })
-
-                        if (typeof users_dict[0].list[value] !== "undefined") {
-                            name  = `${users_dict[0].list[value]['name']} (${users_dict[0].list[value]['post_name']})`
+                        if (typeof this.state.dicts.users[value] !== "undefined") {
+                            name = `${this.state.dicts.users[value]['name']} (${this.state.dicts.users[value]['post_name']})`
                         }
                     }
                     return name;
@@ -119,8 +102,15 @@ class Reports extends Component {
                 }
             }
         }).then((data) => {
+
+            let dicts = {};
+
+            data.data.map((dict, index) => {
+                dicts[dict['type']] = dict.data;
+            })
+
             this.setState({
-                dicts: (typeof data.data !== 'undefined') ? data.data : []
+                dicts: dicts
             })
         })
 
@@ -188,7 +178,7 @@ class Reports extends Component {
                         <FeedList schema={this.state.schema}>
                             {data.map((row, index) => {
                                 return(
-                                    <FeedListRow dicts={this.state.dicts} key={index} to={`/reports/view/${row.id}`} schema={this.state.schema} data={row.attributes}></FeedListRow>
+                                    <FeedListRow dicts={this.state.dicts} key={index} to={`/reports/view/${row.id}`} schema={this.state.schema} data={row}></FeedListRow>
                                 )
                             })}
                         </FeedList>

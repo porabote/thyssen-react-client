@@ -13,24 +13,24 @@ class FilterLeft extends Component {
         }
     }
 
-    componentDidMount() {
-
-        const dicts = {}
-
-        this.props.dicts.map(data => {
-            dicts[data.attributes.assoc_table] = data.list
-        })
-
-        this.setState({
-            dicts: dicts
-        })
-    }
+    // componentDidMount() {
+    //
+    //     const dicts = {}
+    //
+    //     this.props.dicts.map(data => {
+    //         dicts[data.attributes.assoc_table] = data.list
+    //     })
+    //
+    //     this.setState({
+    //         dicts: dicts
+    //     })
+    // }
 
     render() {
 
-        if (this.state.dicts.length == 0) return <p>Данные загружаются...</p>;
+       // if (this.state.dicts.length == 0) return <p>Данные загружаются...</p>;
 
-        const { departments, report_types } = this.state.dicts
+        const { departments, report_types } = this.props.dicts
 
         return (
 

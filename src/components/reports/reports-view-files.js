@@ -12,12 +12,12 @@ class ReportsViewFiles extends Component {
         return(
             <div>
 
-                {this.props.files.data.length == 0 &&
+                {this.props.files.length == 0 &&
                     <p className="no_records">Записи не найдены</p>
                 }
 
                 <StripedList style={{gridTemplateColumns: '500px 200px 1fr'}}>
-                    {this.props.files.data.map((file, index) => {
+                    {this.props.files.map((file, index) => {
                         return(
                             <StripedListRow key={index}>
                                 <StripedListCell>

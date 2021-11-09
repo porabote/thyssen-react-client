@@ -43,7 +43,7 @@ class ReportsView extends React.Component {
 
         if (typeof this.state.data.id == "undefined") return <p>Данные записи загружаются</p>
 
-        const history = this.state.data.relationships.history.data;
+        const history = this.state.data.relationships.history;
 
         const user = this.state.data.relationships.user.attributes;
         
