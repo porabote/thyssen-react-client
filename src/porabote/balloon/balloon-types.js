@@ -1,2 +1,0 @@
-export const SHOW_BALLOON = 'SHOW_BALLOON'
-export const HIDE_BALLOON = 'HIDE_BALLOON'

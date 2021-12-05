@@ -41,7 +41,7 @@ const Profile = (props) => {
             >
             </div>
 
-            <ProfileMenu isMenuOpen={isMenuOpen} />
+            <ProfileMenu auth={props.auth} isMenuOpen={isMenuOpen} />
 
         </div>
 

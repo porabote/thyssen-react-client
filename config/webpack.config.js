@@ -18,6 +18,11 @@ module.exports = webpackEnv => {
     entry: {
       main: './src/index.js'
     },
+    //target: process.env.NODE_ENV === "development" ? "web" : "browserslist",
+    // watch: true,
+    // watchOptions: {
+    //   ignored: /node_modules([\\]+|\/)+(?!porabote)/
+    // },
     output: {
       path: (isEnvProduction) ? path.join(__dirname, '../build') : path.join(__dirname, '../dist'),
       //path: path.join(__dirname, '../build'),
@@ -28,10 +33,16 @@ module.exports = webpackEnv => {
       extensions: ['.js', '.jsx', '.json', '.wasm', '.ttf'],
       alias: {
         '@components': path.resolve(__dirname, '../src/components/'),
+        '@hocs': path.resolve(__dirname, '../src/hocs/'),
         '@services': path.resolve(__dirname, '../src/services/'),
         '@configs': path.resolve(__dirname, '../src/configs/'),
         '@styles': path.resolve(__dirname, '../src/styles/'),
       }
+    },
+    snapshot: {
+      managedPaths: [
+        path.resolve(__dirname, '../node_modules/porabote')
+      ]
     },
     module: {
       rules: [
@@ -59,29 +70,31 @@ module.exports = webpackEnv => {
           }
         },
         {
+          test: /\.(less|css)$/,
+          use: [
+            // {
+            //   loader: MiniCssExtractPlugin.loader,
+            //   options: {
+            //     publicPath: path.join(__dirname, "dist"),
+            //   },
+            // },
+            {
+              loader: 'style-loader' // creates style nodes from JS strings
+            }, {
+              loader: 'css-loader' // translates CSS into CommonJS
+            }, {
+              loader: 'less-loader' // compiles Less to CSS
+            }
+          ]
+        },
+        {
           test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
           type: 'asset/resource',
         },
         {
           test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
           type: 'asset/inline',
-        },
-        {
-          test: /\.(less|css)$/,
-          use: [
-            {
-              loader: MiniCssExtractPlugin.loader,
-              options: {
-                //hmr: isEnvProduction,
-                // reloadAll: isEnvDevelopment
-                publicPath: path.join(__dirname, "dist"),
-              },
-            },
-            // "style-loader",
-            'css-loader',
-            "less-loader",
-          ],
-        },
+        }
       ],
     },
     plugins: [
@@ -112,6 +125,7 @@ module.exports = webpackEnv => {
       stats: 'errors-only',
       historyApiFallback: true,
       contentBase: path.resolve(__dirname, '../dist'),
+      //publicPath: '/'
       open: true,
       compress: true,
       hot: isEnvDevelopment,
@@ -134,8 +148,7 @@ module.exports = webpackEnv => {
       after: function (app, server, compiler) {
         //console.log(app)
         // do fancy stuff
-      },
-      //publicPath: '/'
+      }
     },
   }
 }

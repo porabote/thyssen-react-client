@@ -2,42 +2,34 @@ import React, { Component } from 'react'
 import { Field, Select, Option } from 'porabote/form'
 import DateTime from 'porabote/date-time'
 
-class FilterLeft extends Component {
+class Filterwhere extends Component {
 
     constructor(props) {
         super(props);
         this.weeksList = DateTime.getWeeksList();
-
         this.state = {
             dicts: []
         }
     }
 
-    // componentDidMount() {
-    //
-    //     const dicts = {}
-    //
-    //     this.props.dicts.map(data => {
-    //         dicts[data.attributes.assoc_table] = data.list
-    //     })
-    //
-    //     this.setState({
-    //         dicts: dicts
-    //     })
-    // }
+    componentDidMount() {
+
+        this.setState({
+            dicts: this.props.dicts
+        })
+    }
 
     render() {
-
-       // if (this.state.dicts.length == 0) return <p>Данные загружаются...</p>;
 
         const { departments, report_types } = this.props.dicts
 
         return (
 
             <React.Fragment>
+                <div className="content__filter__left__title">Фильтр</div>
                 <Field>
                     <Select
-                        name="left.type_id"
+                        name="where.type_id"
                         label="Тип отчета:"
                         afterSelectCallback={(event, formContext) => {
                             formContext.submitForm()
@@ -51,7 +43,7 @@ class FilterLeft extends Component {
 
                 <Field>
                     <Select
-                        name="left.object_id"
+                        name="where.object_id"
                         label="Обьект"
                         afterSelectCallback={(event, formContext) => {
                             formContext.submitForm()
@@ -71,4 +63,4 @@ class FilterLeft extends Component {
 
 }
 
-export default FilterLeft
+export default Filterwhere

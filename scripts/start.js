@@ -34,7 +34,7 @@ function build() {
             console.log('dev server listening on port 3000');
 
             if (err) {
-              console.log(err)
+             // console.log(err)
             }
         });
 
@@ -42,7 +42,7 @@ function build() {
 
     }).catch(err => {
         console.log('Error!')
-        console.log(err);
+       // console.log(err);
     })
 
 }
@@ -55,7 +55,7 @@ let checkPort = () => {
 let buildPromise = build()
 
 buildPromise.then(res => {
-    console.log(res);
+  //  console.log(res);
 })
 
 buildPromise.catch((error) => {

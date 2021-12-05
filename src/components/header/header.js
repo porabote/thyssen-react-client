@@ -6,11 +6,6 @@ import Navbar from 'porabote/navbar'
 import { Tree } from 'porabote/datas'
 import { AuthConsumer } from '@components/auth'
 import Api from '@services/api-service'
-import './header.less'
-import 'porabote/form/form.less'
-import 'porabote/form/input.less'
-import 'porabote/form/button.less'
-import 'porabote/form/checkbox.less'
 import PRBLogo from 'porabote/layout/svg/prb_logo.svg'
 
 class Header extends React.Component {
@@ -42,7 +37,7 @@ class Header extends React.Component {
                                 <div className="header-panel">
 
                                     <a className="header-panel__logo" href={"/"}>
-                                        <img style={{width: '92px', marginTop: '5px'}} src={PRBLogo}/>
+                                        <img style={{width: '92px'}} src={PRBLogo}/>
                                     </a>
                                     {authContext.state.isAuth &&
                                         <Navbar data={this.state.menuTree}/>

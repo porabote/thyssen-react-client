@@ -13,28 +13,9 @@ import {
 
 class ReportsAddForm extends Component {
 
-    state = {
-        dicts: []
-    }
-
-    componentDidMount() {
-
-        const dicts = {}
-
-        this.props.dicts.map(data => {
-            dicts[data.attributes.assoc_table] = data.list
-        })
-
-        this.setState({
-            dicts: dicts
-        })
-    }
-
     render() {
 
-        if (this.state.dicts.length == 0) return <p>Данные загружаются...</p>;
-
-        const { departments, report_types } = this.state.dicts
+        const { departments, report_types } = this.props.dicts
 
         return (
             <div>
@@ -92,20 +73,15 @@ class ReportsAddForm extends Component {
                         </Select>
                     </Field>
 
-
-
                     <SubmitButton>
                         <Button
                             text="Сохранить"
                             className="on-button grey-stroke_x_yellow-fill icon-login-auth__grey_x_white"
                             type="button"
-                            onClick={() => {
-                                //this.props.removeModalItem(this.props.itemkey)
-                                //this.props.fetchData()
-                            }}
                             style={{width: '140px', marginTop: '20px'}}
                         />
                     </SubmitButton>
+
                 </Form>
             </div>
 

@@ -1,5 +1,6 @@
 import React from 'react'
 import AppRouter from '@components/app-router'
+import Styles from '@components/styles/styles'
 import Header from '@components/header'
 import Sidebar from '../sidebar'
 import Modal from 'porabote/modal'
