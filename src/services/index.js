@@ -1,5 +1,3 @@
-import Api from './api-service'
+import Api from "./api-service";
 
-export {
-    Api
-}
+export default Api;

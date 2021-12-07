@@ -1,6 +1,6 @@
-import React from 'react'
-import ReportsAddForm from './reports-add-form'
-import { connect } from 'react-redux'
+import React from 'react';
+import { connect } from 'react-redux';
+import ReportsAddForm from './reports-add-form';
 
 class ContentPanel extends React.Component {
 

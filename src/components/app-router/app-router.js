@@ -3,7 +3,7 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 import ProtectedRoute from 'porabote/protected-route/'
 import { AuthForm } from '@components/auth'
 import SampleComponent from '../sample-component'
-import Equipments from '../equipments'
+//import Equipments from '../equipments'
 import Spares from '../spares'
 import Reports from '../reports'
 import Observers from '@components/observers'
@@ -19,7 +19,7 @@ const AppRouter = () => {
             <Switch>
                 <ProtectedRoute path="/" exact component={MainPage} />
                 <ProtectedRoute path="/sample-component/:action" component={SampleComponent} />
-                <ProtectedRoute path="/equipments/:action" component={Equipments} />
+                {/*<ProtectedRoute path="/equipments/:action" component={Equipments} />*/}
                 <ProtectedRoute path="/spares/:action" component={Spares} />
                 <ProtectedRoute path="/reports/:action" component={Reports} />
                 <ProtectedRoute path="/observers/:action" component={Observers} />

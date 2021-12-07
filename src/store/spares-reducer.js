@@ -1,29 +1,48 @@
-import { FETCH_DATA } from './spares-types'
+import { FETCH_DATA, FETCH_DICTS } from "./spares-types";
 
 const initialState = {
-    filter: {
-        week: '',
-        object_id: '',
-        type_id: ''
-    },
-    seekString: ''
-}
+  data: [],
+  meta: {
+    page: 1,
+    loading: true,
+  },
+  dicts: {
+    storage: {},
+    required: [
+      "users",
+    ],
+    loaded: false,
+  },
+  filter: {
+    week: "",
+    object_id: "",
+    type_id: "",
+  },
+  include: [
+    "user",
+  ],
+};
 
-const sparesReducer = (state = initialState, action) => {
+const sparesReducer = (state = initialState, { type, payload } = {}) => {
+  switch (type) {
+    case FETCH_DATA:
+      return {
+        ...state,
+        data: [
+          ...state.items.data,
+          ...payload,
+        ],
+        loading: false,
+      };
+    case FETCH_DICTS:
+      return {
+        ...state,
+        dicts: {
+          ...payload,
+        },
+      };
+    default: return state;
+  }
+};
 
-    switch (action.type) {
-        case FETCH_DATA:
-            return {
-                ...state,
-                data: [
-                    ...state.items.data,
-                    ...action.payload
-                ],
-                loading: false
-            }
-        default: return state
-    }
-
-}
-
-export default sparesReducer
+export default sparesReducer;
