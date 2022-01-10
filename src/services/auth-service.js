@@ -22,7 +22,7 @@ class AuthService {
     const responseJSON = await response.json();
     return { ...responseJSON, ...{ response: { status: response.status } } };
   }
-  
+
   getToken = () => {
     const accessToken = localStorage.getItem("access_token");
     return accessToken;

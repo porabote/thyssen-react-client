@@ -1,36 +1,41 @@
-class Auth {
+import React from 'react'
+import { connect } from 'react-redux';
+import { checkAuth } from './store/auth-actions';
 
-    constructor() {
+class Auth extends React.Component {
 
-        this.state = {
-            isAuth: false,
-            user: {}
-        }
+  constructor(props) {
+    super(props);
 
-        this.check()
-    }
+    this.props.checkAuth();
+  }
 
-    check = () => {
-        let data = JSON.parse(localStorage.getItem('porabote_user'));
-        if (data !== null && typeof data.id !== "undefined") {
-            this.state.isAuth = true;
-            this.state.user = data;
-        }
-    }
 
-    parseJwt = token => {
-        var base64Url = token.split('.')[1];
+  parseJwt = token => {
+    var base64Url = token.split('.')[1];
 
-        if(base64Url === undefined) return null;
+    if(base64Url === undefined) return null;
 
-        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
 
-        return JSON.parse(jsonPayload);
-    };
+    return JSON.parse(jsonPayload);
+  };
+
+  render() {
+    return this.props.children;
+  }
 
 }
 
-export default new Auth
+const mapDispatchToProps = (dispatch) => {
+  return {
+    checkAuth: () => {
+      dispatch(checkAuth());
+    },
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Auth);

@@ -1,31 +1,26 @@
-import React from 'react'
-import AppRouter from '@components/app-router'
-import Styles from '@components/styles/styles'
-import Header from '@components/header'
-import Sidebar from '../sidebar'
-import Modal from 'porabote/modal'
+import React from 'react';
+import AppRouter from '@components/app-router';
+import Header from '@components/header';
+import Modal from 'porabote/modal';
+import Styles from '../styles/styles'
 
 const Layout = () => {
 
-    return(
-        <div className="main">
-            
-            <div className="header">
-                <Header/>
-            </div>
+  return (
+    <div className="main">
 
-            <section className="main-section">
-                <AppRouter/>
-            </section>
+      <div className="header">
+        <Header/>
+      </div>
 
-            {/*<div className="sidebar-container">*/}
-            {/*    <Sidebar/>*/}
-            {/*</div>*/}
+      <section className="main-section">
+        <AppRouter/>
+      </section>
 
-            <Modal/>
+      <Modal/>
 
-        </div>
-    )
+    </div>
+  )
 
 }
 

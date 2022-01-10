@@ -1,6 +1,6 @@
 import { compose, applyMiddleware, createStore } from "redux";
 import thunkMiddleware from "redux-thunk";
-import sagaMiddleware, { rootWatcher } from "./sagas/root-saga";
+import sagaMiddleware, { rootWatcher } from "./root-saga";
 import rootReducer from "./root-reducer";
 
 const store = createStore(

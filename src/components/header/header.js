@@ -1,57 +1,52 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import Profile from './profile'
-import Navbar from 'porabote/navbar'
-import { Tree } from 'porabote/datas'
-import { AuthConsumer } from '@components/auth'
-import Api from '@services/api-service'
-import PRBLogo from 'porabote/layout/svg/prb_logo.svg'
+import React from 'react';
+import {connect} from 'react-redux';
+import Profile from './profile';
+import Navbar from 'porabote/navbar';
+import {Tree} from 'porabote/datas';
+import Api from '@services/api-service';
+import PRBLogo from 'porabote/layout/svg/prb_logo.svg';
 
 class Header extends React.Component {
 
-    state = {
-        menuTree: {}
-    }
+  state = {
+    menuTree: {}
+  }
 
-    componentDidMount()
-    {
-        Api.get(`/api/menus/get/`, {}).then((data) => {
-            this.setState({
-                menuTree: Tree.buildNestedList(data.data)
-            })
-        })
-    }
+  componentDidMount() {
+    Api.get(`/api/menus/get/`, {}).then((data) => {
+      this.setState({
+        menuTree: Tree.buildNestedList(data.data)
+      })
+    })
+  }
 
-    render() {
+  render() {
 
-        return (
-            <AuthConsumer>
-                {
-                    authContext => {
+    const bgColor = (this.props.auth.isAuth) ? '#fff' : ''
 
-                        const bgColor = (authContext.id) ? '#fff' : ''
+    return (
+      <header style={{'background': bgColor}}>
+        <div className="header-panel">
 
-                        return(
-                            <header style={{'background' : bgColor}}>
-                                <div className="header-panel">
+          <a className="header-panel__logo" href={"/"}>
+            <img style={{width: '92px'}} src={PRBLogo}/>
+          </a>
+          {this.props.auth.isAuth &&
+            <Navbar data={this.state.menuTree}/>
+          }
+          <Profile auth={this.props.auth}/>
 
-                                    <a className="header-panel__logo" href={"/"}>
-                                        <img style={{width: '92px'}} src={PRBLogo}/>
-                                    </a>
-                                    {authContext.state.isAuth &&
-                                        <Navbar data={this.state.menuTree}/>
-                                    }
-                                    <Profile auth={authContext.state} />
+        </div>
+      </header>
+    )
 
-                                </div>
-                            </header>
-                        )
-                    }
-                }
-            </AuthConsumer>
-        )
-
-    }
+  }
 }
-export default Header
+
+const mapStateToProps = (state) => {
+  return ({
+    auth: state.auth,
+  })
+}
+
+export default connect(mapStateToProps, null)(Header);

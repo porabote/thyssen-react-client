@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom'
-import ProtectedRoute from 'porabote/protected-route/'
+import ProtectedRoute from './protected-route'
 import { AuthForm } from '@components/auth'
 import SampleComponent from '../sample-component'
 //import Equipments from '../equipments'

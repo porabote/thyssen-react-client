@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import {NavLink} from 'react-router-dom'
-import { logout } from '../auth/auth-actions'
+import { logout } from '../auth/store/auth-actions'
 import {connect} from 'react-redux'
 import ProfileMenu from './profile-menu'
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
