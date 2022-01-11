@@ -5734,10 +5734,10 @@
   "resolved" "https://registry.npmjs.org/popper.js/-/popper.js-1.16.1-lts.tgz"
   "version" "1.16.1-lts"
 
-"porabote@^1.0.6":
-  "integrity" "sha512-2K5sBLe3pg5Hic1s16e3XjZ0A6e/3QdI/YJ+K4S4syJ4WQ8w86JPH4V+Su7D/DUu8If19ng+x5bVdNoNByVy2Q=="
-  "resolved" "https://registry.npmjs.org/porabote/-/porabote-1.0.6.tgz"
-  "version" "1.0.6"
+"porabote@^1.0.7":
+  "integrity" "sha512-8eyu67nhaNZwqyeU+na7CCuONTdazJqbhwYVU/7vWL0aAZfnckPoh1cfpmjMWDolLEFxY4AIcZ/gGDko2PRDvg=="
+  "resolved" "https://registry.npmjs.org/porabote/-/porabote-1.0.7.tgz"
+  "version" "1.0.7"
 
 "portfinder@^1.0.26":
   "integrity" "sha512-Se+2isanIcEqf2XMHjyUKskczxbPH7dQnlMjXX6+dybayyHvAf/TCgyMRlzf/B6QDhAEFOGes0pzRo3by4AbMA=="

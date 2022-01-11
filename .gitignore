@@ -26,7 +26,5 @@ yarn-debug.log*
 yarn-error.log*
 
 .cert
-/src/components/*
-!/src/components/app*
 /config/.env
 /dist/*
