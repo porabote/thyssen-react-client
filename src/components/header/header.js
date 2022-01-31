@@ -13,7 +13,7 @@ class Header extends React.Component {
   }
 
   componentDidMount() {
-    Api.get(`/api/menus/get/`, {}).then((data) => {
+    Api.get(`/api/menus/method/getByAcl`, {}).then((data) => {
       this.setState({
         menuTree: Tree.buildNestedList(data.data)
       })

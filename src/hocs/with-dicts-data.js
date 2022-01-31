@@ -1,8 +1,9 @@
 import React from "react";
-import { dispatch } from "react-redux";
+import { connect, dispatch } from "react-redux";
+import { requestDicts } from "@components/dicts/store/dicts-actions";
 import Loader from "porabote/loader";
 
-export default (Component) => {
+export default (Component, params) => {
 
   class withDictsData extends React.Component {
 
@@ -15,12 +16,7 @@ export default (Component) => {
     }
 
     componentDidMount() {
-
-      const requiredList = this.props.dictsRequired.filter((dict) => {
-        return typeof this.props.data[dict] === "undefined"
-      });
-
-      this.props.requestDicts(requiredList);
+      this.props.requestDicts(this.props.dictsRequired);
     }
 
     render() {
@@ -39,5 +35,21 @@ export default (Component) => {
     }
   }
 
-  return withDictsData;
+  const mapStateToProps = (store) => {
+    return {
+      dicts: { ...store.dicts.data },
+      dictsRequired: store[params.storeAlias].dictsRequired,
+      loaded: store.dicts.loaded
+    }
+  }
+
+  const mapDispatchToProps = (dispatch) => {
+    return {
+      requestDicts: (storeAlias) => {
+        dispatch(requestDicts(storeAlias));
+      },
+    }
+  }
+
+  return connect(mapStateToProps, mapDispatchToProps)(withDictsData);
 }

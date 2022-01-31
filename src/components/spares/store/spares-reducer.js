@@ -25,17 +25,17 @@ const initialState = {
     seekString: ""
   },
   dictsRequired: [
-    "departments",
+    "objects",
     "users",
-    "report_types"
   ],
   relationships: [
     "comments",
     "files",
     "history",
     "user",
-    "equipments",
-    "repairs",
+    "equipment",
+    "repair",
+    "store",
   ],
 };
 
@@ -50,7 +50,7 @@ const sparesReducer = (state = initialState, { type, payload } = {}) => {
       return {
         ...state,
         data: [
-          ...state.data,
+          //...state.data,
           ...payload.data,
         ],
         meta: payload.meta,

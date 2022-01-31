@@ -15,7 +15,7 @@ class View extends React.Component {
 
   render() {
 
-    moment.lang("ru");
+    moment.locale("ru");
     const {data} = this.props
 
     const dicts = this.props.dicts

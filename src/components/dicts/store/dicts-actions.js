@@ -4,8 +4,8 @@ import {
   REQUEST_DICTS_ERROR
 } from './dicts-types'
 
-const requestDicts = (requiredList) => {
-  return { type: REQUEST_DICTS, payload: { requiredList } }
+const requestDicts = (dictsRequired) => {
+  return { type: REQUEST_DICTS, payload: { dictsRequired } }
 };
 
 const requestDictsSuccess = (data) => {

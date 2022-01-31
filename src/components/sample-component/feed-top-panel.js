@@ -12,7 +12,11 @@ class FeedTopPanel extends React.Component {
                 <div>
                     <span
                         onClick={() => {
-                            this.props.pushModalItem(this.props.dicts, this.props.fetchData);
+                            this.props.pushModalItem(
+                              this.props.dicts,
+                              this.props.fetchData,
+                              `Добавить оборудование ${this.props.title}`,
+                            );
                         }}
                         className="button-drop"
                                 >
@@ -26,10 +30,10 @@ class FeedTopPanel extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        pushModalItem: (dicts, fetchData) => dispatch({
+        pushModalItem: (dicts, fetchData, title) => dispatch({
             type: 'PUSH_MODAL_ITEM',
             payload: {
-                title: 'Создать отчет',
+                title,
                 content: React.createElement(SampleComponentAddForm, {dicts, fetchData})
             }
         }),

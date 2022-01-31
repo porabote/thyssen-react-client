@@ -10,22 +10,23 @@ import {
     Select,
     Option,
     InputDate
-} from 'porabote/form'
+} from 'porabote/form';
+import { withDictsData } from "@hocs";
 
 class SparesAddForm extends Component {
 
     render() {
 
-        const { departments, report_types } = this.props.dicts;
+        const { objects } = this.props.dicts;
 
         return (
             <div>
 
                 <Form
                     values={{
-                        id: null,
-                        comment: '',
-                        date_period: null
+                        //
+                        // comment: '',
+                        // date_period: null
                     }}
                     action="/api/spares/add/"
                     submitFormAfter={(resp) => {
@@ -44,48 +45,34 @@ class SparesAddForm extends Component {
                           name="description"
                         />
                     </Field>
+
+                    <Field>
+                        <Input
+                          label="Количество"
+                          name="quantity"
+                        />
+                    </Field>
+
                     <Field>
                         <Input
                           label="Артикул"
                           name="vendor_code"
                         />
                     </Field>
-                    <Field>
-                        <InputDate name="date_period" label="На дату" />
-                    </Field>
 
                     <Field>
-                        <InputHidden
-                            name="id"
-                        />
+                        <InputDate name="repair_date" label="На дату" />
                     </Field>
 
-                    <Field>
-                        <Input
-                            label="Комментарий"
-                            name="comment"
-                        />
-                    </Field>
 
                     <Field>
                         <Select
-                            name="type_id"
-                            label="Тип отчета:"
+                            name="store_id"
+                            label="Склад"
                         >
-                            {Object.keys(report_types).map((id) => {
-                                return <Option key={id} value={id}>{report_types[id].name}</Option>
-                            })}
-                        </Select>
-                    </Field>
-
-                    <Field>
-                        <Select
-                            name="object_id"
-                            label="Обьект"
-                        >
-                            {Object.keys(departments).map((id) => {
-                                if (departments[id].custom_type == 5) {
-                                    return <Option key={id} value={id}>{departments[id].name}</Option>
+                            {Object.keys(objects).map((id) => {
+                                if (objects[id].kind == "store") {
+                                    return <Option key={id} value={id}>{objects[id].name}</Option>
                                 }
                             })}
                         </Select>
@@ -113,10 +100,4 @@ class SparesAddForm extends Component {
 
 }
 
-const mapStateToProps = (state) => {
-    return({
-        dicts: state.dicts.data
-    })
-}
-
-export default connect(mapStateToProps)(SparesAddForm)
+export default withDictsData(SparesAddForm, { storeAlias: "spares" });

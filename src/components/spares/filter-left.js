@@ -7,25 +7,13 @@ class FilterLeft extends Component {
 
     render() {
 
-        const { departments, report_types } = this.props.data
+        const { objects } = this.props.dicts
 
         return (
 
             <React.Fragment>
               <div className="content__filter__left__title">Фильтр</div>
-                <Field>
-                    <Select
-                        name="where.type_id"
-                        label="Тип отчета:"
-                        afterSelectCallback={(event, formContext) => {
-                            formContext.submitForm()
-                        }}
-                    >
-                        {Object.keys(report_types).map((id) => {
-                            return <Option key={id} value={id}>{report_types[id].name}</Option>
-                        })}
-                    </Select>
-                </Field>
+
 
                 <Field>
                     <Select
@@ -35,9 +23,9 @@ class FilterLeft extends Component {
                             formContext.submitForm()
                         }}
                     >
-                        {Object.keys(departments).map((id) => {
-                            if (departments[id].custom_type == 5) {
-                                return <Option key={id} value={id}>{departments[id].name}</Option>
+                        {Object.keys(objects).map((id) => {
+                            if (objects[id].kind == "store") {
+                                return <Option key={id} value={id}>{objects[id].name}</Option>
                             }
                         })}
                     </Select>
@@ -49,4 +37,4 @@ class FilterLeft extends Component {
 
 }
 
-export default withDictsData(FilterLeft);
+export default withDictsData(FilterLeft, { storeAlias: "spares" });

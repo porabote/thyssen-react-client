@@ -47,6 +47,7 @@ export default (View) => {
           React.cloneElement(<View/>, {
             ...this.props,
             data: this.state.data,
+            getRecord: this.getRecord,
           })
         }
         </React.Fragment>

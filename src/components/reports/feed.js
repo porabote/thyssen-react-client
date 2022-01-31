@@ -126,13 +126,14 @@ class Feed extends React.Component {
                                 data.map((record, index) => {
 
                                     const attrs = record.attributes
+                                    let rels = record.relationships;
 
                                     return(
                                         <div linkTo={`/reports/view/${attrs.id}`} key={attrs.id}>
                                             <div>{attrs.id}</div>
                                             <div>{record.relationships.types.attributes.name}</div>
                                             <div>{moment(attrs.date_period).format("DD/MM/YYYY")}</div>
-                                            <div>{record.relationships.object.attributes.name}</div>
+                                            <div>{typeof rels.object !== "undefined" && rels.object.attributes.name}</div>
                                             <div>{attrs.comment}</div>
                                             <div>{record.relationships.user.attributes.name}</div>
                                             <div>{moment(attrs.created_at).format("DD/MM/YYYY")}</div>

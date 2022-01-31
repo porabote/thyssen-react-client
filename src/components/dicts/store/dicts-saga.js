@@ -11,11 +11,15 @@ function* requestDictsAsync() {
 
       const store = yield select();
 
+      const requiredList = store.dicts.requiredList.filter((dict) => {
+        return typeof store.dicts.data[dict] === "undefined"
+      });
+
       const data = yield call(() => {
         return Api.get(`/api/dicts/get/`, {
           query: {
             whereIn: {
-              assoc_table: store.dicts.requiredList
+              assoc_table: requiredList
             }
           }
         })

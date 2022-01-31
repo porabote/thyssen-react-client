@@ -20,8 +20,9 @@ class Api {
     let body = { ...params.body };
 
     // Excluding Content type for correctly binding of data
-    if (body instanceof FormData) {
+    if (params.body instanceof FormData) {
       delete headersDefault["Content-Type"];
+      body = params.body;
     } else {
       body = JSON.stringify(body);
     }

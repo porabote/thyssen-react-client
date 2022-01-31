@@ -11,7 +11,6 @@ import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import AlarmOnOutlinedIcon from '@material-ui/icons/AlarmOnOutlined';
 import RemoveIcon from '@material-ui/icons/Remove';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
-
 import { StripedList, StripedListRow, StripedListCell } from 'porabote/striped-list';
 
 class ObserversByRecord extends React.Component {

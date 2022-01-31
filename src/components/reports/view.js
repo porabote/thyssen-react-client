@@ -36,7 +36,7 @@ class ReportsView extends React.Component {
       this.setState({
         data: (typeof data.data !== 'undefined') ? data.data : []
       })
-    })
+    });
   }
 
   render() {

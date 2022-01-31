@@ -12,14 +12,15 @@ const dictsReducer = (state = initialState, { type, payload } = {}) => {
       return {
         ...state,
         requiredList: [...new Set([
-          ...payload.requiredList,
-          ...state.requiredList,
+          ...payload.dictsRequired,
+         // ...state.requiredList,
         ])],
         loaded: false,
       };
     case REQUEST_DICTS_SUCCEEDED:
 
       return {
+        ...state,
         data: {
           ...state.data,
           ...payload,
@@ -29,6 +30,7 @@ const dictsReducer = (state = initialState, { type, payload } = {}) => {
       };
     case REQUEST_DICTS_ERROR:
       return {
+        ...state,
         loaded: false,
         error: true,
       };

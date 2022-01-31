@@ -1,10 +1,9 @@
 import React from "react";
-import { dispatch } from "react-redux";
+import { connect, dispatch } from "react-redux";
 import Loader from "porabote/loader";
 import Api from "@services/api-service";
-import { Form, ButtonLazyLoad } from "porabote/form";
 
-export default (Component) => {
+export default (Component, storeData) => {
 
   class feedWithData extends React.Component {
 
@@ -20,7 +19,7 @@ export default (Component) => {
     }
 
     componentDidMount() {
-      this.props.fetchFeedData(this.state.filter);
+      this.props.fetchFeedData(this.props.filter);
     }
 
     static getDerivedStateFromError(error) {
@@ -45,19 +44,24 @@ export default (Component) => {
       }
 
       return(
-        <Form
-          values={this.state.filter}
-          submitForm={this.submitForm}
-        >
-          {
-            React.cloneElement(<Component/>, {...this.props})
-          }
 
-          <ButtonLazyLoad {...this.props.meta}/>
-        </Form>
+        <React.Fragment>
+          {
+            React.cloneElement(<Component/>,
+              {
+                ...this.props
+              })
+          }
+        </React.Fragment>
       )
     }
   }
 
-  return feedWithData;
+  const mapStateToProps = (store) => {
+    return {
+      ...store[storeData.storeAlias],
+    }
+  }
+
+  return connect(mapStateToProps)(feedWithData);
 }

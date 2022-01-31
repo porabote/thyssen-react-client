@@ -4,11 +4,12 @@ import PersonIcon from '@material-ui/icons/Person';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SettingsEthernetIcon from '@material-ui/icons/SettingsEthernet';
 import SettingsIcon from '@material-ui/icons/Settings';
+import GroupIcon from '@material-ui/icons/Group';
 
 const ProfileMenu = (props) => {
 
-    
-    
+
+
     const logout = () => {
         window.location = '/users/logout/'
     }
@@ -34,6 +35,12 @@ const ProfileMenu = (props) => {
                         <SettingsIcon style={{color: '#444', marginRight: '12px', fontSize: '18px'}} />
                         <a href="/configs/" className="header-panel__profile__dropdown__item__divnk profil"> Конфигурация</a>
                     </div>
+
+                  <div className="header-panel__profile__dropdown__item">
+                    <GroupIcon style={{color: '#444', marginRight: '12px', fontSize: '18px'}} />
+                    <a href="/porabote/users/feed/" className="header-panel__profile__dropdown__item__divnk profil"> Пользователи</a>
+                  </div>
+
                 </React.Fragment>
             }
 
