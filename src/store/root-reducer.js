@@ -9,12 +9,14 @@ import sampleComponentReducer from "@components/sample-component/store/sample-co
 import equipmentsReducer from "@components/equipments/store/equipments-reducer";
 import platformsReducer from "@components/platforms/store/platforms-reducer";
 import usersReducer from "@components/users/store/users-reducer";
+import { chatReducer } from "@components/chat";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   modal: modalReducer,
   dicts: dictsReducer,
   filters: filtersReducer,
+  chat: chatReducer,
   spares: sparesReducer,
   sampleComponent: sampleComponentReducer,
   equipments: equipmentsReducer,

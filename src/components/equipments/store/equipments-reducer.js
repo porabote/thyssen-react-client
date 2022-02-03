@@ -49,6 +49,8 @@ const initialState = {
     "status",
     "status_reason",
     "equipment_accidents",
+    "equipment_repairs",
+    "equipment_repairs.user",
   ],
 };
 

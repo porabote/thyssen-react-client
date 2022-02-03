@@ -9,6 +9,7 @@ import {
     Option,
     InputDate,
     Textarea,
+    Masks,
 } from 'porabote/form';
 import Api from "@services/api-service";
 
@@ -20,7 +21,7 @@ class EquipmentsAccidentsAdd extends Component {
         this.state = {
             statuses: {},
             loading: true,
-            values: {
+            values: props.data || {
                 equipment_id: props.record.id,
                 date_at: '',
                 date_to: '',
@@ -70,7 +71,13 @@ class EquipmentsAccidentsAdd extends Component {
                     </Field>
 
                     <Field>
-                        <Input name="downtime" label="Время простоя"/>
+                        <Input
+                          name="downtime"
+                          label="Время простоя"
+                          mask={(value) => {
+                              return Masks.digitalOnly(value);
+                          }}
+                        />
                     </Field>
 
                     <Field>

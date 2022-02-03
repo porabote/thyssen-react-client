@@ -17,6 +17,7 @@ class ChangeStatus extends Component {
   state = {
     statuses: {},
     loading: true,
+    status_id: '',
     values: {
       equipment_id: this.props.record_id,
       status_id: '',
@@ -85,27 +86,36 @@ class ChangeStatus extends Component {
             //this.props.fetchRecord()
           }}
         >
-          <Field>
-            <Select
-              name="status_id"
-              label="Статус"
-            >
-              {this.state.statuses.equipments.map((item, index) => {
-                return <Option key={index} value={item.id}>{`${item.name}`}</Option>
-              })}
-            </Select>
-          </Field>
 
-          <Field>
-            <Select
-              name="status_reason_id"
-              label="Причина"
-            >
-              {this.state.statuses.equipments_reason.map((item, index) => {
-                return <Option key={index} value={item.id}>{`${item.name}`}</Option>
-              })}
-            </Select>
-          </Field>
+            <Field>
+              <Select
+                name="status_id"
+                label="Статус"
+                afterSelectCallback={(e, formContext) => {
+                  this.setState({
+                    status_id: formContext.values.status_id
+                  });
+                }}
+              >
+                {this.state.statuses.equipments.map((item, index) => {
+                  return <Option key={index} value={item.id}>{`${item.name}`}</Option>
+                })}
+              </Select>
+            </Field>
+
+
+          {this.state.status_id == 59 &&
+            <Field>
+              <Select
+                name="status_reason_id"
+                label="Причина"
+              >
+                {this.state.statuses.equipments_reason.map((item, index) => {
+                  return <Option key={index} value={item.id}>{`${item.name}`}</Option>
+                })}
+              </Select>
+            </Field>
+          }
 
           <SubmitButton>
             <Button

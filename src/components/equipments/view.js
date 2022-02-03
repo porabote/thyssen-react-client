@@ -42,7 +42,7 @@ class View extends React.Component {
             <Tab>Наработка</Tab>
             <Tab>ТО\Ремонт</Tab>
             <Tab>Авария</Tab>
-            <Tab>Запчасти</Tab>
+            {/*<Tab>Запчасти</Tab>*/}
             <Tab>История</Tab>
             <Tab>Комментарии</Tab>
             <Tab>Наблюдатели</Tab>
@@ -60,7 +60,7 @@ class View extends React.Component {
           <TabPanel>
             <Accidents record={data} getRecord={this.props.getRecord}/>
           </TabPanel>
-          <TabPanel>Запчасти</TabPanel>
+          {/*<TabPanel>Запчасти</TabPanel>*/}
           <TabPanel>
             <History>
               {history.map((item, index) => {

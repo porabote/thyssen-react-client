@@ -1,6 +1,7 @@
 import React from "react";
 import {StripedList, StripedListCell, StripedListRow} from "porabote/striped-list";
 import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
 import EquipmentsAccidentsAdd from "./equipments-accidents-add";
 import { connect } from "react-redux";
 import DateTime from "porabote/date-time";
@@ -99,7 +100,7 @@ class Accidents extends React.Component {
                                                 getRecord={this.props.getRecord}
                                                 record={this.props.record}
                                             />,
-                                            'Добавить наработку',
+                                            'Добавить запись об аварии',
                                         );
                                     }}
                                 >
@@ -121,7 +122,23 @@ class Accidents extends React.Component {
                                     <StripedListCell>{attrs.downtime}</StripedListCell>
                                     <StripedListCell>{attrs.reasons}</StripedListCell>
                                     <StripedListCell>{attrs.measures}</StripedListCell>
-                                    <StripedListCell></StripedListCell>
+                                    <StripedListCell>
+                                        <div
+                                          className="link_with_icon"
+                                          onClick={() => {
+                                              this.props.pushItemToModal(
+                                                <EquipmentsAccidentsAdd
+                                                  getRecord={this.props.getRecord}
+                                                  record={this.props.record}
+                                                  data={attrs}
+                                                />,
+                                                'Добавить аварию',
+                                              );
+                                          }}
+                                        >
+                                            <EditIcon style={{fontSize: '18px'}}/>
+                                        </div>
+                                    </StripedListCell>
                                 </StripedListRow>
                             );
                         })}
