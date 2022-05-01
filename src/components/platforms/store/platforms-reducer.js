@@ -31,10 +31,13 @@ const initialState = {
     seekString: ""
   },
   dictsRequired: [
+    "platforms",
+    "objects",
   ],
   relationships: [
     "history",
     "objects",
+    "objects.parent",
   ],
 };
 

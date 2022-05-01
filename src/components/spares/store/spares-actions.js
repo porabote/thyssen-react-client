@@ -16,4 +16,11 @@ const fetchFeedDataError = (error) => {
   return { type: 'FETCH_FEED_SPARES_DATA_ERROR', payload: error }
 };
 
-export { fetchFeedData, fetchFeedDataSuccess, fetchFeedDataError }
+const updateFeedFilters = (data) => {
+  return {
+    type: "UPDATE_FILTERS_EQUIPMENTS",
+    payload: data
+  }
+}
+
+export { fetchFeedData, fetchFeedDataSuccess, fetchFeedDataError, updateFeedFilters }

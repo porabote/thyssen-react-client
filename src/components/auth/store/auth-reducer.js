@@ -20,6 +20,9 @@ const initialState = {
     role_id: null,
     username: "",
   },
+  dictsRequired: [
+    "accounts",
+  ],
 };
 
 const authReducer = (store = initialState, action) => {

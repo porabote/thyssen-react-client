@@ -9,6 +9,7 @@ import {
   Option,
   InputDate,
   InputDatePeriod,
+  Masks,
 } from 'porabote/form';
 import Api from "@services/api-service";
 
@@ -47,7 +48,7 @@ class EngineHoursAdd extends Component {
       <div>
         <Form
           values={this.state.values}
-          action="/api/observers/method/subscribe/"
+          action="/"
           submitForm={this.submitForm}
           submitFormAfter={(resp) => {
             //window.location = `/porabote/business-events/view/${resp.data.id}`
@@ -65,7 +66,13 @@ class EngineHoursAdd extends Component {
           {/*</Field>*/}
 
           <Field>
-            <Input name="count" label="Количество часов"/>
+            <Input
+              name="count"
+              label="Количество часов"
+              mask={(value) => {
+                return Masks.digitalOnly(value);
+              }}
+            />
           </Field>
 
           <Field>

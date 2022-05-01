@@ -1,8 +1,8 @@
 import React from "react";
-import {connect} from "react-redux";
-import { Form, ButtonLazyLoad } from "porabote/form";
-import {fetchFeedData} from "./store/spares-actions";
-import { updateFilters } from "@components/filters/store/filters-actions";
+import {useSelector} from "react-redux";
+import {Form, ButtonLazyLoad} from "porabote/form";
+import {fetchData} from "./store/spares-actions";
+import {updateFilters} from "@components/filters/store/filters-actions";
 import {requestDicts} from "@components/dicts/store/dicts-actions";
 import {feedWithData} from "@hocs";
 import Grid from "porabote/grid";
@@ -11,114 +11,108 @@ import ContentPanel from "./content-panel";
 import FilterTop from "./filter-top";
 import MenuIcon from "@material-ui/icons/Menu";
 import moment from "moment";
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import FeedPreloader from "../feed/feed-preloader";
 
-class Feed extends React.Component {
+const Feed = (props) => {
 
-  submitForm = (values) => {
-    this.props.updateFilters(values, "equipments");
-    this.props.fetchFeedData();
+  const {title, filter, data, meta} = useSelector(state => state.spares);
+
+  const submitForm = (values) => {
+    props.updateFilters(values);
+    props.fetchData();
   }
 
-  render() {
+  if (!props.isDictsLoaded) {
+    return <FeedPreloader title="Запчасти"/>;
+  }
 
-    const {data, dicts} = this.props
+  return (
 
-    return (
+    <Form
+      values={filter}
+      submitForm={(values) => {
+        submitForm(values);
+      }}
+    >
 
-      <Form
-        values={this.props.filter}
-        submitForm={(values) => {
-          this.submitForm(values);
-        }}
-      >
+      <div className="content feed">
 
-        <div className="content feed">
-
-          <div className="content__top-filter">
-            <FilterTop/>
-          </div>
-
-          <div className="content-title">
-            <MenuIcon style={{color: '#999', marginRight: '11px', fontSize: '16px'}}/>
-            Запчасти обслуживание
-          </div>
-
-          <div className="content__filter__left">
-            <FilterLeft/>
-          </div>
-
-          <div className="content__tools_panel">
-            <ContentPanel fetchData={this.fetchData}/>
-          </div>
-
-          <div className="content__body">
-
-            <Grid grid-template-columns="60px 140px 170px 80px 80px 80px 80px 120px 120px 140px 140px">
-
-              <div className="head">
-                <div>ID</div>
-                <div>Название</div>
-                <div>Описание</div>
-                <div>Артикул</div>
-                <div>Кол-во</div>
-                <div>Ед. изм</div>
-                <div>Склад</div>
-                <div>Оборудование</div>
-                <div>ТО</div>
-                <div>Дата замены</div>
-                <div>Дата добавления</div>
-              </div>
-
-              {
-                data.map((record, index) => {
-                  //console.log(record)
-                  const attrs = record.attributes
-                  const rels = record.relationships
-
-                  return (
-                    <div linkTo={`/spares/view/${attrs.id}`} key={attrs.id}>
-                      <div>{attrs.id}</div>
-                      <div>{attrs.name}</div>
-                      <div>{attrs.description}</div>
-                      <div>{attrs.vendor_code}</div>
-                      <div>{attrs.quantity}</div>
-                      <div>{attrs.unit}</div>
-                      <div>{attrs.store_id}</div>
-                      <div></div>
-                      <div>{attrs.repair_id}</div>
-                      <div>{moment(attrs.repair_date).format("DD/MM/YYYY")}</div>
-                      <div>{moment(attrs.created_at).format("DD/MM/YYYY")}</div>
-                    </div>
-                  )
-                })
-              }
-            </Grid>
-
-          </div>
+        <div className="content__top-filter">
+          <FilterTop/>
         </div>
-        <ButtonLazyLoad {...this.props.meta}/>
-      </Form>
-    )
-  }
+
+        <div className="content-title">
+          <MenuIcon style={{color: '#999', marginRight: '11px', fontSize: '16px'}}/>
+          Запчасти (склад)
+        </div>
+
+        <div className="content__filter__left">
+          <FilterLeft/>
+        </div>
+
+        <div className="content__tools_panel">
+          <ContentPanel fetchData={fetchData}/>
+        </div>
+
+        <div className="content__body">
+
+          <Grid grid-template-columns="50px 32px 100px 240px 170px 80px 80px 160px 140px">
+
+            <div className="head">
+              <div>ID</div>
+              <div></div>
+              <div>Статус</div>
+              <div>Название</div>
+              <div>Артикул</div>
+              <div>Кол-во</div>
+              <div>Ед. изм</div>
+              <div>Склад</div>
+              <div>Дата добавления</div>
+            </div>
+
+            {
+              data.map((record, index) => {
+
+                const attrs = record.attributes
+                const rels = record.relationships
+                const store = (typeof rels.store !== "undefined") ? rels.store.attributes : {};
+
+                return (
+                  <div linkTo={`/spares/view/${attrs.id}`} key={attrs.id}>
+                    <div>
+                      {attrs.id}
+                    </div>
+                    <div>
+                      <div style={{
+                        display: 'flex',
+                        alignContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                        {attrs.status_id == 66 &&
+                          <AccessTimeIcon style={{fontSize: '18px', marginLeft: '6px', color: '#21c782'}}/>
+                        }
+                      </div>
+                    </div>
+                    <div>{rels.status.attributes.name}</div>
+                    <div>
+                      {attrs.name}
+                    </div>
+                    <div>{attrs.vendor_code}</div>
+                    <div>{attrs.quantity}</div>
+                    <div>{attrs.unit || ''}</div>
+                    <div>{store.name || ''}</div>
+                    <div>{moment(attrs.created_at).format("DD/MM/YYYY")}</div>
+                  </div>
+                )
+              })
+            }
+          </Grid>
+          <ButtonLazyLoad fetchData={props.fetchData} {...meta}/>
+        </div>
+      </div>
+    </Form>
+  )
 }
 
-const mapStateToProps = (state) => {
-  return ({
-    ...state.spares,
-    dicts: state.dicts,
-    requiredList: state.spares.requiredList
-  })
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateFilters: (data, storeAlias) => {
-      dispatch(updateFilters(data, storeAlias));
-    },
-    fetchFeedData: () => {
-      dispatch(fetchFeedData());
-    },
-  }
-}
-
-export default connect(null, mapDispatchToProps)(feedWithData(Feed, {storeAlias: "spares"}));
+export default Feed;

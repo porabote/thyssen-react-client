@@ -1,4 +1,5 @@
 import React from "react";
+import Api from "@services/api-service";
 import {StripedList, StripedListCell, StripedListRow} from "porabote/striped-list";
 import AddIcon from '@mui/icons-material/Add';
 import EngineHoursAdd from "./engine-hours-add";
@@ -10,6 +11,8 @@ import {
   Select,
   Option,
 } from 'porabote/form';
+import moment from "moment";
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 class EngineHours extends React.Component {
 
@@ -21,6 +24,16 @@ class EngineHours extends React.Component {
       date_to: '4999',
       months: DateTime.monthsList,
     };
+  }
+
+  deleteHours = data => {
+
+    Api.post(`/api/equipments/method/markToDeleteHours/`, {
+      body: data
+    })
+      .then((data) => {
+        this.props.getRecord();
+      });
   }
 
   render() {
@@ -182,10 +195,21 @@ class EngineHours extends React.Component {
             return (
               <StripedListRow key={index}>
                 <StripedListCell>{item.count}</StripedListCell>
-                <StripedListCell>{item.date_at} - {item.date_to}</StripedListCell>
+                <StripedListCell>{moment(item.date_at).format('DD-MM-Y')} - {moment(item.date_to).format('DD-MM-Y')}</StripedListCell>
                 <StripedListCell>{item.user_name}</StripedListCell>
-                <StripedListCell>{item.created_at}</StripedListCell>
-                <StripedListCell></StripedListCell>
+                <StripedListCell>{moment(item.created_at).format('DD-MM-Y')}</StripedListCell>
+                <StripedListCell>
+                  <DeleteOutlineIcon
+                    style={{color: 'rgba(243,111,161,0.96)', cursor: 'pointer', fontSize: '24px'}}
+                    onClick={() => {
+                      this.props.openConfirm(
+                        `Удалить наработку - <br> ${item.count}</b>`,
+                        this.deleteHours,
+                        {record_id: this.props.record.id, key: index},
+                      )
+                    }}
+                  />
+                </StripedListCell>
               </StripedListRow>
             );
           })}
@@ -199,6 +223,10 @@ class EngineHours extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    openConfirm: (msg, approveCallback, callbackData) => dispatch({
+      type: "OPEN_CONFIRM",
+      payload: {msg, approveCallback, callbackData},
+    }),
     pushItemToModal: (content, title) => dispatch({type: 'PUSH_MODAL_ITEM', payload: {title, content}}),
   }
 }

@@ -66,7 +66,7 @@ class BusinessEventsAddForm extends Component {
                             label="Модуль"
                         >
                             {Object.keys(components).map((id) => {
-                                return <Option key={id} value={id}>{components[id].attributes.description}</Option>
+                                return <Option key={id} value={components[id].id}>{components[id].attributes.description}</Option>
                             })}
                         </Select>
                     </Field>

@@ -1,4 +1,6 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
+import { useSelector } from "react-redux";
+import {withDictsData} from "@hocs";
 import {
   Form,
   Field,
@@ -14,27 +16,23 @@ import {
 } from 'porabote/form';
 import Api from "@services/api-service";
 
-class RepairsAdd extends Component {
+const RepairsAdd = (props) => {
 
-  constructor(props) {
-    super(props);
+  const [statuses, setStatuses] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [values, setValues] = useState(props.data || {
+    type: '',
+    downtime: "",
+    name: "",
+    equipment_id: props.record.id,
+    date_at: '',
+    date_to: '',
+    count: '',
+  });
 
-    this.state = {
-      statuses: {},
-      loading: true,
-      values: props.data || {
-        type: '',
-        downtime: "",
-        name: "",
-        equipment_id: props.record.id,
-        date_at: '',
-        date_to: '',
-        count: '',
-      }
-    }
-  }
+  const { dicts } = useSelector(state => state.dicts);
 
-  submitForm = (values) => {
+  const submitForm = (values) => {
 
     Api.post(
       `/api/equipments-repairs/method/add/`,
@@ -42,22 +40,18 @@ class RepairsAdd extends Component {
         body: values,
       }
     ).then((data) => {
-      this.props.getRecord();
+      props.getRecord();
     })
   }
-
-  render() {
-
-    const { values } = this.state;
 
     return (
       <div>
         <Form
           values={values}
-          submitForm={this.submitForm}
+          submitForm={submitForm}
           submitFormAfter={(resp) => {
-            this.props.removeModalItem(this.props.itemkey);
-            this.props.getRecord();
+            props.removeModalItem(props.itemkey);
+            props.getRecord();
           }}
         >
 
@@ -73,7 +67,13 @@ class RepairsAdd extends Component {
           </Field>
 
           <Field>
-            <Input name="engine_hours" label="Наработка"/>
+            <Input
+              name="engine_hours"
+              label="Наработка"
+              mask={(value) => {
+                return Masks.digitalOnly(value);
+              }}
+            />
           </Field>
 
           <Field>
@@ -94,15 +94,15 @@ class RepairsAdd extends Component {
             <Textarea name="desc_short" label="Краткое описание" grid="flex"/>
           </Field>
 
-          <Field>
-            <Textarea name="desc" label="Детальное описание работ" grid="flex"/>
-          </Field>
+          {/*<Field>*/}
+          {/*  <Textarea name="desc" label="Детальное описание работ" grid="flex"/>*/}
+          {/*</Field>*/}
 
           <Field>
-            <Select name="spares_ids" label="Запчасти" empty={false}>
-              {[].map((item, index) => {
+            <Select name="doer_id" label="Исполнитель" empty={false}>
+              {Object.entries(dicts.users).map((item, index) => {
                 let itemData = item[1];
-                return <Option key={index} value={itemData.id}>{itemData.name}</Option>;
+                return <Option key={index} value={itemData.id}>{`${itemData.name} ( ${itemData.post_name} )`}</Option>;
               })}
             </Select>
           </Field>
@@ -113,16 +113,15 @@ class RepairsAdd extends Component {
               className="on-button grey-stroke_x_yellow-fill icon-login-auth__grey_x_white"
               type="button"
               onClick={() => {
-                this.props.removeModalItem(this.props.itemkey);
-                this.props.getRecord();
+                props.removeModalItem(props.itemkey);
+                props.getRecord();
               }}
               style={{width: '140px', marginTop: '20px'}}
             />
           </SubmitButton>
         </Form>
       </div>
-    )
-  }
+    );
 
 }
 

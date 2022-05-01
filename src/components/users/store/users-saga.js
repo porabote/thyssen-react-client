@@ -1,5 +1,5 @@
-import { call, takeEvery, put } from 'redux-saga/effects'
-import { fetchFeedDataSuccess, fetchFeedDataError } from "./users-actions"
+import {call, put, select, takeEvery} from "redux-saga/effects";
+import {fetchFeedDataSuccess, fetchFeedDataError} from "./users-actions"
 import Api from '@services/api-service'
 
 function* usersWatcher() {//console.log(select(spares))
@@ -7,17 +7,28 @@ function* usersWatcher() {//console.log(select(spares))
 }
 
 function* fetchFeedDataAsync() {
-    try {
-      const data = yield call(() => {
-        return Api.get(`/api/users/get/`, {
-          query: {
+
+  const state = yield select();
+
+  try {
+    const data = yield call(() => {
+      return Api.get(`/api/api-users/get/`, {
+        query: {
+          where: state.users.filter.where,
+          orWhereGrouped: state.users.filter.orWhereGrouped,
+          include: state.users.relationships,
+          page: state.users.meta.nextPage,
+          limit: state.users.meta.limit,
+          orderBy: {
+            name: 'ASC'
           }
-        }).then((res) => res);
-      });
-      yield put(fetchFeedDataSuccess(data));
-    } catch (error) {
-      yield put(fetchFeedDataError(error));
-    }
+        }
+      }).then((res) => res);
+    });
+    yield put(fetchFeedDataSuccess(data));
+  } catch (error) {
+    yield put(fetchFeedDataError(error));
+  }
 }
 
 export default usersWatcher;

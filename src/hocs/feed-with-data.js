@@ -39,10 +39,10 @@ export default (Component, storeData) => {
         return <h1>Что-то пошло не так.</h1>;
       }
 
-      if (this.props.loading) {
-        return <Loader/>
-      }
-
+//       if (this.props.loading) {
+//         return <Loader/>
+//       }
+// console.log(99)
       return(
 
         <React.Fragment>

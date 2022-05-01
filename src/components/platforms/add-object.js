@@ -10,16 +10,18 @@ import {
   Option,
   InputDate
 } from 'porabote/form';
-import Api from '@services/api-service'
+import Api from '@services/api-service';
+import { withDictsData } from "@hocs";
 
 class AddObject extends Component {
 
   state = {
-    values: {
-      platform_id: this.props.platformId,
+    values: this.props.data || {
+      platform_id: this.props.platformId || null,
       name: "",
       address: "",
-      kind: "self",
+      kind: this.props.kind || "self",
+      parent_id: this.props.parent_id || "",
     }
   }
 
@@ -37,6 +39,8 @@ class AddObject extends Component {
 
   render() {
 
+    const { objects, platforms } = this.props.dicts;
+
     return (
       <div>
         <Form
@@ -47,6 +51,19 @@ class AddObject extends Component {
             this.props.getRecord()
           }}
         >
+
+          <Field>
+            <Select
+              name="platform_id"
+              label="Площадка"
+            >
+              {Object.entries(platforms).map((item, index) => {
+                let itemData = item[1];
+                return <Option key={itemData.id} value={itemData.id}>{itemData.ru_alias}</Option>;
+              })}
+            </Select>
+          </Field>
+
           <Field>
             <Input
               label="Название"
@@ -55,7 +72,7 @@ class AddObject extends Component {
           </Field>
           <Field>
             <Input
-              label="Андес"
+              label="Адрес"
               name="address"
             />
           </Field>
@@ -68,6 +85,21 @@ class AddObject extends Component {
               <Option key="self" value="self">Базовый</Option>
               <Option key="store" value="store">Склад</Option>
               <Option key="rent" value="rent">Аренда</Option>
+              <Option key="hole" value="hole">Скважина</Option>
+            </Select>
+          </Field>
+
+          <Field>
+            <Select
+              name="parent_id"
+              label="Родительский объект (не обязательно)"
+            >
+              {Object.entries(objects).map((item, index) => {
+                let itemData = item[1];
+                if (!itemData.parent_id) {
+                  return <Option key={itemData.id} value={itemData.id}>{itemData.name}</Option>;
+                }
+              })}
             </Select>
           </Field>
 
@@ -90,4 +122,4 @@ class AddObject extends Component {
 
 }
 
-export default AddObject
+export default withDictsData(AddObject, { storeAlias: 'platforms' });

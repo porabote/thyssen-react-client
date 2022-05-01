@@ -23,6 +23,8 @@ class Files extends Component {
 
   render() {
 
+    const files = this.props.files || [];
+
     return (
       <div>
 
@@ -56,13 +58,12 @@ class Files extends Component {
 
         <div style={{paddingBottom: '20px'}}></div>
 
-
-        {this.props.files.length == 0 &&
+        {files.length == 0 &&
           <p className="no_records">Записи не найдены</p>
         }
 
         <StripedList style={{gridTemplateColumns: '1fr 50px 130px 30px 30px'}}>
-          {this.props.files.map((file, index) => {
+          {files.map((file, index) => {
             return (
               <StripedListRow key={index}>
                 <StripedListCell>
@@ -78,7 +79,7 @@ class Files extends Component {
                   </a>
                 </StripedListCell>
                 <StripedListCell>
-                  {moment(file.attributes.created_at).format("DD MMM YYYY HH:mm")}
+                  {moment(file.attributes.created_at).format("DD-MM-Y HH:mm")}
                 </StripedListCell>
                 <StripedListCell>
                   <EditIcon

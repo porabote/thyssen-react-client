@@ -1,32 +1,45 @@
-import { FETCH_DATA, FETCH_DICTS } from "./spares-types";
+import { FETCH_DATA, FETCH_DICTS, UPDATE_FILTERS_EQUIPMENTS } from "./spares-types";
 
 const initialState = {
   alias: "spares",
   data: [],
   meta: {
-    count: 0,
-    limit: 0,
+    count: 0, // total count of records
+    limit: 50,
     offset: 0,
-    page: 1,
-    perPage: 0,
+    nextPage: 1,
+    perPage: 0, // total count of loaded records
+    lastId: 0,
   },
   loading: true,
   filter: {
     where: {
-      week: "",
-      id: {
-        operand: "like",
-        pattern: "%T%",
-        value: ""
-      }
+      store_id: "",
     },
+    orWhereGrouped: [
+      {
+        name: {
+          operand: "like",
+            pattern: "%T%",
+            value: ""
+        },
+        vendor_code: {
+          operand: "like",
+            pattern: "%T%",
+            value: ""
+        },
+      }
+    ],
     whereIn: {
+      status_id: [66, 67],
     },
     seekString: ""
   },
   dictsRequired: [
     "objects",
     "users",
+    "spares_types",
+    "statuses",
   ],
   relationships: [
     "comments",
@@ -34,8 +47,11 @@ const initialState = {
     "history",
     "user",
     "equipment",
-    "repair",
+    "repairs",
     "store",
+    "spares_type",
+    "remains",
+    "status",
   ],
 };
 
@@ -44,17 +60,23 @@ const sparesReducer = (state = initialState, { type, payload } = {}) => {
     case "FETCH_FEED_SPARES_DATA":
       return {
         ...state,
+        meta: {
+          ...state.meta,
+        },
         loading: true,
       };
     case "FETCH_FEED_SPARES_DATA_SUCCEEDED":
       return {
         ...state,
         data: [
-          //...state.data,
+          ...state.data,
           ...payload.data,
         ],
-        meta: payload.meta,
-        nextPage: ++state.nextPage,
+        meta: {
+          ...state.meta,
+          ...payload.meta,
+          nextPage: ++state.meta.nextPage,
+        },
         loading: false,
         error: false,
       };

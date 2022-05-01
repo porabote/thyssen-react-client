@@ -1,9 +1,10 @@
 import { REQUEST_DICTS, REQUEST_DICTS_SUCCEEDED, REQUEST_DICTS_ERROR } from "./dicts-types";
 
 const initialState = {
-  data: {},
+  dicts: {},
   requiredList: [],
-  loaded: false,
+  loadingComponent: null,
+  components: {}
 };
 
 const dictsReducer = (state = initialState, { type, payload } = {}) => {
@@ -13,25 +14,28 @@ const dictsReducer = (state = initialState, { type, payload } = {}) => {
         ...state,
         requiredList: [...new Set([
           ...payload.dictsRequired,
-         // ...state.requiredList,
         ])],
-        loaded: false,
+        loadingComponent: payload.componentAlias,
       };
     case REQUEST_DICTS_SUCCEEDED:
 
+      let components = state.components;
+      components[state.loadingComponent] = true;
       return {
         ...state,
-        data: {
-          ...state.data,
+        dicts: {
+          ...state.dicts,
           ...payload,
         },
-        loaded: true,
+        components: {
+          ...components,
+        },
+        loadingComponent: null,
         error: false,
       };
     case REQUEST_DICTS_ERROR:
       return {
         ...state,
-        loaded: false,
         error: true,
       };
     default:

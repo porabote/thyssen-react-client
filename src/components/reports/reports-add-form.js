@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { useSelector } from "react-redux";
 import {
     Form,
     Field,
@@ -11,11 +12,11 @@ import {
     InputDate
 } from 'porabote/form'
 
-class ReportsAddForm extends Component {
+const ReportsAddForm = (props) => {
 
-    render() {
 
-        const { departments, report_types } = this.props.dicts
+    const {dicts} = useSelector(state => state.dicts);
+        const { departments, report_types } = dicts
 
         return (
             <div>
@@ -86,7 +87,6 @@ class ReportsAddForm extends Component {
             </div>
 
         )
-    }
 
 }
 

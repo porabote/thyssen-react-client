@@ -21,13 +21,13 @@ class View extends React.Component {
     const {data} = this.props
 
     const dicts = this.props.dicts
-    const history = data.relationships.history;
+    const history = data.relationships.history || [];
     const user = data.relationships.user.attributes;
 
     return (
       <div className="content" style={{padding: "40px"}}>
 
-        <p style={{padding: "30px 0 10px 0", color: "#555"}}>
+        <p style={{padding: "0px 0 10px 0", color: "#555"}}>
           <NavLink className="crumb_link" to="/equipments/feed/">
             <ArrowRightRoundedIcon style={{fontSize: "24px", marginRight: "2px", top: "7px", position: "relative"}}/>
             Назад к списку
@@ -40,7 +40,7 @@ class View extends React.Component {
           <TabList>
             <Tab>Краткая информация</Tab>
             <Tab>Наработка</Tab>
-            <Tab>ТО\Ремонт</Tab>
+            <Tab>ТО/Ремонт</Tab>
             <Tab>Авария</Tab>
             {/*<Tab>Запчасти</Tab>*/}
             <Tab>История</Tab>
@@ -70,6 +70,7 @@ class View extends React.Component {
                     msg={item.attributes.msg}
                     user={item.attributes.user_name}
                     datetime={moment(item.attributes.created_at).format("DD MMM YYYY HH:mm")}
+                    diff={item.attributes.diff}
                   />
                 )
               })}

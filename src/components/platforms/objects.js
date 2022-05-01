@@ -7,6 +7,7 @@ import AddIcon from '@material-ui/icons/Add';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import AddObject from "./add-object"
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
+import EditIcon from '@mui/icons-material/Edit';
 
 import { StripedList, StripedListRow, StripedListCell } from 'porabote/striped-list';
 
@@ -19,6 +20,7 @@ class Objects extends React.Component {
       self: "Базовый",
       rent: "Аренда",
       store: "Склад",
+      hole: "Скважина",
     },
   }
 
@@ -52,7 +54,16 @@ class Objects extends React.Component {
 
         </div>
 
-        <StripedList style={{gridTemplateColumns: '450px 100px 1fr'}}>
+        <StripedList style={{gridTemplateColumns: '250px 100px 1fr 170px 40px'}}>
+
+          <StripedListRow>
+            <StripedListCell><b>Название</b></StripedListCell>
+            <StripedListCell><b>Тип</b></StripedListCell>
+            <StripedListCell><b>Адрес</b></StripedListCell>
+            <StripedListCell><b>Родитель</b></StripedListCell>
+            <StripedListCell><b></b></StripedListCell>
+          </StripedListRow>
+
           {this.props.objects.map((object, index) => {
 
             return(
@@ -63,16 +74,21 @@ class Objects extends React.Component {
                 <StripedListCell>
                   {this.state.kindList[object.attributes.kind]}
                 </StripedListCell>
+                <StripedListCell>
+                  {object.attributes.address}
+                </StripedListCell>
+                <StripedListCell>
+                  {typeof object.relationships.parent != "undefined" && object.relationships.parent.attributes.name}
+                </StripedListCell>
                 <StripedListCell className="grid_list__item center">
-                  <RemoveCircleIcon
-                    className="link_with_icon grey"
-                    // onClick={(e) => {
-                    //   this.deleteObject({
-                    //     // entity_id: this.props.recordId,
-                    //     // event_ids: this.props.businessEventIds,
-                    //     // user_ids: [observer.relationships.user.id],
-                    //   })
-                    // }}
+                  <EditIcon
+                    className="link_with_icon"
+                    onClick={(e) => {
+                      this.props.pushItemToModal(
+                        <AddObject data={object.attributes} getRecord={this.props.getRecord} platformId={this.props.record.id}/>,
+                        "Корректировка данных",
+                      );
+                    }}
                   />
                 </StripedListCell>
               </StripedListRow>

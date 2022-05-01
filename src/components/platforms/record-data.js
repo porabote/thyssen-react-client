@@ -29,37 +29,17 @@ class RecordData extends Component {
         return(
             <StripedList style={{gridTemplateColumns: '150px 1fr'}}>
               <StripedListRow>
-                <StripedListCell>Название</StripedListCell>
+                <StripedListCell>Название на русском</StripedListCell>
                 <StripedListCell>
-                  {data.attributes.name}
+                  {data.attributes.ru_alias}
                 </StripedListCell>
               </StripedListRow>
-                <StripedListRow>
-                    <StripedListCell>Объект</StripedListCell>
-                    <StripedListCell>
-                        {typeof data.relationships.object !== "undefined" &&
-                            data.relationships.object.attributes.name
-                        }</StripedListCell>
-                </StripedListRow>
-                <StripedListRow>
-                    <StripedListCell>Тип отчета</StripedListCell>
-                    <StripedListCell>
-                        {typeof data.relationships.types !== "undefined" &&
-                            data.relationships.types.attributes.name
-                        }</StripedListCell>
-                </StripedListRow>
-                <StripedListRow>
-                    <StripedListCell>На дату</StripedListCell>
-                    <StripedListCell>{moment(data.attributes.date_period).format("DD MMMM YYYY")}</StripedListCell>
-                </StripedListRow>
-                <StripedListRow>
-                    <StripedListCell>Комментарий</StripedListCell>
-                    <StripedListCell>{data.attributes.comment}</StripedListCell>
-                </StripedListRow>
-                <StripedListRow>
-                    <StripedListCell>Дата создания</StripedListCell>
-                    <StripedListCell>{moment(data.attributes.created_at).format("DD MMMM YYYY hh:mm")}</StripedListCell>
-                </StripedListRow>
+              <StripedListRow>
+                <StripedListCell>Название на английском</StripedListCell>
+                <StripedListCell>
+                  {data.attributes.en_alias}
+                </StripedListCell>
+              </StripedListRow>
             </StripedList>
         )
     }

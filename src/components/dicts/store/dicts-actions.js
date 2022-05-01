@@ -2,10 +2,10 @@ import {
   REQUEST_DICTS,
   REQUEST_DICTS_SUCCEEDED,
   REQUEST_DICTS_ERROR
-} from './dicts-types'
+} from './dicts-types';
 
-const requestDicts = (dictsRequired) => {
-  return { type: REQUEST_DICTS, payload: { dictsRequired } }
+const requestDicts = (dictsRequired, componentAlias) => {
+  return { type: REQUEST_DICTS, payload: { dictsRequired, componentAlias } }
 };
 
 const requestDictsSuccess = (data) => {

@@ -7,6 +7,7 @@ import moment from "moment";
 import ChangeStatus from "./change-status";
 import EquipmentsAddForm from "./equipments-add-form";
 import Files from "./files";
+import { Button } from "porabote/form";
 
 class RecordData extends Component {
 
@@ -38,6 +39,7 @@ class RecordData extends Component {
       organizations_own,
       platform,
       object,
+      hole,
       comments,
       files,
       history,
@@ -75,6 +77,12 @@ class RecordData extends Component {
               <StripedListCell>Объект</StripedListCell>
               <StripedListCell>
                 {object && object.attributes.name}
+              </StripedListCell>
+            </StripedListRow>
+            <StripedListRow>
+              <StripedListCell>Скважина</StripedListCell>
+              <StripedListCell>
+                {hole && hole.attributes.name}
               </StripedListCell>
             </StripedListRow>
             <StripedListRow>
@@ -125,13 +133,13 @@ class RecordData extends Component {
             <StripedListRow>
               <StripedListCell>Дата изготовления</StripedListCell>
               <StripedListCell>
-                {attrs.release_date && moment(attrs.release_date).format("MM/YYYY")}
+                {attrs.release_date && moment(attrs.release_date).format("DD-MM-Y")}
               </StripedListCell>
             </StripedListRow>
             <StripedListRow>
               <StripedListCell>Дата ввода в эксплуатацию</StripedListCell>
               <StripedListCell>
-                {attrs.operation_start && moment(attrs.operation_start).format("MM/YYYY")}
+                {attrs.operation_start && moment(attrs.operation_start).format("DD-MM-Y")}
               </StripedListCell>
             </StripedListRow>
             <StripedListRow>
@@ -197,13 +205,24 @@ class RecordData extends Component {
                 return (
                   <StripedListRow key={index}>
                     <StripedListCell>{item.status}</StripedListCell>
-                    <StripedListCell>{item.datetime}</StripedListCell>
+                    <StripedListCell>{moment(item.datetime).format("DD-MM-Y")}</StripedListCell>
                     <StripedListCell>{item.status_reason}</StripedListCell>
                     <StripedListCell>{item.user_name}</StripedListCell>
                   </StripedListRow>
                 );
               })}
             </StripedList>
+          </div>
+
+          <div style={{width: '1000px', margin: '20px auto'}}>
+            <Button
+              className="on-button grey-stroke_x_yellow-fill icon-excel__grey_x_white"
+              type="button"
+              onClick={() => {
+                window.open(`https://api.thyssen24.ru/api/equipments/method/exportToExcel/?id=${attrs.id}`, 'target=_blank')
+              }}
+            >Выгрузка РЭП Excel
+            </Button>
           </div>
 
         </div>

@@ -4,6 +4,10 @@ import SearchIcon from '@material-ui/icons/Search';
 
 class FilterTop extends React.Component {
 
+  getData = (e, params) => {
+
+  }
+
     render() {
 
         return(
@@ -11,13 +15,14 @@ class FilterTop extends React.Component {
                     <SearchIcon style={{color: '#888', fontSize: 22, padding: '4px 8px'}}/>
                     <Field>
                         <InputBare
-                            placeholder="Поиск по номеру счета"
+                            placeholder="Поиск по наименованию или артикулу"
                             type="text"
                             name="seekString"
                             className="fast-find__item__input"
                             onKeyUp={(e, params) => {
                               let value = e.target.value;
-                              params.formContext.setFieldValue('where.id.value', value);
+                              params.formContext.setFieldValue('orWhereGrouped.0.name.value', value);
+                              params.formContext.setFieldValue('orWhereGrouped.0.vendor_code.value', value);
                               params.formContext.submitForm()
                             }}
                         />

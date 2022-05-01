@@ -1,5 +1,5 @@
-import Reports from './reports'
+import ReportsContainer from './reports-container'
 //import reportsReducer from './reports-reducer'
 
-export default Reports
+export default ReportsContainer
 //export { reportsReducer }

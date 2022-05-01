@@ -1,18 +1,26 @@
-import React, { Component } from 'react'
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import Feed from './feed'
 import View from './view'
 
-class Spares extends Component {
+const Spares = (props) => {
 
-    render() {
-        if (this.props.match.params.action === 'view') {
-            return <View/>
-        }
+  const dispatch = useDispatch();
 
-        return(
-            <Feed/>
-        )
-    }
+  const { isDictsLoaded, dicts } = useSelector(state => state.dicts);
+  const { dictsRequired, title, meta, filter } = useSelector(state => state.spares);
+  useEffect(() => {
+    dispatch(requestDicts(dictsRequired));
+  }, []);
+
+  if (props.match.params.action === 'view') {
+    return <View/>
+  }
+
+  return (
+    <Feed isDictsLoaded={isDictsLoaded} />
+  )
+
 }
 
 export default Spares

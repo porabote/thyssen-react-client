@@ -30,7 +30,7 @@ module.exports = webpackEnv => {
       publicPath: (isEnvProduction) ? `/porabote` : '/',
     },
     resolve: {
-      extensions: ['.js', '.jsx', '.json', '.wasm', '.ttf'],
+      extensions: ['.js', '.ts', '.jsx', '.tsx', '.ttf'],
       alias: {
         '@components': path.resolve(__dirname, '../src/components/'),
         '@hocs': path.resolve(__dirname, '../src/hocs/'),
@@ -46,6 +46,11 @@ module.exports = webpackEnv => {
     },
     module: {
       rules: [
+        // {
+        //   test: /\.tsx?$/,
+        //   loader: 'ts-loader',
+        //   exclude: /(node_modules\/[^porabote]|bower_components)/,
+        // },
         {
           test: /\.(js|mjs|jsx|ts|tsx)$/,
           exclude: /(node_modules\/[^porabote]|bower_components)/,
@@ -58,6 +63,7 @@ module.exports = webpackEnv => {
             loader: 'babel-loader',
             options: {
               presets: [
+                ['@babel/preset-typescript'],
                 ['@babel/preset-env',
                   {
                     "targets": {
@@ -89,7 +95,7 @@ module.exports = webpackEnv => {
         },
         {
           test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
-          type: 'asset/resource',
+          loader: 'file-loader',
         },
         {
           test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
@@ -148,7 +154,10 @@ module.exports = webpackEnv => {
       after: function (app, server, compiler) {
         //console.log(app)
         // do fancy stuff
-      }
+      },
+      // proxy: {
+      //   '/userfiles': 'https://thyssen24.ru',
+      // },
     },
   }
 }

@@ -1,7 +1,9 @@
 import Auth from './auth';
-import AuthForm from './auth-form';
+import AuthLogin from './auth-login';
+import AuthLoginContainer from "./auth-login-container.ts";
 
 export {
   Auth,
-  AuthForm,
+  AuthLogin,
+  AuthLoginContainer,
 };

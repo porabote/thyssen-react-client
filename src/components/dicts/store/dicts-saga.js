@@ -12,7 +12,7 @@ function* requestDictsAsync() {
       const store = yield select();
 
       const requiredList = store.dicts.requiredList.filter((dict) => {
-        return typeof store.dicts.data[dict] === "undefined"
+        return typeof store.dicts.dicts[dict] === "undefined"
       });
 
       const data = yield call(() => {

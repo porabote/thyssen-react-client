@@ -8,12 +8,10 @@ import Permissions from "./permissions"
 import moment from "moment";
 import ArrowRightRoundedIcon from "@material-ui/icons/ArrowRightRounded";
 
-class View extends React.Component {
-
-  render() {
+const View = (props) => {
 
     moment.lang("ru");
-    const {data} = this.props
+    const { data } = props;
 
     return (
       <div className="content" style={{padding: "40px"}}>
@@ -23,10 +21,10 @@ class View extends React.Component {
             <ArrowRightRoundedIcon style={{fontSize: "24px", marginRight: "2px", top: "7px", position: "relative"}}/>
             Назад к списку
           </NavLink>
-          {data.attributes.last_name} {data.attributes.name}
+          {data.attributes.post_name} {data.attributes.name}
         </p>
 
-        <Tabs {...this.props}>
+        <Tabs {...props}>
 
           <TabList>
             <Tab>Данные</Tab>
@@ -45,13 +43,8 @@ class View extends React.Component {
 
       </div>
     )
-  }
+
 }
 
-const mapStateToProps = (state) => {
-  return ({
-    ...state.users,
-  })
-}
 
-export default connect(mapStateToProps)(recordWithData(View, {}))
+export default View;

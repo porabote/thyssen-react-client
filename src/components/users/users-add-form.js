@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {connect} from "react-redux";
+import {useSelector} from "react-redux";
 import {
   Form,
   Button,
@@ -12,78 +12,98 @@ import {
   SubmitButton
 } from "porabote/form";
 
-class UsersAddForm extends Component {
+const UsersAddForm = () => {
 
-  render() {
+  const { departments } = useSelector(state => state.dicts.dicts);
 
-    const {departments, report_types} = this.props.dicts;
+  // const values = {
+  //   last_name: null,
+  //   name: null,
+  //   patronymic: null,
+  //   username: null,
+  //   post_name: null,
+  // };
+  const values = {
+    last_name: 'Максимов',
+    name: 'Денис',
+    patronymic: 'Анатольевич',
+    username: 'maksimov_den@mail.ru',
+    post_name: 'Разработчик',
+    department_id: 9
+  };
 
-    return (
-      <div>
+  return (
+    <div>
 
-        <Form
-          values={{
-            id: null,
-            comment: '',
-            date_period: null
-          }}
-          action="/api/users/add/"
-          submitFormAfter={(resp) => {
-            window.location = `/porabote/users/view/${resp.data.id}`
-            //OR
-            //this.props.removeModalItem(this.props.itemkey);
-            //this.props.fetchData();
-          }}
-        >
+      <Form
+        values={values}
+        action="/api/users/method/makeInvite/"
+        submitFormAfter={(resp) => {
+          props.removeModalItem(props.itemkey);
+          props.fetchData();
+        }}
+      >
 
+        <div className="fieldset" style={{gridTemplateColumns: '1fr 1fr 1fr'}}>
           <Field>
-            <InputDate name="date_period" label="На дату"/>
-          </Field>
-
-          <Field>
-            <InputHidden
-              name="id"
+            <Input
+              label="Фамилия"
+              name="last_name"
             />
           </Field>
           <Field>
             <Input
-              label="Название"
+              label="Имя"
               name="name"
             />
           </Field>
           <Field>
-            <Select
-              name="object_id"
-              label="Обьект"
-            >
-              {Object.keys(departments).map((id) => {
-                if (departments[id].custom_type == 5) {
-                  return <Option key={id} value={id}>{departments[id].name}</Option>
-                }
-              })}
-            </Select>
-          </Field>
-
-          <SubmitButton>
-            <Button
-              text="Сохранить"
-              className="on-button grey-stroke_x_yellow-fill icon-login-auth__grey_x_white"
-              type="button"
-              style={{width: '140px', marginTop: '20px'}}
+            <Input
+              label="Отчество"
+              name="patronymic"
             />
-          </SubmitButton>
-        </Form>
-      </div>
+          </Field>
+        </div>
 
-    )
-  }
+        <Field>
+          <Input
+            label="Email"
+            name="username"
+          />
+        </Field>
+
+        <Field>
+          <Input
+            label="Название должности"
+            name="post_name"
+          />
+        </Field>
+
+
+        <Field>
+          <Select
+            name="department_id"
+            label="Департамент"
+          >
+            {Object.keys(departments).map((id) => {
+                return <Option key={id} value={id}>{departments[id].name}</Option>
+            })}
+          </Select>
+        </Field>
+
+        <SubmitButton>
+          <Button
+            text="Сохранить"
+            className="on-button grey-stroke_x_yellow-fill icon-login-auth__grey_x_white"
+            type="button"
+            style={{width: '140px', marginTop: '20px'}}
+          />
+        </SubmitButton>
+      </Form>
+    </div>
+
+  );
 
 }
 
-const mapStateToProps = (state) => {
-  return ({
-    dicts: state.dicts.data
-  })
-}
-
-export default connect(mapStateToProps)(UsersAddForm)
+export default UsersAddForm;

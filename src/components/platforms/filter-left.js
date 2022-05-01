@@ -20,4 +20,4 @@ class FilterLeft extends Component {
 
 }
 
-export default withDictsData(FilterLeft, { storeAlias: "platforms" });
+export default FilterLeft;

@@ -1,5 +1,3 @@
-import PaymentsSets from './payments-sets'
-//import payments-setsReducer from './payments-sets-reducer'
+import PaymentsSetsContainer from './payments-sets-container';
 
-export default PaymentsSets
-//export { payments-setsReducer }
+export default PaymentsSetsContainer;

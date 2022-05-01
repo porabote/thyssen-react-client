@@ -15,7 +15,7 @@ import {
 class PlatformsAddForm extends Component {
 
   render() {
-
+console.log(this.props.dicts);
     const {departments, report_types} = this.props.dicts;
 
     return (
@@ -36,33 +36,33 @@ class PlatformsAddForm extends Component {
           }}
         >
 
-          <Field>
-            <InputDate name="date_period" label="На дату"/>
-          </Field>
+          {/*<Field>*/}
+          {/*  <InputDate name="date_period" label="На дату"/>*/}
+          {/*</Field>*/}
 
-          <Field>
-            <InputHidden
-              name="id"
-            />
-          </Field>
+          {/*<Field>*/}
+          {/*  <InputHidden*/}
+          {/*    name="id"*/}
+          {/*  />*/}
+          {/*</Field>*/}
           <Field>
             <Input
               label="Название"
               name="name"
             />
           </Field>
-          <Field>
-            <Select
-              name="object_id"
-              label="Обьект"
-            >
-              {Object.keys(departments).map((id) => {
-                if (departments[id].custom_type == 5) {
-                  return <Option key={id} value={id}>{departments[id].name}</Option>
-                }
-              })}
-            </Select>
-          </Field>
+          {/*<Field>*/}
+          {/*  <Select*/}
+          {/*    name="object_id"*/}
+          {/*    label="Обьект"*/}
+          {/*  >*/}
+          {/*    {Object.keys(departments).map((id) => {*/}
+          {/*      if (departments[id].custom_type == 5) {*/}
+          {/*        return <Option key={id} value={id}>{departments[id].name}</Option>*/}
+          {/*      }*/}
+          {/*    })}*/}
+          {/*  </Select>*/}
+          {/*</Field>*/}
 
           <SubmitButton>
             <Button
@@ -82,7 +82,7 @@ class PlatformsAddForm extends Component {
 
 const mapStateToProps = (state) => {
   return ({
-    dicts: state.dicts.data
+    dicts: state.dicts.dicts
   })
 }
 

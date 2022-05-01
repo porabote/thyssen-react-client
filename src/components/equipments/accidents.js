@@ -28,7 +28,7 @@ class Accidents extends React.Component {
     render() {
 
         let years = {};
-        const { equipment_accidents } = this.props.record.relationships;
+        const equipment_accidents  = this.props.record.relationships.equipment_accidents || [];
         return(
             <div style={{display: 'grid', gridTemplateColumns: '200px 40px 1fr'}}>
 
@@ -81,7 +81,7 @@ class Accidents extends React.Component {
 
                 <div>
                     <h3 style={{padding: '20px 0 10px 0'}}>Запись аварий</h3>
-                    <StripedList key={1} style={{gridTemplateColumns: '40px 90px 90px 1fr 80px 1fr 1fr 40px'}}>
+                    <StripedList key={1} style={{gridTemplateColumns: '40px 90px 90px 1fr 80px 1fr 40px'}}>
                         <StripedListRow key={99}>
                             <StripedListCell><b>ID</b></StripedListCell>
                             <StripedListCell><b>Дата</b></StripedListCell>
@@ -89,7 +89,6 @@ class Accidents extends React.Component {
                             <StripedListCell><b>Сущность аварии</b></StripedListCell>
                             <StripedListCell><b>Время простоя (ч)</b></StripedListCell>
                             <StripedListCell><b>Причины</b></StripedListCell>
-                            <StripedListCell><b>Меры</b></StripedListCell>
                             <StripedListCell>
 
                                 <div
@@ -116,12 +115,11 @@ class Accidents extends React.Component {
                             return (
                                 <StripedListRow key={index}>
                                     <StripedListCell>{item.id}</StripedListCell>
-                                    <StripedListCell>{moment(attrs.date).format("DD MMM YYYY")}</StripedListCell>
+                                    <StripedListCell>{moment(attrs.date).format("DD-MM-Y")}</StripedListCell>
                                     <StripedListCell>{attrs.act_number}</StripedListCell>
                                     <StripedListCell>{attrs.details}</StripedListCell>
                                     <StripedListCell>{attrs.downtime}</StripedListCell>
                                     <StripedListCell>{attrs.reasons}</StripedListCell>
-                                    <StripedListCell>{attrs.measures}</StripedListCell>
                                     <StripedListCell>
                                         <div
                                           className="link_with_icon"

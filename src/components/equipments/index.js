@@ -1,3 +1,3 @@
-import Equipments from "./equipments";
+import EquipmentsContainer from "./equipments-container.ts";
 
-export default Equipments;
+export default EquipmentsContainer;

@@ -1,4 +1,6 @@
-import React from 'react'
+import React from "react";
+import {useSelector} from "react-redux";
+import {fetchData} from "./store/reports-actions";
 import Grid from 'porabote/grid'
 import { Form, ButtonLazyLoad } from 'porabote/form'
 import FilterLeft from './filter-left'
@@ -8,86 +10,27 @@ import MenuIcon from '@material-ui/icons/Menu'
 import Stringer from 'porabote/stringer'
 import Api from '@services/api-service'
 import moment from 'moment'
+import FeedPreloader from "../feed/feed-preloader";
 
-class Feed extends React.Component {
+const Feed = (props) => {
 
-    state = {
-        page: 1,
-        data: [],
-        meta: [],
-        dicts: [],
-        filter: {
-            where: {
-                object_id: '',
-                type_id: ''
-            },
-            seekString: ''
-        }
+
+    const {title, filter, data, meta} = useSelector(state => state.reports);
+
+    const submitForm = (values) => {
+        props.updateFilters(values);
+        props.fetchData();
     }
 
-    componentDidMount() {
-
-        Api.get(`/api/dicts/get/`, {
-            query: {
-                whereIn: {
-                    id: [1, 2, 3]
-                }
-            }
-        }).then((data) => {
-
-            const dicts = {};
-            data.data.map((dict, index) => {
-                dicts[dict['type']] = dict['data'];
-            })
-
-            this.setState({
-                dicts: dicts
-            })
-        })
-
-        this.fetchData()
+    if (!props.isDictsLoaded) {
+        return <FeedPreloader title="Отчёты"/>;
     }
-
-    fetchData = () => {
-
-        Api.get(`/api/reports/get/`, {
-            query: {
-                where: this.state.filter.where,
-                include: [
-                    'user', 'object', 'types'
-                ],
-                page: this.state.page
-            }
-        }).then((response) => {
-            this.setState({
-                data: [...this.state.data, ...response.data],
-                meta: response.meta,
-                page: ++this.state.page
-            })
-        })
-    }
-
-
-    submitForm = (values) => {
-        this.setState({
-            data: [],
-            page: 1
-        }, () => {
-            this.fetchData()
-        })
-
-    }
-
-    render() {
-
-        const { data, dicts } = this.state
-        if (dicts.length == 0) return <p>Данные загружаются</p>
 
         return(
 
             <Form
-                values={this.state.filter}
-                submitForm={this.submitForm}
+                values={filter}
+                submitForm={submitForm}
             >
                 <div className="content feed">
 
@@ -101,11 +44,11 @@ class Feed extends React.Component {
                     </div>
 
                     <div className="content__filter__left">
-                        <FilterLeft dicts={dicts} />
+                        <FilterLeft/>
                     </div>
 
                     <div className="content__tools_panel">
-                        <ContentPanel fetchData={this.fetchData} dicts={dicts} />
+                        <ContentPanel fetchData={fetchData}/>
                     </div>
 
                     <div className="content__body">
@@ -143,7 +86,7 @@ class Feed extends React.Component {
                             }
                         </Grid>
 
-                        <ButtonLazyLoad meta={this.state.meta} fetch={this.fetchData} page={this.state.page}/>
+                        <ButtonLazyLoad fetchData={props.fetchData} {...meta}/>
 
                     </div>
                 </div>
@@ -151,7 +94,7 @@ class Feed extends React.Component {
 
 
         )
-    }
+
 }
 
 export default Feed

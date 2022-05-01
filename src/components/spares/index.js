@@ -1,3 +1,3 @@
-import Spares from "./spares";
+import SparesContainer from "./spares-container";
 
-export default Spares;
+export default SparesContainer;

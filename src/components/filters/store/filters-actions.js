@@ -1,4 +1,4 @@
-export const updateFilters = (data, storeAlias) => {
+export const updateFeedFilters = (data, storeAlias) => {
   return {
     type: "UPDATE_FILTERS",
     payload: {

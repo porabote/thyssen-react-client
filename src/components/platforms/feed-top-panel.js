@@ -15,7 +15,7 @@ class FeedTopPanel extends React.Component {
                             this.props.pushModalItem(
                               this.props.dicts,
                               this.props.fetchData,
-                              `Добавить оборудование ${this.props.title}`,
+                              `Добавить площадку`,
                             );
                         }}
                         className="button-drop"

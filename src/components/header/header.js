@@ -1,10 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Profile from './profile';
-import Navbar from 'porabote/navbar';
+import Navbar from '../navbar';
 import {Tree} from 'porabote/datas';
 import Api from '@services/api-service';
-import PRBLogo from 'porabote/layout/svg/prb_logo.svg';
+import PRBLogo from '../layout/svg/prb_logo.svg';
 
 class Header extends React.Component {
 

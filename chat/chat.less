@@ -1,0 +1,198 @@
+@top-menu-height: 85px;
+
+.chat {
+  width: 100%;
+  font-family: "Roboto Light", sans-serif;
+  font-size: 14px;
+  display: grid;
+  align-items: flex-start;
+  padding: 0;
+  grid-template-columns: 300px 1fr;
+  max-height: calc(100vh - @top-menu-height);
+  grid-template-areas:
+        "dialogs chat-room";
+}
+
+.dialogs {
+  grid-area: dialogs;
+  border-right: 1px solid #E6E5E6;
+  padding: 0 10px;
+  background: #fff;
+  height: calc(100vh - @top-menu-height);
+  overflow: auto;
+}
+
+.dialogs-title {
+  font-weight: 600;
+  padding: 10px;
+}
+
+.dialogs-user-search-wrap {
+  position: relative;
+  margin-top: 10px;
+  background: #f0f2f3;
+  border-radius: 5px;
+  border: 0;
+  width: 90%;
+}
+.dialogs-user-search-input {
+  border: 0;
+  background: #f0f2f3;
+  width: 100%;
+  padding: 10px 14px;
+}
+.dialogs-user-search-input::placeholder {
+  color: #73777a;
+  font-size: 14px;
+  font-family: "Roboto Regular";
+  letter-spacing: 0.2px;
+}
+
+.dialogs-item {
+  font-family: 'Roboto Regular';
+  padding: 10px;
+  border-bottom: 1px solid #ececec;
+  cursor: pointer;
+  color: #444;
+  font-size: 15px;
+}
+.dialogs-item:hover, .dialogs-item.active {
+  color: #000;
+}
+
+.chat-room {
+  grid-area: chat-room;
+  display: grid;
+  grid-template-rows: 1fr 70px;
+  height: calc(100vh - @top-menu-height);
+  overflow: auto;
+  background: #FAFAFA;
+}
+
+.chat-window-msgs-list {
+  background: #FAFAFA;
+}
+
+.chat-room-msgs-list {
+  height: calc(100vh - 120px);
+  max-height: calc(100vh - 120px);
+  overflow: scroll;
+  padding: 10px;
+  border: 1px solid red;
+}
+
+
+
+.chat-panel {
+  display: grid;
+  grid-template-columns: 1fr 50px;
+  align-items: center;
+  padding: 10px;
+  background: #fafafa;
+  height: 50px;
+}
+
+.chat-panel-textarea {
+  font-family: "Helvetica Neue", sans-serif;
+  font-size: 14px;
+  width: 97%;
+  border: 1px solid #eaeaea;
+  height: 30px;
+  border-radius: 4px;
+  padding: 10px;
+}
+.chat-panel-button {
+  font-size: 20px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.no-records {
+  padding: 20px;
+  color: #888;
+}
+
+.chat-room-msgs-list__msg {
+  border-bottom: 1px solid #fafafa;
+  padding: 12px 10px;
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  grid-template-areas:
+        "msgs-list__msg__avatar msgs-list__msg__name"
+        "msgs-list__msg__avatar msgs-list__msg__text";
+  background: #fff;
+  border-radius: 8px;
+  width: 50%;
+  margin: 10px;
+}
+
+.msgs-list__msg__avatar {
+  grid-area: msgs-list__msg__avatar;
+  padding-top: 4px;
+}
+
+.msgs-list__msg__avatar__img {
+  width: 35px;
+  height: 35px;
+  background-size: cover;
+  border-radius: 50%;
+  background-color: #efefef;
+}
+
+.msgs-list__msg__name {
+  font-family: "Roboto Bold";
+  grid-area: msgs-list__msg__name;
+  font-size: 13px;
+  padding-bottom: 2px;
+  font-weight: 600;
+  color: #282828;
+  letter-spacing: 0.5px;
+}
+
+.msgs-list__msg__text {
+  font-family: "Roboto Regular";
+  padding-top: 2px;
+  font-size: 14px;
+  color: #111;
+}
+
+.dialogs-user-search__drop-panel {
+  position: absolute;
+  left: 0px;
+  top: 100%;
+  width: 100%;
+  box-shadow: 0px 6px 8px 0px rgba(201,201,201,0.2);
+  padding: 0;
+  max-height: 80vh;
+  overflow: auto;
+  background: #fff;
+  z-index: 9999;
+}
+
+.dialogs-user-search__drop-panel__item {
+  font-family: "Roboto Bold";
+  padding: 6px 10px 6px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #191919;
+  text-decoration: none;
+  align-content: flex-end;
+  align-items: flex-end;
+  font-family: Helvetica, Sans-Serif;
+  line-height: 18px;
+}
+.dialogs-user-search__drop-panel__item__sub {
+  font-family: "Roboto Light";
+  color: #999;
+  font-size: 14px;
+}
+.dialogs-user-search__drop-panel__item:first-child {
+  padding-top: 15px;
+}
+.dialogs-user-search__drop-panel__item:last-child {
+  padding-bottom: 15px;
+}
+.dialogs-user-search__drop-panel__item:hover {
+  cursor: pointer;
+  background: #fefde1;
+}

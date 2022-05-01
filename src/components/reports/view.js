@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {  } from 'react'
+import { useSelector } from "react-redux";
 import { NavLink } from 'react-router-dom'
 import { Tab, Tabs, TabList, TabPanel } from 'porabote/tabs'
 import Api from '@services/api-service'
@@ -30,7 +31,7 @@ class ReportsView extends React.Component {
 
     Api.get(`/api/reports/get/${id}/`, {
       query: {
-        include: [ 'files', 'departments', 'types', 'history', 'user', 'object' ]
+        include: this.props.relationships,
       }
     }).then((data) => {
       this.setState({
@@ -88,6 +89,7 @@ class ReportsView extends React.Component {
                     msg={item.attributes.msg}
                     user={item.attributes.user_name}
                     datetime={moment(item.attributes.created_at).format("DD MMM YYYY HH:mm")}
+                    diff={item.attributes.diff}
                   />
                 )
               })}
@@ -116,4 +118,13 @@ class ReportsView extends React.Component {
   }
 }
 
-export default ReportsView
+const ReportViewContainer = () => {
+  const { relationships } = useSelector(state => state.reports);
+
+  return(
+    <ReportsView
+      relationships={relationships}
+    />
+  );
+}
+export default ReportViewContainer;

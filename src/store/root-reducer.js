@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import { modalReducer } from "porabote/modal";
 import { confirmReducer } from "porabote/confirm";
+import reportsReducer from "@components/reports/store/reports-reducer";
 import authReducer from "@components/auth/store/auth-reducer";
 import dictsReducer from "@components/dicts/store/dicts-reducer";
 import filtersReducer from "@components/filters/store/filters-reducer";
@@ -9,14 +10,17 @@ import sampleComponentReducer from "@components/sample-component/store/sample-co
 import equipmentsReducer from "@components/equipments/store/equipments-reducer";
 import platformsReducer from "@components/platforms/store/platforms-reducer";
 import usersReducer from "@components/users/store/users-reducer";
-import { chatReducer } from "@components/chat";
+import paymentsSetsReduser from "@components/payments-sets/store/reducer.js"
+//import { chatReducer } from "@components/chat";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   modal: modalReducer,
   dicts: dictsReducer,
   filters: filtersReducer,
-  chat: chatReducer,
+  //chat: chatReducer,
+  paymentsSets: paymentsSetsReduser,
+  reports: reportsReducer,
   spares: sparesReducer,
   sampleComponent: sampleComponentReducer,
   equipments: equipmentsReducer,
