@@ -1,38 +1,43 @@
 import React from 'react';
-import { connect, useSelector } from 'react-redux';
-import {Redirect, Route} from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Redirect, Route } from 'react-router-dom';
+import {LOGIN_ACTION} from "@components/auth/constants"
 
-export const ProtectedRoute = ({component: Component, ...rest}) => {
+const ProtectedRoute = ({component: Component, authAllow: authAllow, ...rest}) => {
 
-  const auth = useSelector(state => state.auth);
+  const {isAuth} = useSelector(state => state.auth);
 
   return (
     <Route
       {...rest}
       render={props => {
-        if (auth.isAuth) {
+        //console.log(isAuth)
+        authAllow = authAllow || [];
+        var isMethodAllowed = false;
+        for (var i = 0; i < authAllow.length; i++) {
+          if (authAllow[i] == props.match.params.action) {
+            isMethodAllowed = true;
+            break;
+          }
+        }
+//console.log(isAuth)
+        if (isAuth || isMethodAllowed) {
           return <Component {...props} />;
         } else {
           return <Redirect to={
             {
-              pathname: "/auth/login",
+              pathname: LOGIN_ACTION,
               state: {
-                from: props.location
+                reference: props.location
               }
             }
-          }/>
-        }
-
+              }
+            />
+          }
       }
       }/>
   );
 
 };
-
-const mapStateToProps = (state) => {
-  return ({
-    auth: state.auth,
-  })
-}
 
 export default ProtectedRoute;

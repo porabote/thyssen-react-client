@@ -7,7 +7,9 @@ import Api from "@services/api-client";
 import { requestDicts } from "../dicts/store/dicts-actions";
 import { fetchFeedData, updateFeedFilters } from "@components/users/store/users-actions";
 import ViewContainer from "./view-container";
+import ConfirmInvitation from "./confirm-invitation";
 import Feed from "./feed";
+import Contacts from "./contacts.js"
 
 interface IChildComponentProps extends React.Props<any> {
   // fetchFeedData: Function,
@@ -15,7 +17,7 @@ interface IChildComponentProps extends React.Props<any> {
 }
 
 const UsersContainer = (props: IChildComponentProps) => {
-
+ 
   const dispatch = useDispatch();
 
   const { dictsRequired, title, meta, filter } = useSelector(state => state.users);
@@ -36,16 +38,27 @@ const UsersContainer = (props: IChildComponentProps) => {
     dispatch(updateFeedFilters(values));
   }
 
-  if (props.match.params.action === "view") {
+  if (props.match.params.action === "contacts") {
+    return React.createElement(Contacts, {
+      id: props.match.params.id
+    });
+  } else if (props.match.params.action === "view") {
     return React.createElement(ViewContainer, {
       id: props.match.params.id
+    });
+  } else if (props.match.params.action === "confirmInvitation") {
+    let uri = window.location.search;
+    var searchParams = new URLSearchParams(uri);
+    return React.createElement(ConfirmInvitation, {
+      token: searchParams.get('token'),
+      requestId: searchParams.get('requestId')
     });
   }
 
   return React.createElement(Feed, {
     isDictsLoaded,
     fetchData,
-    updateFilters
+    updateFilters,
   });
 
 }

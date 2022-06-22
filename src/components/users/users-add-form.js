@@ -1,5 +1,6 @@
 import React, {Component} from "react";
-import {useSelector} from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { openConfirm } from "porabote/confirm/store/confirm-actions";
 import {
   Form,
   Button,
@@ -12,24 +13,19 @@ import {
   SubmitButton
 } from "porabote/form";
 
-const UsersAddForm = () => {
+const UsersAddForm = (props) => {
 
-  const { departments } = useSelector(state => state.dicts.dicts);
+  const dispatch = useDispatch();
 
-  // const values = {
-  //   last_name: null,
-  //   name: null,
-  //   patronymic: null,
-  //   username: null,
-  //   post_name: null,
-  // };
+  const { departments, accounts } = useSelector(state => state.dicts.dicts);
+
   const values = {
-    last_name: 'Максимов',
-    name: 'Денис',
-    patronymic: 'Анатольевич',
-    username: 'maksimov_den@mail.ru',
-    post_name: 'Разработчик',
-    department_id: 9
+    last_name: '',
+    name: '',
+    patronymic: '',
+    email: '',
+    post_name: '',
+    department_id: ''
   };
 
   return (
@@ -37,8 +33,11 @@ const UsersAddForm = () => {
 
       <Form
         values={values}
-        action="/api/users/method/makeInvite/"
+        action="/api/users/method/create/"
         submitFormAfter={(resp) => {
+          if( typeof resp.error != "undefined") {
+            return dispatch(openConfirm(resp.error));
+          }
           props.removeModalItem(props.itemkey);
           props.fetchData();
         }}
@@ -68,7 +67,7 @@ const UsersAddForm = () => {
         <Field>
           <Input
             label="Email"
-            name="username"
+            name="email"
           />
         </Field>
 
@@ -86,7 +85,9 @@ const UsersAddForm = () => {
             label="Департамент"
           >
             {Object.keys(departments).map((id) => {
-                return <Option key={id} value={id}>{departments[id].name}</Option>
+              let account = accounts[departments[id].account_id]
+                if (departments[id].label != 'platform' && departments[id].label != 'object')
+                return <Option key={id} value={id}>{`${departments[id].name} - (${account.ru_name})`}</Option>
             })}
           </Select>
         </Field>

@@ -55,19 +55,24 @@ const Feed = (props) => {
         </div>
 
         <div className="content__tools_panel">
-          <FeedTopPanel fetchData={props.fetchData}/>
+          <FeedTopPanel
+            fetchData={props.fetchData}
+          />
         </div>
 
         <div className="content__body">
 
-          <Grid grid-template-columns="60px 290px 180px 100px 1fr">
+          <Grid grid-template-columns="60px 250px 180px 180px 100px 200px 100px 100px">
 
             <div className="head">
               <div></div>
               <div>Лицо</div>
+              <div>Телефон</div>
               <div>Департамент</div>
               <div>Статус</div>
-              <div>Добавлен</div>
+              <div>Email</div>
+              <div>Площадка</div>
+              <div>Вахта</div>
             </div>
 
             {
@@ -76,7 +81,7 @@ const Feed = (props) => {
                 const attrs = record.attributes
                 const rels = record.relationships
 
-                const { avatar, department } = record.relationships;
+                const { avatar, department, shift } = record.relationships;
 
                 let avatarUri = (avatar) ? avatar.attributes.uri : '';
                 const departmentName = (department) ? department.attributes.name : '';
@@ -87,13 +92,19 @@ const Feed = (props) => {
                 >
                 </div>
 
+                let shiftTitle = shift ? shift.attributes.title : '5/2';
+
                 return (
                   <div linkTo={`/users/view/${attrs.id}`} key={attrs.id}>
                     <div>{Avatar}</div>
                     <div><b>{attrs.name}</b><br/>{attrs.post_name}</div>
+                    <div><b>{attrs.phone}</b></div>
                     <div>{departmentName}</div>
                     <div>{statuses[attrs.status]}</div>
-                    <div>{moment(attrs.created_at).format("DD/MM/YYYY")}</div>
+                    <div><b>{attrs.email}</b></div>
+                    {/*<div>{moment(attrs.created_at).format("DD/MM/YYYY")}</div>*/}
+                    <div>{department && department.attributes.account.ru_name}</div>
+                    <div>{shiftTitle}</div>
                   </div>
                 )
               })

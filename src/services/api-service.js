@@ -1,10 +1,6 @@
 import { API_URL, API_VERSION } from "./constants";
 
 class Api {
-  getToken = () => {
-    const accessToken = localStorage.getItem("access_token");
-    return accessToken;
-  }
 
   post = async (uri, params) => {
     const url = (typeof params.url !== "undefined") ? params.url : API_URL;
@@ -108,6 +104,15 @@ class Api {
 
     return uriObj;
   }
+
+  getToken = () => {
+    let accessToken = localStorage.getItem("access_token");
+    if (typeof accessToken === "object") {
+      accessToken = "";
+    }
+    return accessToken;
+  }
+  
 }
 
 export default new Api();

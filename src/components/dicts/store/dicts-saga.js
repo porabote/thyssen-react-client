@@ -6,7 +6,8 @@ function* dictsWatcher() {
   yield takeEvery("REQUEST_DICTS", requestDictsAsync);
 }
 
-function* requestDictsAsync() {
+function* requestDictsAsync(action) {
+
     try {
 
       const store = yield select();
@@ -31,9 +32,10 @@ function* requestDictsAsync() {
         dicts[dict["type"]] = dict["data"];
       })
 
-      yield put(requestDictsSuccess(dicts));
+      yield put(requestDictsSuccess(dicts, action.payload.componentAlias));
 
-    } catch (error) {console.log(error)
+    } catch (error) {
+      console.log(error);
       yield put(requestDictsError(error));
     }
 }

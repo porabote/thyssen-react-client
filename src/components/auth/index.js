@@ -1,9 +1,3 @@
-import Auth from './auth';
-import AuthLogin from './auth-login';
-import AuthLoginContainer from "./auth-login-container.ts";
+import AuthContainer from "./auth-container.ts";
 
-export {
-  Auth,
-  AuthLogin,
-  AuthLoginContainer,
-};
+export default AuthContainer;

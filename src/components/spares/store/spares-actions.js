@@ -18,7 +18,7 @@ const fetchFeedDataError = (error) => {
 
 const updateFeedFilters = (data) => {
   return {
-    type: "UPDATE_FILTERS_EQUIPMENTS",
+    type: "UPDATE_FILTERS_SPARES",
     payload: data
   }
 }

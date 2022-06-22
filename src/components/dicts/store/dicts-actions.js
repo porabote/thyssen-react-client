@@ -8,8 +8,8 @@ const requestDicts = (dictsRequired, componentAlias) => {
   return { type: REQUEST_DICTS, payload: { dictsRequired, componentAlias } }
 };
 
-const requestDictsSuccess = (data) => {
-  return { type: REQUEST_DICTS_SUCCEEDED, payload: data }
+const requestDictsSuccess = (data, componentAlias) => {
+  return { type: REQUEST_DICTS_SUCCEEDED, payload: { data, componentAlias} }
 };
 
 const requestDictsError = (error) => {

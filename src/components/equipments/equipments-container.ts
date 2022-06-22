@@ -44,7 +44,7 @@ const EquipmentsContainer = (props: IChildComponentProps) => {
 
     var mapForm = document.createElement("form");
     mapForm.target = "Map";
-    mapForm.method = "POST"; // or "post" if appropriate
+    mapForm.method = "POST";
     mapForm.action = `${API_URL}/api/equipments/method/exportFeedToExcel/`;
 
     var mapInput = document.createElement("input");

@@ -1,19 +1,16 @@
 import React, {Component} from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
-import {Auth} from '../auth';
 import store from '../../store';
-import Layout from '../layout';
+import AuthContainer from '@components/auth';
 
 const App = () => {
 
   return (
     <Provider store={store}>
-      <Auth>
-        <BrowserRouter basename="/porabote" history={history}>
-          <Layout/>
-        </BrowserRouter>
-      </Auth>
+      <BrowserRouter basename="/porabote" history={history}>
+        <AuthContainer/>
+      </BrowserRouter>
     </Provider>
   );
 }

@@ -13,6 +13,9 @@ class Header extends React.Component {
   }
 
   componentDidMount() {
+
+    if (!this.props.auth.isAuth) return;
+
     Api.get(`/api/menus/method/getByAcl`, {}).then((data) => {
       this.setState({
         menuTree: Tree.buildNestedList(data.data)

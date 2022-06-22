@@ -1,4 +1,6 @@
 import {
+  AUTH_CHECK,
+  AUTH_CHECK_SUCCESS,
   LOGIN,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
@@ -8,6 +10,7 @@ import {
 
 const initialState = {
   isAuth: false,
+  access_token: null,
   user: {
     account_alias: "",
     api_id: null,
@@ -27,10 +30,22 @@ const initialState = {
 
 const authReducer = (store = initialState, action) => {
   switch (action.type) {
-    case LOGIN:
-      return {...store, isAuth: true, user: {...store.user, ...action.payload}}
+    case AUTH_CHECK_SUCCESS:
+        return {
+          ...store,
+          isAuth: true,
+          access_token: action.payload.access_token,
+          user: JSON.parse(localStorage.getItem('porabote_user')),
+        }
+    case LOGIN_REQUEST:
+      return {...store}
     case LOGIN_SUCCESS:
-      return {...store, isAuth: true, user: {...action.payload}}
+      return {
+        ...store,
+        isAuth: true,
+        user: {...action.payload.user},
+        access_token: action.payload.access_token,
+      }
     case LOGIN_FAILURE:
       return {...store, isAuth: false, authError: action.payload}
     case LOGOUT:

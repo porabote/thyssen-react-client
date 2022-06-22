@@ -43,11 +43,15 @@ const initialState = {
   },
   dictsRequired: [
     "departments",
+    "accounts",
+    "shifts",
   ],
   relationships: [
     "avatar",
-    "department",
-    "department.account"
+    "department.account",
+    "users_requests.sender",
+    "shift.head_user",
+    "shift.platform",
   ],
 };
 

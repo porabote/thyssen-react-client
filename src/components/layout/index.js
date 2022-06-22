@@ -1,3 +1,5 @@
-import Layout from './default'
+import LayoutContainer from "./layout-container";
+import LoginLayout from "./login-layout";
 
-export default Layout
+export { LoginLayout };
+export default LayoutContainer;
