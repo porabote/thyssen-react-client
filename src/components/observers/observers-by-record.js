@@ -62,7 +62,7 @@ class ObserversByRecord extends React.Component {
       `/api/observers/method/subscribe/`,
       {
         query: {
-          user_ids: [this.props.auth.user.api_id],
+          user_ids: [this.props.auth.user.id],
           event_ids: this.props.businessEventIds,
           entity_id: this.props.recordId,
         },

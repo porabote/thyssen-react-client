@@ -168,11 +168,11 @@ const EquipmentsAddForm = (props) => {
         </Field>
 
         <Field>
-          <Input name="name" label="Наименование оборудования"/>
+          <Input name="name" label="Наименование оборудования (тип/марка)"/>
         </Field>
-        <Field>
-          <Input name="brand_name" label="Обозначение (тип, марка)"/>
-        </Field>
+        {/*<Field>*/}
+        {/*  <Input name="brand_name" label="Обозначение (тип, марка)"/>*/}
+        {/*</Field>*/}
         <Field>
           <Input name="factory_name" label="Завод-изготовитель"/>
         </Field>

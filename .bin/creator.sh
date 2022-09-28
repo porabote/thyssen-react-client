@@ -77,7 +77,8 @@ function create {
 
     #set global variables
     export APP_ROOT="$( cd "$(dirname "../${BASH_SOURCE[0]}")" ; pwd -P )";
-    export sourceName="SampleComponent";
+
+    export sourceName="MailsPatterns";
     sourceNameLowerCase=$(echo ${sourceName} | sed -r 's/([a-z0-9])([A-Z])/\1-\L\2/g')
     export sourceNameLowerCase=${sourceNameLowerCase,,};
 
@@ -92,7 +93,7 @@ function create {
     cp -r $sourceFolder $targetFolder
 
     renameDirs $targetFolder
-    renameFiles $targetFolder
+   # renameFiles $targetFolder
 }
 
 "$@"

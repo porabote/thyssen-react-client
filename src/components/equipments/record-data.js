@@ -8,6 +8,8 @@ import ChangeStatus from "./change-status";
 import EquipmentsAddForm from "./equipments-add-form";
 import Files from "./files";
 import { Button } from "porabote/form";
+import Upload, {FileInput, InputFileCustom} from "porabote/upload";
+import {API_URL} from "@configs";
 
 class RecordData extends Component {
 
@@ -15,13 +17,15 @@ class RecordData extends Component {
     super(props);
 
     this.state = {
-      data: null
+      data: null,
     }
   }
 
   render() {
 
-    const {data, dicts} = this.props
+    const {data, dicts, relationships} = this.props;
+
+    const cover = data.relationships.cover || null;
 
     if (data === null) {
       return (
@@ -234,6 +238,27 @@ class RecordData extends Component {
             files={data.relationships.files}
             data={data}
           />
+        </div>
+
+
+        <div>
+          <h3 style={{padding: '20px 0 10px 0'}}>Изображение</h3>
+          <div className="user-profile">
+            <Upload
+              preview={false}
+              uploadCallback={() => this.props.getRecord()}
+              data={{
+              record_id: attrs.id,
+              model_alias: "Equipments",
+              label: "cover",
+            }}>
+              <FileInput name="files[]">
+                <div className="user-profile-avatar"  style={{cursor: 'pointer'}}>
+                  <div className="user-profile-avatar-img" style={{backgroundImage: `url('${API_URL}/files${cover && cover.attributes.uri}')`}}></div>
+                </div>
+              </FileInput>
+            </Upload>
+          </div>
         </div>
 
       </div>

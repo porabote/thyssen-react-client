@@ -94,12 +94,14 @@ const ConfirmInvitation = (props) => {
       >
         <Field>
           <Input
+            type="password"
             label="Пароль"
             name="password"
           />
         </Field>
         <Field>
           <Input
+            type="password"
             label="Пароль повторно"
             name="password_confirm"
           />

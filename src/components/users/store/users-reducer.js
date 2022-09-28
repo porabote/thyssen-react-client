@@ -22,6 +22,7 @@ const initialState = {
     where: {
       department_id: '',
       status: '',
+      account_id: '',
     },
     orWhereGrouped: [
       {
@@ -38,13 +39,16 @@ const initialState = {
       }
     ],
     whereIn: {
+      department_id: [],
     },
     seekString: "",
   },
   dictsRequired: [
+    "api_users",
     "departments",
     "accounts",
     "shifts",
+    "cities",
   ],
   relationships: [
     "avatar",
@@ -52,6 +56,7 @@ const initialState = {
     "users_requests.sender",
     "shift.head_user",
     "shift.platform",
+    "shiftworkers.user",
   ],
 };
 

@@ -21,6 +21,7 @@ class View extends React.Component {
     const {data} = this.props
 
     const dicts = this.props.dicts
+   
     const history = data.relationships.history || [];
     const user = data.relationships.user.attributes;
 
@@ -41,7 +42,7 @@ class View extends React.Component {
             <Tab>Краткая информация</Tab>
             <Tab>Наработка</Tab>
             <Tab>ТО/Ремонт</Tab>
-            <Tab>Авария</Tab>
+            <Tab>Запись аварий</Tab>
             {/*<Tab>Запчасти</Tab>*/}
             <Tab>История</Tab>
             <Tab>Комментарии</Tab>

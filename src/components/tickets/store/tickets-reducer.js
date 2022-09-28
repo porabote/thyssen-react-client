@@ -1,7 +1,7 @@
 import { FETCH_DATA, FETCH_DICTS, UPDATE_FILTERS_TICKETS } from "./tickets-types";
 
 const initialState = {
-  title: "Билеты",
+  title: "Закупка билетов",
   alias: "tickets",
   data: [],
   meta: {
@@ -15,7 +15,7 @@ const initialState = {
   loading: true,
   filter: {
     where: {
-      store_id: "",
+      status_id: "",
     },
     orWhereGrouped: [
       {
@@ -37,17 +37,20 @@ const initialState = {
     seekString: ""
   },
   dictsRequired: [
-   // "objects",
     "users",
-  //  "tickets_types",
     "statuses",
+    "cities",
+    "shifts",
   ],
   relationships: [
+    "city_from",
+    "city_to",
     "comments",
     "files",
     "history",
-    "user",
-    "type",
+    "user.passport",
+    "user.passport_foreign",
+    "tickets",
     "status",
     "steps",
   ],
@@ -67,13 +70,13 @@ const ticketsReducer = (state = initialState, { type, payload } = {}) => {
       return {
         ...state,
         data: [
-          ...state.data,
+         // ...state.data,
           ...payload.data,
         ],
         meta: {
           ...state.meta,
           ...payload.meta,
-          nextPage: ++state.meta.nextPage,
+          nextPage: 1//++state.meta.nextPage,
         },
         loading: false,
         error: false,

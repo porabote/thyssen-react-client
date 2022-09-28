@@ -30,16 +30,16 @@ const SparesAddForm = (props) => {
       >
         <Field>
           <Input
-            label="Название"
+            label="Название (тип/марка)"
             name="name"
           />
         </Field>
-        <Field>
-          <Input
-            label="Тип/марка"
-            name="description"
-          />
-        </Field>
+        {/*<Field>*/}
+        {/*  <Input*/}
+        {/*    label="Тип/марка"*/}
+        {/*    name="description"*/}
+        {/*  />*/}
+        {/*</Field>*/}
 
         <Field>
           <Input

@@ -22,31 +22,35 @@ const ProfileMenu = (props) => {
 
       <div className="header-panel__profile__dropdown__item">
         <PersonIcon style={{color: '#444', marginRight: '12px', fontSize: '18px'}}/>
-        <NavLink to={`/users/view/${user.id}`} className="header-panel__profile__dropdown__item__divnk profil"> Профиль</NavLink>
+        <NavLink to={`/users/view/${user.id}`}
+                 className="header-panel__profile__dropdown__item__divnk profil"> Профиль</NavLink>
       </div>
 
-      {props.auth.user.role_id == 1 &&
-
-        <React.Fragment>
+      <React.Fragment>
+        {props.perms.isCanViewBusinessEvents &&
           <div className="header-panel__profile__dropdown__item">
             <SettingsEthernetIcon style={{color: '#444', marginRight: '12px', fontSize: '18px'}}/>
             <NavLink to="/business-events/feed/"
                      className="header-panel__profile__dropdown__item__divnk profil">Бизнес-события</NavLink>
           </div>
+        }
+        {props.perms.isCanViewConfigs &&
 
           <div className="header-panel__profile__dropdown__item">
             <SettingsIcon style={{color: '#444', marginRight: '12px', fontSize: '18px'}}/>
             <a href="/configs/" className="header-panel__profile__dropdown__item__divnk profil"> Конфигурация</a>
           </div>
+        }
 
+        {props.perms.isCanViewUsers &&
           <div className="header-panel__profile__dropdown__item">
             <GroupIcon style={{color: '#444', marginRight: '12px', fontSize: '18px'}}/>
             <a href="/porabote/users/feed/"
                className="header-panel__profile__dropdown__item__divnk profil"> Пользователи</a>
           </div>
+        }
+      </React.Fragment>
 
-        </React.Fragment>
-      }
 
       <div className="header-panel__profile__dropdown__separator"></div>
       <div className="header-panel__profile__dropdown__item ">

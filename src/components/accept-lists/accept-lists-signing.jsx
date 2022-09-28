@@ -24,11 +24,15 @@ const AcceptListsSigning = (props) => {
 
         stepCount++;
 
+        if (!step.acceptor) return;
+
         let { acceptor } = step;
 
         let whoNeedSign = null;
         for (let i = 0; i < props.steps.length; i++) {
           let step = props.steps[i];
+
+          if (!step.acceptor) continue;
 
           if (!step.acceptor.accepted_at) {
             whoNeedSign = step.acceptor.user_id;
@@ -39,7 +43,10 @@ const AcceptListsSigning = (props) => {
           }
         }
 
-        let name = acceptor.api_user.name;
+        let name = '';
+        if (acceptor) {
+          name = acceptor.api_user.name;
+        }
 
         return (
           <div style={{

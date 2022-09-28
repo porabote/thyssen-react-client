@@ -7,6 +7,8 @@ import Api from "@services";
 import View from "./view";
 import ViewPreloader from "../view/view-preloader";
 import EditUserForm from "./edit-user-form";
+import EditForeignPassportForm from "./edit-foreign-passport-form";
+import EditPassportForm from "./edit-passport-form";
 
 const ViewContainer = (props) => {
 
@@ -22,6 +24,7 @@ const ViewContainer = (props) => {
   const [data, setData] = useState();
   const [loaded, setLoaded] = useState(false);
   const [isCanEdit, setIsCanEdit] = useState(false);
+  const [isCanViewTabs, setIsCanViewTabs] = useState(false);
   const [isItOwn, setIsItOwn] = useState(false);
 
   useEffect(() => {
@@ -51,6 +54,7 @@ const ViewContainer = (props) => {
     Api.get(`/api/api-users/method/checkEditAccess/`)
       .then((resp) => {
         setIsCanEdit(resp.data.isCanEdit);
+        setIsCanViewTabs(resp.data.isCanViewTabs);
         setLoaded(true);
       });
   }
@@ -81,19 +85,111 @@ const ViewContainer = (props) => {
       });
   }
 
-  if (!loaded) {
+  const getPassport = (callback) => {
+    Api.get(`/api/passports/method/getByUser/${props.id}`)
+      .then((resp) => {
+        if (typeof resp.error != "undefined") {
+          return dispatch(openConfirm(resp.error));
+        }
+        callback(resp.data);
+      });
+  }
+
+  const editPassport = (getRecord) => {
+    dispatch(pushItemToModal(
+      React.createElement(EditPassportForm, {
+        data,
+        editUserConfirm,
+        dicts,
+        isItOwn,
+        isCanEdit,
+        getRecord,
+        getPassport,
+        editPassportSubmit,
+      }),
+      `Редактирование паспортных данных`
+    ));
+  }
+
+  const editForeignPassport = (getRecord) => {
+    dispatch(pushItemToModal(
+      React.createElement(EditForeignPassportForm, {
+        data,
+        editUserConfirm,
+        dicts,
+        isItOwn,
+        isCanEdit,
+        getRecord,
+        getForeignPassport,
+        editPassportSubmit,
+      }),
+      `Редактирование данных заграничного паспорта`
+    ));
+  }
+
+  const getForeignPassport = (callback) => {
+    Api.get(`/api/passports/method/getForeignByUser/${props.id}`)
+      .then((resp) => {
+        if (typeof resp.error != "undefined") {
+          return dispatch(openConfirm(resp.error));
+        }
+        callback(resp.data);
+      });
+  }
+
+  const editPassportSubmit = (values, modalKey) => {
+    Api.post(`/api/passports/method/edit/`, {
+      body: values
+    }).then((resp) => {
+      if( typeof resp.error != "undefined") {
+        return dispatch(openConfirm(resp.error));
+      }
+      dispatch(removeModalItem(modalKey));
+    });
+  }
+
+  const attachShiftWorker = (shiftworkerId, userId) => {
+    Api.get(`/api/api-users/method/attachShiftWorker/`, {
+      query: {
+        user_id: userId,
+        shiftworker_id: shiftworkerId,
+      }
+    }).then((resp) => {
+      //dispatch(removeModalItem(modalKey));
+      getRecord();
+    });
+  }
+
+  const detachShiftWorker = (shiftworkerId, userId) => {
+    Api.get(`/api/api-users/method/detachShiftWorker/`, {
+      query: {
+        user_id: userId,
+        shiftworker_id: shiftworkerId,
+      }
+    }).then((resp) => {
+      getRecord();
+    });
+  }
+
+  if (!loaded || !isDictsLoaded) {
     return <ViewPreloader/>;
   }
 
   return (
     <View
+      dicts={dicts}
       data={data}
       getRecord={getRecord}
       isCanEdit={isCanEdit}
+      isCanViewTabs={isCanViewTabs}
       editUser={editUser}
       editUserConfirm={editUserConfirm}
       isItOwn={isItOwn}
       sendInvitationNotification={sendInvitationNotification}
+      editPassport={editPassport}
+      editForeignPassport={editForeignPassport}
+      attachShiftWorker={attachShiftWorker}
+      detachShiftWorker={detachShiftWorker}
     />
   );
 

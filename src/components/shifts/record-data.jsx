@@ -1,5 +1,6 @@
 import React from "react";
 import {StripedList, StripedListCell, StripedListRow} from "porabote/striped-list";
+import EditIcon from '@mui/icons-material/Edit';
 
 const RecordData = (props) => {
 
@@ -26,6 +27,16 @@ const RecordData = (props) => {
           </StripedListCell>
         </StripedListRow>
       </StripedList>
+
+      <div className="links_with_icon__wrap" style={{justifyContent: 'flex-end'}}>
+
+        <div className="link_with_icon" onClick={() => props.edit(props)}>
+          <EditIcon style={{fontSize: '19px'}} className="link_with_icon__icon"/>
+          Редактировать данные
+        </div>
+
+      </div>
+
     </div>
 
   );

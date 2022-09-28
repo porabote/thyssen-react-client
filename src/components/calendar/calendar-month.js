@@ -1,42 +1,11 @@
 import React, {useEffect, useContext} from "react";
 import moment from "moment";
-import CalendarContext from "./calendar-context";
 import CalendarDay from "./calendar-day";
 
 const CalendarMonth = (props) => {
 
   useEffect(() => {
   }, [props]);
-
-  const context = useContext(CalendarContext);
-
-  let monthLogicalNumber = props.number + 1;
-  monthLogicalNumber.toString().padStart(2, "0");
-
-  let daysInMonth = moment(`${props.year}-${monthLogicalNumber}`, "YYYY-MM").daysInMonth();
-
-  let {periods} = context;
-
-  let days = [];
-  for(let i = 1; i <= daysInMonth; i++) {
-
-    let date = new Date(props.year, props.number, i, 0, 0, 0);
-    let isSelected = false;
-    let belongToPeriod = null;
-
-    for (let timestamp in periods) {
-      if (date >= periods[timestamp].dateStart && date <= periods[timestamp].dateFinish) {
-        isSelected = true;
-        belongToPeriod = timestamp;
-        break;
-      }
-    }
-    days.push({
-      number: i,
-      isSelected,
-      belongToPeriod,
-    });
-  };
 
   let weekDaysAliases = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'];
 
@@ -50,7 +19,7 @@ const CalendarMonth = (props) => {
   return(
     <div className="prb-calendar-year-months-month">
       <div className="prb-calendar-year-months-month-panel">
-        {props.alias} {props.year}
+        {props.month_alias} {props.year}
       </div>
       <div className="prb-calendar-year-months-month-days-names">
         {weekDaysAliases.map((dayAlis, index) => {
@@ -59,15 +28,13 @@ const CalendarMonth = (props) => {
       </div>
       <div className="prb-calendar-year-months-month-days">
         {daysDummy.map((month, index) => (<div key={index} className="prb-calendar-year-months-month-day"></div>))}
-        {days.map((day, index) => {
+        {Object.entries(props.days).map((item, index) => {
+
+          let day = item[1];
+
           return <CalendarDay
             key={index}
-            year={props.year}
-            month={props.number}
-            monthNatural={props.number + 1}
-            number={day.number}
-            isSelected={day.isSelected}
-            belongToPeriod={day.belongToPeriod}
+            day={day}
           />
         })}
       </div>

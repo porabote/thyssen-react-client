@@ -1,6 +1,6 @@
-import React from 'react'
-import {NavLink} from 'react-router-dom'
-import './navbar.less'
+import React from 'react';
+import {NavLink} from 'react-router-dom';
+import './navbar.less';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 
 class Navbar extends React.Component {

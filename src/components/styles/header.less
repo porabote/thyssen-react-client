@@ -7,7 +7,7 @@
 }
 
 // Иконки в верхней панели
-.header-panel__icons-set {
+.header-panel__top-bar-icons {
   grid-area: head-icons;
   display: none;
   justify-content: flex-end;
@@ -18,7 +18,7 @@
   border-right: 0px solid #f1f2f8;
   border-left: 0px solid #f1f2f8;
 }
-.header-panel__icons-set__item__link {
+.header-panel__top-bar-icons__item__link {
   position: relative;
   top: 5px;
   color: rgba(130, 130, 130, 1);
@@ -27,14 +27,14 @@
   padding: 10px 6px;
   cursor: pointer;
 }
-.header-panel__icons-set__item__link:hover {
+.header-panel__top-bar-icons__item__link:hover {
 }
-.header-panel__icons-set__item__link:hover .header-panel__icons-set__item__link_img {
+.header-panel__top-bar-icons__item__link:hover .header-panel__top-bar-icons__item__link_img {
   color: #fff;
   transform: scaleX(-1);
   transition: 0.3s;
 }
-.header-panel__icons-set__item__link_img {
+.header-panel__top-bar-icons__item__link_img {
   color: #2fd4b1;
   padding-bottom: 3px;
   padding-top: 2px;
@@ -44,7 +44,7 @@
   font-size: 1.3rem;
 }
 
-.header-panel__icons-set__item__link_text {
+.header-panel__top-bar-icons__item__link_text {
   font-family: 'Roboto Regular';
   font-size: 12px;
   text-align: center;
@@ -52,22 +52,25 @@
   text-transform: lowercase;
 }
 
-//.header-panel__icons-set__item__link_text { background-position: 50% 2px;background-repeat: no-repeat; }
-//.header-panel__icons-set__item__link_text.chat { background-image: url('./svg/speech-bubble__blue.svg'); background-size: 22px; padding: 26px 0 2px 0px;width: 39px; color: #666;}
-//.header-panel__icons-set__item__link_text.chat:hover { background-image: url('./svg/speech-bubble__blue.svg');}
-//
-//.header-panel__icons-set__item__link_text.alarm_clock { background-image: url('./svg/alarm-clock.svg'); background-size: 22px; padding: 26px 0 2px 0;width: 36px; color: #666; }
-//.header-panel__icons-set__item__link_text.alarm_clock:hover { background-image: url('./svg/alarm-clock__blue.svg'); }
-//
-//.header-panel__icons-set__item__link_text.notification { background-image: url('./svg/bell.svg'); background-size: 24px; padding: 26px 0 2px 0;width: 40px; }
-
-.header-panel__icons-set__item__link .count {
+.header-panel__top-bar-icons__item__link .count {
   position: absolute;
   top: 6px;
   right: -6px;
 }
 
-// ...Иконки в верхней панели
+.header-panel__top-bar-icons__contacts {
+  background: #d2d2d2;
+  border-radius: 50%;
+  color: #fff;
+  padding: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.header-panel__top-bar-icons__contacts:hover {
+  background: #fcca07;
+  color: #fff;
+}
+// ...Иконки в верхней панели #0561ea
 
 
 // Панель настроек..
@@ -247,7 +250,7 @@
 
 
 // Иконки в верхней панели
-.header-panel__icons-set {
+.header-panel__top-bar-icons {
   grid-area: head-icons;
   display: none;
   justify-content: flex-end;
@@ -258,7 +261,7 @@
   border-right: 0px solid #f1f2f8;
   border-left: 0px solid #f1f2f8;
 }
-.header-panel__icons-set__item__link {
+.header-panel__top-bar-icons__item__link {
   position: relative;
   top: 5px;
   color: rgba(130, 130, 130, 1);
@@ -267,14 +270,14 @@
   padding: 10px 6px;
   cursor: pointer;
 }
-.header-panel__icons-set__item__link:hover {
+.header-panel__top-bar-icons__item__link:hover {
 }
-.header-panel__icons-set__item__link:hover .header-panel__icons-set__item__link_img {
+.header-panel__top-bar-icons__item__link:hover .header-panel__top-bar-icons__item__link_img {
   color: #fff;
   transform: scaleX(-1);
   transition: 0.3s;
 }
-.header-panel__icons-set__item__link_img {
+.header-panel__top-bar-icons__item__link_img {
   color: #2fd4b1;
   padding-bottom: 3px;
   padding-top: 2px;
@@ -284,7 +287,7 @@
   font-size: 1.3rem;
 }
 
-.header-panel__icons-set__item__link_text {
+.header-panel__top-bar-icons__item__link_text {
   font-family: 'Roboto Regular';
   font-size: 12px;
   text-align: center;
@@ -292,16 +295,16 @@
   text-transform: lowercase;
 }
 
-//.header-panel__icons-set__item__link_text { background-position: 50% 2px;background-repeat: no-repeat; }
-//.header-panel__icons-set__item__link_text.chat { background-image: url('./svg/speech-bubble.svg'); background-size: 22px; padding: 26px 0 2px 0px;width: 39px; color: #666;}
-//.header-panel__icons-set__item__link_text.chat:hover { background-image: url('./svg/speech-bubble__blue.svg');}
+//.header-panel__top-bar-icons__item__link_text { background-position: 50% 2px;background-repeat: no-repeat; }
+//.header-panel__top-bar-icons__item__link_text.chat { background-image: url('./svg/speech-bubble.svg'); background-size: 22px; padding: 26px 0 2px 0px;width: 39px; color: #666;}
+//.header-panel__top-bar-icons__item__link_text.chat:hover { background-image: url('./svg/speech-bubble__blue.svg');}
 //
-//.header-panel__icons-set__item__link_text.alarm_clock { background-image: url('./svg/alarm-clock.svg'); background-size: 22px; padding: 26px 0 2px 0;width: 36px; color: #666; }
-//.header-panel__icons-set__item__link_text.alarm_clock:hover { background-image: url('./svg/alarm-clock__blue.svg'); }
+//.header-panel__top-bar-icons__item__link_text.alarm_clock { background-image: url('./svg/alarm-clock.svg'); background-size: 22px; padding: 26px 0 2px 0;width: 36px; color: #666; }
+//.header-panel__top-bar-icons__item__link_text.alarm_clock:hover { background-image: url('./svg/alarm-clock__blue.svg'); }
 //
-//.header-panel__icons-set__item__link_text.notification { background-image: url('./svg/bell.svg'); background-size: 24px; padding: 26px 0 2px 0;width: 40px; }
+//.header-panel__top-bar-icons__item__link_text.notification { background-image: url('./svg/bell.svg'); background-size: 24px; padding: 26px 0 2px 0;width: 40px; }
 
-.header-panel__icons-set__item__link .count {
+.header-panel__top-bar-icons__item__link .count {
   position: absolute;
   top: 6px;
   right: -6px;
@@ -351,7 +354,7 @@
           "navbar navbar navbar";
   }
 
-  .header-panel__icons-set {display: flex;}
+  .header-panel__top-bar-icons {display: flex;}
 }
 
 @media only screen and (min-width: 1280px) {

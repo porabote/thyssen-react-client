@@ -1,7 +1,8 @@
 import React from 'react'
-import {StripedList, StripedListRow, StripedListCell} from 'porabote/striped-list'
+import {StripedList, StripedListRow, StripedListCell} from 'porabote/striped-list';
 import moment from 'moment';
 import EditIcon from '@mui/icons-material/Edit';
+import SubjectIcon from '@mui/icons-material/Subject';
 
 const RecordData = (props) => {
 
@@ -26,13 +27,13 @@ const RecordData = (props) => {
         <StripedListRow>
           <StripedListCell>Площадка</StripedListCell>
           <StripedListCell>
-            {department.attributes.account.ru_name}
+            {department && department.attributes.account.ru_name}
           </StripedListCell>
         </StripedListRow>
         <StripedListRow>
           <StripedListCell>Департамент</StripedListCell>
           <StripedListCell>
-            {department.attributes.name}
+            {department && department.attributes.name}
           </StripedListCell>
         </StripedListRow>
         <StripedListRow>
@@ -93,6 +94,16 @@ const RecordData = (props) => {
           <div className="link_with_icon" onClick={() => props.editUser(props.getRecord)}>
             <EditIcon style={{fontSize: '19px'}} className="link_with_icon__icon"/>
             Редактировать данные
+          </div>
+
+          <div className="link_with_icon" onClick={() => props.editPassport(props.getRecord)}>
+            <SubjectIcon style={{fontSize: '19px'}} className="link_with_icon__icon"/>
+            Паспорт
+          </div>
+
+          <div className="link_with_icon" onClick={() => props.editForeignPassport(props.getRecord)}>
+            <SubjectIcon style={{fontSize: '19px'}} className="link_with_icon__icon"/>
+            Заграничный паспорт
           </div>
 
         </div>

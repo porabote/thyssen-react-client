@@ -32,6 +32,7 @@ module.exports = webpackEnv => {
     resolve: {
       extensions: ['.js', '.ts', '.jsx', '.tsx', '.ttf'],
       alias: {
+        '@src': path.resolve(__dirname, '../src/'),
         '@components': path.resolve(__dirname, '../src/components/'),
         '@hocs': path.resolve(__dirname, '../src/hocs/'),
         '@services': path.resolve(__dirname, '../src/services/'),
@@ -155,9 +156,9 @@ module.exports = webpackEnv => {
         //console.log(app)
         // do fancy stuff
       },
-      // proxy: {
-      //   '/userfiles': 'https://thyssen24.ru',
-      // },
+      proxy: {
+        '/userfiles/files': 'https://thyssen24.ru',
+      },
     },
   }
 }

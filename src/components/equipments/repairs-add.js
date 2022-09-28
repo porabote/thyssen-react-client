@@ -21,7 +21,7 @@ const RepairsAdd = (props) => {
   const [statuses, setStatuses] = useState({});
   const [loading, setLoading] = useState(true);
   const [values, setValues] = useState(props.data || {
-    type: '',
+    type_id: '',
     downtime: "",
     name: "",
     equipment_id: props.record.id,
@@ -56,20 +56,22 @@ const RepairsAdd = (props) => {
         >
 
           <Field>
-            <Select name="type" label="Вид ТО\ремонта" empty={false}>
-              <Option key={1} value="repair">Ремонт</Option>
-              <Option key={2} value="to">ТО</Option>
+            <Select name="type_id" label="Вид ТО/ремонта" empty={false}>
+              {Object.entries(dicts.equipments_repair_types).map((item, index) => {
+                let itemData = item[1];
+                return <Option key={index} value={itemData.id}>{`${itemData.name}`}</Option>;
+              })}
             </Select>
           </Field>
 
-          <Field>
-            <Input name="name" label="Наименование"/>
-          </Field>
+          {/*<Field>*/}
+          {/*  <Input name="name" label="Наименование"/>*/}
+          {/*</Field>*/}
 
           <Field>
             <Input
               name="engine_hours"
-              label="Наработка"
+              label="Наработка (ч)"
               mask={(value) => {
                 return Masks.digitalOnly(value);
               }}
@@ -100,7 +102,7 @@ const RepairsAdd = (props) => {
 
           <Field>
             <Select name="doer_id" label="Исполнитель" empty={false}>
-              {Object.entries(dicts.users).map((item, index) => {
+              {Object.entries(dicts.api_users).map((item, index) => {
                 let itemData = item[1];
                 return <Option key={index} value={itemData.id}>{`${itemData.name} ( ${itemData.post_name} )`}</Option>;
               })}

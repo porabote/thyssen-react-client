@@ -8,6 +8,7 @@ import { fetchFeedData, updateFeedFilters } from "./store/actions";
 import View from "./view";
 import Feed from "./feed";
 import Add from "./add";
+import Edit from "./edit";
 import AttachUsersForm from "./attach-users-form";
 import { openConfirm } from "porabote/confirm/store/confirm-actions";
 
@@ -47,8 +48,24 @@ const ShiftsContainer = (props: IChildComponentProps) => {
       body: values,
     })
       .then((resp) => {
-        fetchData();
         dispatch(removeModalItem(modalKey));
+        dispatch(updateFeedFilters());
+        fetchData();
+      });
+  }
+
+  const edit = (values) => {
+    dispatch(pushItemToModal(React.createElement(Edit, { dicts, editConfirm, values }),`Редактирование вахты вахты`));
+  }
+
+  const editConfirm = (values, modalKey) => {
+    Api.post(`/api/shifts/method/edit/`, {
+      body: values,
+    })
+      .then((resp) => {
+        dispatch(removeModalItem(modalKey));
+        dispatch(updateFeedFilters());
+        fetchData();
       });
   }
 
@@ -78,13 +95,14 @@ const ShiftsContainer = (props: IChildComponentProps) => {
       });
   }
 
-  const savePeriods = (id, periods) => {
+  const savePeriods = (id, periods, callback) => {
 
     Api.post(`/api/shifts/method/savePeriods/`, {
       body: {id, periods},
     })
       .then((resp) => {
         dispatch(openConfirm('Данные обновлены.'));
+        callback([...periods]);
       });
   }
 
@@ -97,6 +115,7 @@ const ShiftsContainer = (props: IChildComponentProps) => {
       attachUser,
       detachUser,
       savePeriods,
+      edit,
     });
   };
 

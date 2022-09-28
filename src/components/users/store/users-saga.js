@@ -12,9 +12,14 @@ function* fetchFeedDataAsync() {
 
   try {
     const data = yield call(() => {
+
+      let where = {...state.users.filter.where};
+      delete where.account_id;
+
       return Api.get(`/api/api-users/get/`, {
         query: {
-          where: state.users.filter.where,
+          where: where,
+          whereIn: state.users.filter.whereIn,
           orWhereGrouped: state.users.filter.orWhereGrouped,
           include: state.users.relationships,
           page: state.users.meta.nextPage,

@@ -58,7 +58,7 @@ const AcceptListsContainer = (props) => {
       body: values,
     })
       .then((resp) => {
-        setMode('signing');
+        getSteps();
         setAcceptorsCallback();
       });
   }

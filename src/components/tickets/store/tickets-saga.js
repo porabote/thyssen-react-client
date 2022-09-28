@@ -9,14 +9,14 @@ function* ticketsWatcher() {//console.log(select(tickets))
 function* fetchFeedDataAsync() {
 
   const state = yield select();
-
+//console.log(state.tickets.filter.where);
     try {
       const data = yield call(() => {
-        return Api.get(`/api/tickets/get/`, {
+        return Api.get(`/api/ticketsRequests/get/`, {
           query: {
             where: state.tickets.filter.where,
-            orWhereGrouped: state.tickets.filter.orWhereGrouped,
-            whereIn: state.tickets.filter.whereIn,
+          //  orWhereGrouped: state.tickets.filter.orWhereGrouped,
+          //  whereIn: state.tickets.filter.whereIn,
             include: state.tickets.relationships,
             page: state.tickets.meta.nextPage,
             limit: state.tickets.meta.limit,

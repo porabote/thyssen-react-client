@@ -1,5 +1,5 @@
 import React from "react";
-import AppRouter from '@components/app-router';
+import Router from '@src/routes/router';
 import AuthLogin from "@components/auth/auth-login";
 import Modal from 'porabote/modal';
 import Confirm from "porabote/confirm";

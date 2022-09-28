@@ -85,7 +85,7 @@ class Repairs extends React.Component {
             <Field>
               <Select
                 name="type"
-                label="Вид ТО\ремонта"
+                label="Вид ТО/ремонта"
                 empty="Не выбрано"
                 afterSelectCallback={(event, formContext) => {
                   this.setState({
@@ -125,11 +125,11 @@ class Repairs extends React.Component {
         <div>
 
           <h3 style={{padding: '10px 0 40px 0'}}>ТО и ремонт</h3>
-          <StripedList key={1} style={{gridTemplateColumns: '120px 1fr 100px 140px 140px 1fr 150px 40px 40px'}}>
+          <StripedList key={1} style={{gridTemplateColumns: '120px 100px 140px 140px 1fr 150px 40px 40px'}}>
             <StripedListRow key={99}>
-              <StripedListCell><b>Вид ТО\ремонта</b></StripedListCell>
-              <StripedListCell><b>Наименование</b></StripedListCell>
-              <StripedListCell><b>Наработка</b></StripedListCell>
+              <StripedListCell><b>Вид ТО/ремонта</b></StripedListCell>
+              {/*<StripedListCell><b>Наименование</b></StripedListCell>*/}
+              <StripedListCell><b>Наработка (ч)</b></StripedListCell>
               <StripedListCell><b>Период проведения</b></StripedListCell>
               <StripedListCell><b>Время простоя (ч)</b></StripedListCell>
               <StripedListCell><b>Краткое описание</b></StripedListCell>
@@ -168,8 +168,8 @@ class Repairs extends React.Component {
 
               return (
                 <StripedListRow key={index}>
-                  <StripedListCell>{this.state.types[data.type]}</StripedListCell>
-                  <StripedListCell>{data.name}</StripedListCell>
+                  <StripedListCell>{rels.type && rels.type.attributes.name}</StripedListCell>
+                  {/*<StripedListCell>{data.name}</StripedListCell>*/}
                   <StripedListCell>{data.engine_hours}</StripedListCell>
                   <StripedListCell>{moment(data.date_at).format("DD-MM-Y")}</StripedListCell>
                   <StripedListCell>{data.downtime}</StripedListCell>

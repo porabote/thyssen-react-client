@@ -8,6 +8,7 @@ import FilterTop from "./filter-top";
 import {updateFilters} from "@components/filters/store/filters-actions";
 import FeedPreloader from "@components/feed/feed-preloader";
 import MenuIcon from "@material-ui/icons/Menu";
+import FlagCircleIcon from '@mui/icons-material/FlagCircle';
 
 const Feed = (props) => {
 
@@ -66,9 +67,10 @@ const Feed = (props) => {
 
         <div className="content__body">
 
-          <Grid grid-template-columns="260px 100px 160px 1fr">
+          <Grid grid-template-columns="1fr 260px 100px 160px 1fr">
 
             <div className="head">
+              <div>Наименование</div>
               <div>Руководитель</div>
               <div>Статус</div>
               <div>Кол. сотрудников</div>
@@ -78,14 +80,24 @@ const Feed = (props) => {
             {
               data.map((record, index) => {
 
-                const attrs = record.attributes
-                const { head_user, platform } = record.relationships;
+                const attrs = record.attributes;
+                const { head_user, platform, users } = record.relationships;
+
+                let statusColor = '#999999';
+                if (attrs.periods) {
+                  let periods = attrs.periods;
+                  periods = JSON.parse(periods);
+                  let now = moment().format('Y-MM-DD');
+                  let activePeriods = periods.filter(period => now >=period.dateStart && now <= period.dateFinish);
+                  if (activePeriods.length > 0) statusColor = '#21c763';
+                }
 
                 return (
-                  <div linkTo={`/shifts/view/${attrs.id}`} key={attrs.id}>
+                  <div linkTo={`/shifts/view/${attrs.id}`} key={index}>
+                    <div>{attrs.title}</div>
                     <div><b>{head_user && head_user.attributes.name}</b><br/>{head_user && head_user.attributes.post_name}</div>
-                    <div></div>
-                    <div></div>
+                    <div><FlagCircleIcon style={{color: statusColor}}/></div>
+                    <div><b>{users.length}</b></div>
                     <div>{platform && platform.attributes.ru_alias}</div>
                   </div>
                 )

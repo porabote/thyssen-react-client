@@ -15,7 +15,7 @@ class FeedTopPanel extends React.Component {
                 this.props.pushModalItem(
                   this.props.fetchData,
                   `Добавить заявку`,
-                  this.props.createTicket,
+                  this.props.createTicketRequest,
                 );
               }}
               className="button-drop"
@@ -30,11 +30,11 @@ class FeedTopPanel extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    pushModalItem: (fetchData, title, createTicket) => dispatch({
+    pushModalItem: (fetchData, title, createTicketRequest) => dispatch({
       type: 'PUSH_MODAL_ITEM',
       payload: {
         title,
-        content: React.createElement(EquipmentsAddForm, {fetchData, createTicket})
+        content: React.createElement(EquipmentsAddForm, {fetchData, createTicketRequest})
       }
     }),
   }

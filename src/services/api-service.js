@@ -2,6 +2,44 @@ import { API_URL, API_VERSION } from "./constants";
 
 class Api {
 
+  get = async (uri, params = {}) => {
+    let queryUri = uri;
+
+    const url = (typeof params.url !== "undefined") ? params.url : API_URL;
+
+    if (typeof params.query !== "undefined") {
+      const query = this.objectToQuerystring(params.query);
+      queryUri = `${queryUri}?${query}`;
+    }
+
+    const response = await fetch(`${url}${queryUri}`, {
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "omit",
+      headers: {
+        "Access-Control-Allow-Credentials": false,
+        Authorization: `bearer ${this.getToken()}`,
+        Accept: "application/json, text/html, application/xhtml+xml, application/xml;q=0.9, image/webp, */*;q=0.8",
+        "Content-Type": "application/json, text/html;charset=UTF-8",
+        "Api-Version": 2,
+      },
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+    });
+
+    const data = await response.json();
+
+    // check for error response
+    if (!response.ok) {
+      // get error message from body or default to response statusText
+      const error = (data && data.message) || response.statusText;
+      return Promise.reject(error);
+    }
+    
+    return { ...data, ...{ response: { status: response.status } } };
+  }
+
   post = async (uri, params) => {
     const url = (typeof params.url !== "undefined") ? params.url : API_URL;
 
@@ -34,36 +72,6 @@ class Api {
       redirect: "follow",
       referrerPolicy: "no-referrer",
       body,
-    });
-
-    const responseJSON = await response.json();
-    return { ...responseJSON, ...{ response: { status: response.status } } };
-  }
-
-  get = async (uri, params = {}) => {
-    let queryUri = uri;
-
-    const url = (typeof params.url !== "undefined") ? params.url : API_URL;
-
-    if (typeof params.query !== "undefined") {
-      const query = this.objectToQuerystring(params.query);
-      queryUri = `${queryUri}?${query}`;
-    }
-
-    const response = await fetch(`${url}${queryUri}`, {
-      method: "GET",
-      mode: "cors",
-      cache: "no-cache",
-      credentials: "omit",
-      headers: {
-        "Access-Control-Allow-Credentials": false,
-        Authorization: `bearer ${this.getToken()}`,
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTF-8",
-        "Api-Version": 2,
-      },
-      redirect: "follow",
-      referrerPolicy: "no-referrer",
     });
 
     const responseJSON = await response.json();
@@ -112,7 +120,7 @@ class Api {
     }
     return accessToken;
   }
-  
+
 }
 
 export default new Api();

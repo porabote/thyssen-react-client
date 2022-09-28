@@ -14,7 +14,7 @@ import {
 const EditUserForm = (props) => {
   
   const {attributes} = props.data;
-  const {departments, shifts, accounts} = props.dicts;
+  const {departments, shifts, accounts, cities} = props.dicts;
 
   const isMainDisable = props.isCanEdit ? false : true;
 
@@ -25,6 +25,13 @@ const EditUserForm = (props) => {
   };
 
   const genderList = {'m': 'Муж.', 'f': 'Жен.'};
+  const statusList = {
+    new: 'Новый',
+    invited: 'Приглашен в систему',
+    external: 'Внешний сотрудник (Аутсорсинг)',
+    active: 'Активен',
+    fired: 'Уволен',
+  };
 
   return (
     <div>
@@ -60,7 +67,7 @@ const EditUserForm = (props) => {
         <div className="fieldset" style={{gridTemplateColumns: '1fr 1fr 1fr'}}>
           <Field>
             <Input
-              disabled={disabled}
+              disabled={() => true}
               label="Email/Логин"
               name="email"
             />
@@ -134,7 +141,6 @@ const EditUserForm = (props) => {
             />
           </Field>
 
-
           <Field>
             <Select
               disabled={() => {
@@ -149,7 +155,40 @@ const EditUserForm = (props) => {
             </Select>
           </Field>
 
+          <Field>
+            <Select
+              disabled={() => {
+                return (isCanEdit || props.isItOwn) ? false : true;
+              }}
+              name="status"
+              label="Статус"
+            >
+              {Object.keys(statusList).map((id) => {
+                return <Option key={id} value={id}>{`${statusList[id]}`}</Option>
+              })}
+            </Select>
+          </Field>
         </div>
+
+
+        <div className="fieldset" style={{gridTemplateColumns: '1fr 1fr 1fr'}}>
+
+
+          <Field>
+            <Select
+              disabled={disabled}
+              name="city_id"
+              label="Город"
+            >
+              {Object.keys(cities).map((id) => {
+                return <Option key={id} value={id}>
+                  {`${cities[id].name_ru} - ${cities[id].name_en}`}
+                </Option>
+              })}
+            </Select>
+          </Field>
+        </div>
+
 
         <SubmitButton>
           <Button

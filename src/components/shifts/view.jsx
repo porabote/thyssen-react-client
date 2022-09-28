@@ -31,8 +31,8 @@ const View = (props) => {
           <ArrowRightRoundedIcon style={{fontSize: "24px", marginRight: "2px", top: "7px", position: "relative"}}/>
           Назад к списку
         </NavLink>
-        Вахта {attrs.name} -
-        <span style={{color: "#bababa"}}> статус </span>
+        <b>Вахта {attrs.title}</b> 
+        <span style={{color: "#bababa"}}> </span>
       </p>
 
       <Tabs {...props}>

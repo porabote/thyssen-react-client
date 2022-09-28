@@ -41,7 +41,6 @@ const AcceptListBuilding = (props) => {
 
   setFormValues();
 
-  console.log(props.steps)
   return (
     <Form
       values={values}
@@ -74,7 +73,7 @@ const AcceptListBuilding = (props) => {
         } else if (default_step) {
           name = default_step.name;
           default_step.default_users.map((user, index) => {
-            users[user.id] = `${user.api_user.name} - ${user.api_user.post_name}`;
+            users[user.api_user.id] = `${user.api_user.name} - ${user.api_user.post_name}`;
           });
         }
 

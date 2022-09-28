@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  useRouteMatch,
-} from "react-router-dom";
+import {useRouteMatch,} from "react-router-dom";
 import Api from "@services/api-client";
 import { requestDicts } from "../dicts/store/dicts-actions";
 import { fetchFeedData, updateFeedFilters } from "@components/users/store/users-actions";
@@ -40,7 +38,10 @@ const UsersContainer = (props: IChildComponentProps) => {
 
   if (props.match.params.action === "contacts") {
     return React.createElement(Contacts, {
-      id: props.match.params.id
+      isDictsLoaded,
+      fetchData,
+      updateFilters,
+      dicts,
     });
   } else if (props.match.params.action === "view") {
     return React.createElement(ViewContainer, {
@@ -59,6 +60,7 @@ const UsersContainer = (props: IChildComponentProps) => {
     isDictsLoaded,
     fetchData,
     updateFilters,
+    dicts,
   });
 
 }

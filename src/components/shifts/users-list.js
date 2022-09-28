@@ -6,7 +6,6 @@ import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOut
 import RemoveCircleSharpIcon from '@material-ui/icons/RemoveCircleSharp';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import AlarmOnOutlinedIcon from '@material-ui/icons/AlarmOnOutlined';
-import RemoveIcon from '@material-ui/icons/Remove';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import {StripedList, StripedListRow, StripedListCell} from 'porabote/striped-list';
 

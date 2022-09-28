@@ -8,6 +8,7 @@ import Permissions from "./permissions";
 import UsersRequests from "./users-requests";
 import moment from "moment";
 import ArrowRightRoundedIcon from "@material-ui/icons/ArrowRightRounded";
+import ShiftWorkers from "./shift-workers";
 
 const View = (props) => {
 
@@ -29,22 +30,28 @@ const View = (props) => {
 
         <TabList>
           <Tab>Данные</Tab>
-          {props.isCanEdit && <Tab>Права</Tab>}
-          {props.isCanEdit && <Tab>Запросы</Tab>}
+          {props.isCanViewTabs && <Tab>Права</Tab>}
+          {props.isCanViewTabs && <Tab>Запросы</Tab>}
+          {props.isCanViewTabs && <Tab>Сменщики</Tab>}
         </TabList>
 
 
         <TabPanel>
-          <RecordData getRecord={props.getRecord} data={data} {...props}/>
+          <RecordData data={data} {...props}/>
         </TabPanel>
-        {props.isCanEdit &&
+        {props.isCanViewTabs &&
           <TabPanel>
             <Permissions data={data}/>
           </TabPanel>
         }
-        {props.isCanEdit &&
+        {props.isCanViewTabs &&
           <TabPanel>
             <UsersRequests sendInvitationNotification={props.sendInvitationNotification} getRecord={props.getRecord} user={data}/>
+          </TabPanel>
+        }
+        {props.isCanEdit &&
+          <TabPanel>
+            <ShiftWorkers user={data} {...props}/>
           </TabPanel>
         }
       </Tabs>

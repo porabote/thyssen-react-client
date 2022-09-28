@@ -4,19 +4,28 @@ import CalendarMonth from "./calendar-month";
 
 const CalendarYear = (props) => {
 
-  const [monthStart, setMonthStart] = useState(moment().month());
   const [months, setMonths] = useState(moment.months());
 
   return(
     <div className="prb-calendar-year">
       <div className="prb-calendar-year-months">
-        {months.map((month, index) => {
-          return <CalendarMonth
-            key={index}
-            alias={month}
-            number={index}
-            year={props.number}
-          />
+        {Object.entries(props.days).map((year_item, index) => {
+
+          let year = year_item[0];
+          let days = year_item[1];
+
+          return Object.entries(days).map((item, index) => {
+
+            let days = item[1];
+
+            return <CalendarMonth
+              key={index}
+              number={index}
+              days={days}
+              year={props.number}
+              month_alias={months[index]}
+            />
+          });
         })}
       </div>
     </div>

@@ -46,16 +46,19 @@ const Feed = (props) => {
         </div>
 
         <div className="content__tools_panel">
-          <FeedTopPanel createTicket={props.createTicket} fetchData={props.fetchData}/>
+          <FeedTopPanel createTicketRequest={props.createTicketRequest} fetchData={props.fetchData}/>
         </div>
 
         <div className="content__body">
 
-          <Grid grid-template-columns="60px 190px 120px 150px 150px 150px 220px 150px">
+          <Grid grid-template-columns="60px 1fr 120px 120px 240px 150px">
             <div className="head">
               <div>ID</div>
+              <div>Город прилета</div>
+              <div>Дата вылета</div>
               <div>Статус</div>
-              <div>Описание</div>
+              <div>Объект</div>
+              <div>Добавил</div>
             </div>
 
             {
@@ -64,14 +67,18 @@ const Feed = (props) => {
                 let {
                   user,
                   type,
-                  status
+                  status,
+                  city_to,
                 } = record.relationships;
 
                 return (
                   <div linkTo={`/tickets/view/${attrs.id}`} key={attrs.id}>
                     <div>{attrs.id}</div>
-                    <div>{status && status.name}</div>
+                    <div>{city_to && city_to.attributes.name_ru} - {city_to && city_to.attributes.name_en}</div>
+                    <div>{attrs.date}</div>
+                    <div>{status && status.attributes.name}</div>
                     <div>{attrs.comment}</div>
+                    <div>{user && user.attributes.name}</div>
                   </div>
                 )
               })
@@ -79,14 +86,14 @@ const Feed = (props) => {
           </Grid>
 
           <div style={{width: '1000px', margin: '20px auto', textAlign: 'right'}}>
-            <Button
-              className="on-button grey-stroke_x_yellow-fill icon-excel__grey_x_white"
-              type="button"
-              onClick={() => {
-                props.exportFeedToExcel(data);
-              }}
-            >Экспорт в Excel
-            </Button>
+            {/*<Button*/}
+            {/*  className="on-button grey-stroke_x_yellow-fill icon-excel__grey_x_white"*/}
+            {/*  type="button"*/}
+            {/*  onClick={() => {*/}
+            {/*    props.exportFeedToExcel(data);*/}
+            {/*  }}*/}
+            {/*>Экспорт в Excel*/}
+            {/*</Button>*/}
           </div>
           <ButtonLazyLoad fetchData={props.fetchData} {...meta}/>
         </div>

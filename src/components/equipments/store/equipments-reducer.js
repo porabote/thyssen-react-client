@@ -6,7 +6,7 @@ import {
 } from "./equipments-types";
 
 const initialState = {
-  title: "Оборудование",
+  title: "Наработка оборудования",
   event_ids: [1, 2, 3],
   alias: "equipments",
   data: [],
@@ -37,12 +37,14 @@ const initialState = {
     "objects",
     "equipments_types",
     "statuses",
-    "users",
+    "api_users",
+    "equipments_repair_types",
   ],
   relationships: [
     "organizations_own",
     "platform",
     "object",
+    "cover",
     "hole",
     "comments",
     "files",
@@ -58,6 +60,7 @@ const initialState = {
     "equipment_repairs.spares",
     "equipment_repairs.spares.spare",
     "equipment_repairs.spares.spare.store",
+    "equipment_repairs.type",
   ],
 };
 

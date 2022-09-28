@@ -16,6 +16,8 @@ function* requestDictsAsync(action) {
         return typeof store.dicts.dicts[dict] === "undefined"
       });
 
+      if (requiredList.length == 0) requiredList.push('dummy');
+
       const data = yield call(() => {
         return Api.get(`/api/dicts/get/`, {
           query: {
