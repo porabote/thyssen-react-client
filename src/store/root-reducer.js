@@ -17,16 +17,14 @@ import shiftsReducer from "@components/shifts/store/reducer";
 import ticketsReducer from "@components/tickets/store/tickets-reducer";
 import usersReducer from "@components/users/store/users-reducer";
 import paymentsSetsReduser from "@components/payments-sets/store/reducer.js"
-//import { chatReducer } from "@components/chat";
 
-const rootReducer = combineReducers({
+const staticReducers = {
   acceptLists: acceptListsReducer,
   auth: authReducer,
   companies: companiesReducer,
   modal: modalReducer,
   dicts: dictsReducer,
   filters: filtersReducer,
-  //chat: chatReducer,
   mailsPatterns: mailsPatternsReducer,
   menus: menusReducer,
   paymentsSets: paymentsSetsReduser,
@@ -39,6 +37,13 @@ const rootReducer = combineReducers({
   tickets: ticketsReducer,
   users: usersReducer,
   confirm: confirmReducer,
-});
+};
 
-export default rootReducer;
+function createReducer(asyncReducers) {
+  return combineReducers({
+    ...staticReducers,
+    ...asyncReducers
+  })
+}
+
+export default createReducer;

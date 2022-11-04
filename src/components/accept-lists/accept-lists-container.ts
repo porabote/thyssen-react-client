@@ -8,6 +8,7 @@ import AcceptListSigning from "./accept-lists-signing.jsx";
 import AddStep from "./add-step.jsx";
 import DeclineStepForm from "./decline-step-form";
 import ChangeAcceptorForm from "./change-acceptor-form";
+import { openConfirm } from "porabote/confirm/store/confirm-actions";
 
 const AcceptListsContainer = (props) => {
 
@@ -16,22 +17,30 @@ const AcceptListsContainer = (props) => {
   const [steps, setSteps] = useState([]);
   const [mode, setMode] = useState('building');
   const [isCanChangeAcceptor, setIsCanChangeAcceptor] = useState(false);
+  const [isCanAccept, setIsCanAccept] = useState(false);
   const [isStepsLoaded, setIsStepsLoaded] = useState(false);
+  const [notification, setNotification] = useState(null);
 
   const { dictsRequired } = useSelector(state => state.acceptLists);
   const { dicts, components } = useSelector(state => state.dicts);
 
   const isDictsLoaded = components.acceptLists ? true : false;
 
-  useEffect(() => {
-    dispatch(requestDicts(dictsRequired, 'acceptLists'));
-    getSteps();
-  }, []);
 
   const {
     foreignKey,
     model,
   } = props;
+
+  const setNotificationCustom = (msg) => {
+    setNotification(msg);
+  }
+  window.setNotificationCustom = setNotificationCustom;
+
+  useEffect(() => {
+    dispatch(requestDicts(dictsRequired, 'acceptLists'));
+    getSteps();
+  }, []);
 
   const getSteps = () => {
     setIsStepsLoaded(false);
@@ -48,6 +57,7 @@ const AcceptListsContainer = (props) => {
         setIsCanChangeAcceptor(resp.data.isCanChangeAcceptor);
         setSteps(steps);
         setIsStepsLoaded(true);
+        setIsCanAccept(resp.data.isCanAccept);
       });
   }
 
@@ -58,8 +68,12 @@ const AcceptListsContainer = (props) => {
       body: values,
     })
       .then((resp) => {
-        getSteps();
-        setAcceptorsCallback();
+        if (typeof resp.error == "undefined") {
+          getSteps();
+          setAcceptorsCallback();
+        } else {
+          return dispatch(openConfirm(resp.error));
+        }
       });
   }
 
@@ -161,6 +175,10 @@ const AcceptListsContainer = (props) => {
     }
   }
 
+  if (notification) {
+    return notification;
+  }
+
   if (!isDictsLoaded) {
     return('Справочники загружаются');
   }
@@ -186,6 +204,7 @@ const AcceptListsContainer = (props) => {
       declineStep,
       changeAcceptor,
       isCanChangeAcceptor,
+      isCanAccept,
     });
   }
 
