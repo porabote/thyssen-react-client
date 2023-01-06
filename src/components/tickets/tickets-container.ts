@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import Api from "@services/api-service";
+import Api from "@/services/api-service";
 import {openConfirm} from "porabote/confirm";
-import {API_URL} from "@configs"
+import {API_URL} from "@/configs"
 import { requestDicts } from "../dicts/store/dicts-actions";
 import { pushItemToModal, removeModalItem } from "porabote/modal/store/modal-actions";
-import { fetchFeedData, updateFeedFilters } from "@components/tickets/store/tickets-actions";
+import { fetchFeedData, updateFeedFilters } from "@/components/tickets/store/tickets-actions";
 import View from "./view";
 import Feed from "./feed";
 import { useHistory } from 'react-router';
@@ -88,7 +88,7 @@ const TicketsContainer = (props) => {
     console.log(request_id);
     window.location = `${API_URL}/api/ticketsRequests/method/downloadTickets?request_id=${request_id}`;
   }
-  
+
   const editTicket = (id, data, setTickets) => {
     dispatch(pushItemToModal(
       React.createElement(EditTicket, { id, dicts, editTicketSubmit, data, setTickets}),
@@ -145,7 +145,7 @@ const TicketsContainer = (props) => {
   }
 
 
-  
+
 
   if (props.match.params.action === "view") {
     return React.createElement(View, {
@@ -161,7 +161,7 @@ const TicketsContainer = (props) => {
       setStatusAsBought,
     });
   }
-  
+
   return React.createElement(Feed, {
     isDictsLoaded,
     fetchData,

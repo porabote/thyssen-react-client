@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import { fetchRecordsThunk } from './business-events-actions'
 import { FeedList, FeedListBody, FeedListBodyRow } from '../app/feed-list'
 import ListWithData from '../hoc/list-with-data'
-import { Checkbox } from '../app/form'
+import { Checkbox } from '../app/Form'
 import moment from 'moment'
 
 class BusinessEventsList extends Component {

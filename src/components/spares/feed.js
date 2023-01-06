@@ -1,10 +1,7 @@
 import React from "react";
 import {useSelector} from "react-redux";
 import {Form, ButtonLazyLoad} from "porabote/form";
-import {fetchData} from "./store/spares-actions";
-import {updateFilters} from "@components/filters/store/filters-actions";
-import {requestDicts} from "@components/dicts/store/dicts-actions";
-import {feedWithData} from "@hocs";
+import {fetchFeedData} from "./store/spares-actions";
 import Grid from "porabote/grid";
 import FilterLeft from "./filter-left";
 import ContentPanel from "./content-panel";
@@ -52,7 +49,7 @@ const Feed = (props) => {
         </div>
 
         <div className="content__tools_panel">
-          <ContentPanel fetchData={fetchData}/>
+          <ContentPanel fetchData={fetchFeedData}/>
         </div>
 
         <div className="content__body">

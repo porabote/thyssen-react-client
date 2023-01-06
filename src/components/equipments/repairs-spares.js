@@ -86,7 +86,7 @@ class RepairsSpares extends React.Component {
           include: [
             "spares",
             "spares.spare",
-            "spares.spare.store",
+            "spares.spare.ReduxStore",
           ],
         },
       }
@@ -158,7 +158,7 @@ class RepairsSpares extends React.Component {
               {this.state.seekOptions.map((item, index) => {
                 const data = item.attributes;
                 return(
-                  <div 
+                  <div
                     onClick={(e) => {
 
                       let count = '';
@@ -182,8 +182,8 @@ class RepairsSpares extends React.Component {
                         />,
                         `Зачасти к ремонту/то N ${data.id} - ${data.name}`,
                       );
-                    }} 
-                    key={index} 
+                    }}
+                    key={index}
                     className="fast-find__item__drop-panel__item"
                   >
                     <p>{data.name}</p>

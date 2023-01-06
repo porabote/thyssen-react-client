@@ -1,15 +1,9 @@
-import React from 'react'
-import AddObserver from '@components/observers/add-observer-form'
-import ObserverUnsubscribe from '@components/observers/observer-unsubscribe'
-import Api from '@services/api-service'
-import { connect } from 'react-redux'
+import React from 'react';
+import AddObserver from '@components/observers/add-observer-form';
+import Api from '@services/api-service';
+import { connect } from 'react-redux';
 import AddIcon from '@material-ui/icons/Add';
-import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
-import PersonAdd from '@material-ui/icons/PersonAdd';
-import RemoveCircleSharpIcon from '@material-ui/icons/RemoveCircleSharp';
-import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import AlarmOnOutlinedIcon from '@material-ui/icons/AlarmOnOutlined';
-import RemoveIcon from '@material-ui/icons/Remove';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import { StripedList, StripedListRow, StripedListCell } from 'porabote/striped-list';
 

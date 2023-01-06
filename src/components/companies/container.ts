@@ -1,9 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {useDispatch, useSelector} from 'react-redux';
-import {useRouteMatch} from "react-router-dom";
-import { useHistory } from 'react-router';
-import Api from "@services";
-import {requestDicts} from "@components/dicts/store/dicts-actions";
+import Api from "@/services";
+import {requestDicts} from "@/components/dicts/store/dicts-actions";
 import {fetchFeedData, updateFeedFilters} from "./store/actions";
 import ViewContainer from "./view/view-container";
 import Feed from "./feed/feed";
@@ -18,9 +16,8 @@ interface IChildComponentProps extends React.Props<any> {
 const CompaniesContainer = (props: IChildComponentProps) => {
 
   const dispatch = useDispatch();
-  const history = useHistory();
 
-  const {alias, dictsRequired, title, meta, filter} = useSelector(state => state.companies);
+  const {alias, dictsRequired, title, meta, filter} = useSelector((state: {}) => state.companies);
   const {components, dicts} = useSelector(state => state.dicts);
 
   const isDictsLoaded = components[alias] ? true : false;

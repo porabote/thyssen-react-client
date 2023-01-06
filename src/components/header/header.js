@@ -1,4 +1,5 @@
 import React from 'react';
+import {NavLink} from 'react-router-dom';
 import {connect} from 'react-redux';
 import Profile from './profile';
 import TopBarIcons from "./top-bar-icons";
@@ -38,9 +39,9 @@ class Header extends React.Component {
       <header style={{'background': bgColor}}>
         <div className="header-panel">
 
-          <a className="header-panel__logo" href={"/"}>
+          <NavLink className="header-panel__logo" to={"/"}>
             <img style={{width: '92px'}} src={PRBLogo}/>
-          </a>
+          </NavLink>
           {this.props.auth.isAuth &&
             <Navbar data={this.state.menuTree}/>
           }

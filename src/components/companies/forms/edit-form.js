@@ -6,7 +6,7 @@ import {
   Field,
   Input,
   InputDate,
-  TextArea,
+  Textarea,
   Option,
   Select,
   SubmitButton
@@ -40,7 +40,7 @@ const EditForm = props => {
             />
           </Field>
           <Field>
-            <TextArea
+            <Textarea
               areaStyle={{height: '500px', fontSize: '12px'}}
               label="Тело письма"
               name="body"

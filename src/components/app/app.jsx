@@ -8,7 +8,7 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <BrowserRouter basename="/porabote" history={history}>
+      <BrowserRouter basename="/porabote">
         <AuthContainer/>
       </BrowserRouter>
     </Provider>

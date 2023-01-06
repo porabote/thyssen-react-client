@@ -1,5 +1,3 @@
 import HomePage from "./home-page.jsx";
 
-export {
-  HomePage
-};
+export default HomePage;

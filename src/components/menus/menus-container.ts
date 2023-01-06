@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from 'react-redux';
-import {useRouteMatch} from "react-router-dom";
-import Api from "@services";
-import {requestDicts} from "@components/dicts/store/dicts-actions";
+import Api from "@/services";
+import {requestDicts} from "@/components/dicts/store/dicts-actions";
 import {fetchFeedData, updateFeedFilters} from "./store/actions";
 import ViewContainer from "./view/view-container";
 import Feed from "./feed/feed";

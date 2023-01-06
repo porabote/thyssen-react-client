@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useSelector} from "react-redux";
-import {fetchData} from "./store/actions";
+import {fetchFeedData} from "./store/actions";
 import Grid from 'porabote/grid'
 import {Form, ButtonLazyLoad} from 'porabote/form'
 import FilterLeft from './filter-left'
@@ -47,7 +47,7 @@ const Feed = (props) => {
         </div>
 
         <div className="content__tools_panel">
-          <ContentPanel fetchData={fetchData}/>
+          <ContentPanel fetchData={fetchFeedData}/>
         </div>
 
         <div className="content__body">

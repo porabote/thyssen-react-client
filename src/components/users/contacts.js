@@ -71,6 +71,27 @@ const Contacts = (props) => {
     return <FeedPreloader title="Контакты сотрудников"/>;
   }
 
+  const {shifts} = props.dicts;
+
+  let DateNow = new Date().getTime();
+  let shiftsOnlineList = {};
+
+  Object.entries(shifts).map(item => {
+    const [key, shift] = item;
+    let periods = JSON.parse(shift.periods)
+    if(periods) {
+      let nowPeriod = periods.filter(item => {
+        if(DateNow >= new Date(`${item.dateStart} 00:00:00`).getTime() && DateNow <= new Date(`${item.dateFinish} 23:59:59`).getTime()) {
+          return true;
+        }
+        return false;
+      });
+      if(nowPeriod.length) shiftsOnlineList[shift.id] = 1;
+    }
+
+  });
+
+
   return (
     <Form values={{...filter}}>
       <div className="content feed">
@@ -132,18 +153,16 @@ const Contacts = (props) => {
               const { avatar, department, shift, shiftworkers } = item[1].relationships;
 
               let isOnline = false;
-              if (shift) {
-                let periods = [];
-                if (shift.attributes.periods) {
-                  let periods = JSON.parse(shift.attributes.periods);
-                  console.log(periods);
-                }
-              }
+              if (shift && typeof shiftsOnlineList[shift.id] != "undefined") isOnline = true;
+
               let avatarUri =  (avatar) ? avatar.attributes.uri : '';
               let Avatar = <div
                 className="header-panel__profile__photo"
-                style={{backgroundImage: `url(${avatarUri})`}}
+                style={{backgroundImage: `url(${avatarUri})`, position: 'relative'}}
               >
+                {isOnline &&
+                  <div style={{top: '26px', left: '29px'}} className="header-panel__profile__photo_online"></div>
+                }
               </div>;
 
                 let platformTitle = (shift && shift.attributes.platform) ? `(${shift.attributes.platform.ru_alias})` : '';
@@ -151,7 +170,9 @@ const Contacts = (props) => {
 
               return (
                 <Row key={index}>
-                  <Cell>{Avatar}</Cell>
+                  <Cell>
+                    {Avatar}
+                  </Cell>
                   <Cell><b>{user.name}</b><br/>{user.post_name}</Cell>
                   <Cell>{department && department.attributes.name}</Cell>
                   <Cell style={{textOverflow: 'clip'}}><a href={`mailto:${user.email}`}>{user.email}</a></Cell>

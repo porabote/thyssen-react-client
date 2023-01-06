@@ -39,7 +39,7 @@ const initialState = {
     // "user",
     // "equipment",
     // "repairs",
-    // "store",
+    // "ReduxStore",
     // "spares_type",
     // "remains",
     // "status",

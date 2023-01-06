@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import Api from "@services/api-client";
 import { requestDicts } from "../dicts/store/dicts-actions";
-import { fetchFeedData, updateFeedFilters } from "@components/reports/store/reports-actions";
+import { fetchFeedData, updateFeedFilters } from "@/components/reports/store/reports-actions";
 import View from "./view";
 import Feed from "./feed";
 

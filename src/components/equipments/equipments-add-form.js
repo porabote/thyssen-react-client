@@ -105,7 +105,7 @@ const EquipmentsAddForm = (props) => {
             // buttons={[
             //   <Button
             //     key={1}
-            //     className="form-item__icon-plus"
+            //     className="Form-item__icon-plus"
             //     onClick={() => {
             //       props.pushItemToModal(
             //         <AddObject kind="self" platforms={platforms} />,
@@ -133,7 +133,7 @@ const EquipmentsAddForm = (props) => {
             // buttons={[
             //   <Button
             //     key={1}
-            //     className="form-item__icon-plus"
+            //     className="Form-item__icon-plus"
             //     onClick={() => {
             //       props.pushItemToModal(
             //         <AddObject kind="hole" platforms={platforms} />,

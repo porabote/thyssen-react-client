@@ -73,7 +73,7 @@ class EquipmentsAccidentsAdd extends Component {
                     <Field>
                         <Input
                           name="downtime"
-                          label="Время простоя"
+                          label="Время простоя (ч)"
                           mask={(value) => {
                               return Masks.digitalOnly(value);
                           }}

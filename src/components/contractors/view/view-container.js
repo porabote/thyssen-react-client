@@ -3,7 +3,7 @@ import {useSelector, useDispatch} from "react-redux";
 import {pushItemToModal, removeModalItem} from "porabote/modal/store/modal-actions";
 import { useHistory } from 'react-router';
 import { openConfirm } from "porabote/confirm/store/confirm-actions";
-import { requestDicts } from "@components/dicts/store/dicts-actions";
+import { requestDicts } from "@components/dicts/ReduxStore/dicts-actions";
 import Api from "@services";
 import View from "./view";
 import ViewPreloader from "@components/view/view-preloader";

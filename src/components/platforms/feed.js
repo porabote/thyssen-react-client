@@ -1,9 +1,8 @@
 import React from "react";
 import {connect} from "react-redux";
 import { Form, ButtonLazyLoad } from "porabote/form";
-import { updateFilters } from "@components/filters/store/filters-actions";
+import {updateFeedFilters} from "@components/filters/store/filters-actions";
 import {fetchFeedData} from "./store/platforms-actions";
-import {requestDicts} from "@components/dicts/store/dicts-actions";
 import {feedWithData} from "@hocs";
 import Grid from "porabote/grid";
 import FilterLeft from "./filter-left";
@@ -92,7 +91,7 @@ class Feed extends React.Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     updateFilters: (data, storeAlias) => {
-      dispatch(updateFilters(data, storeAlias));
+      dispatch(updateFeedFilters(data, storeAlias));
     },
     fetchFeedData: () => {
       dispatch(fetchFeedData());

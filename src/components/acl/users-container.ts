@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import Api from "@services/api-client";
 import { requestDicts } from "../dicts/store/dicts-actions";
-import { fetchFeedData, updateFeedFilters } from "@components/users/store/users-actions";
+import { fetchFeedData, updateFeedFilters } from "@/components/users/store/users-actions";
 import View from "./view";
 import Feed from "./feed";
 
@@ -15,7 +14,7 @@ const UsersContainer = (props: IChildComponentProps) => {
 
   const dispatch = useDispatch();
 
-  const { dictsRequired, title, meta, filter } = useSelector(state => state.users);
+  const { dictsRequired, title, meta, filter } = useSelector((state: IRootState) => state.users);
   const { components, dicts } = useSelector(state => state.dicts);
 
   const isDictsLoaded = components.users ? true : false;

@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { API_URL } from "@services/constants";
-import Api from "@services/api-client";
+import { API_URL } from "@/services/constants";
 import { requestDicts } from "../dicts/store/dicts-actions";
-import { fetchFeedData, updateFeedFilters } from "@components/equipments/store/equipments-actions";
+import { fetchFeedData, updateFeedFilters } from "@/components/equipments/store/equipments-actions";
 import View from "./view";
 import Feed from "./feed";
 
@@ -68,7 +67,7 @@ const EquipmentsContainer = (props: IChildComponentProps) => {
     updateFilters,
     exportFeedToExcel
   });
-  
+
 }
 
 export default EquipmentsContainer;

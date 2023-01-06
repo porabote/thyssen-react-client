@@ -2,8 +2,9 @@ import React from 'react';
 import Router from '@src/routes/router';
 import Header from '@components/header';
 import Modal from 'porabote/modal';
+import ModalTS from '@app/Modal';
 import Confirm from "porabote/confirm";
-import Styles from "../styles/styles";
+//import Styles from "../styles/styles";
 
 const DefaultLayout = () => {
 
@@ -19,6 +20,7 @@ const DefaultLayout = () => {
       </section>
 
       <Modal/>
+      <ModalTS/>
       <Confirm/>
 
     </div>

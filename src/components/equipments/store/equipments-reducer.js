@@ -59,7 +59,7 @@ const initialState = {
     "equipment_repairs.doer",
     "equipment_repairs.spares",
     "equipment_repairs.spares.spare",
-    "equipment_repairs.spares.spare.store",
+    "equipment_repairs.spares.spare.ReduxStore",
     "equipment_repairs.type",
   ],
 };

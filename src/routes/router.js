@@ -1,7 +1,8 @@
 import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import { AuthContainer } from "@components/auth";
-import AccessLists from "@components/access-lists"
+import AuthContainer from "@components/auth";
+import AccessLists from "@components/access-lists";
+import AccessListsAddForm from "@components/access-lists/forms/add-form";
 import BusinessEvents from "@components/business-events";
 import Companies from "@components/companies";
 import EquipmentsContainer from "@components/equipments";
@@ -15,7 +16,6 @@ import ProtectedRoute from "./protected-route";
 import Platforms from "@components/platforms";
 import ReportsContainer from "@components/reports";
 import SparesContainer from "@components/spares";
-import Samples from "@components/samples";
 import Shifts from "@components/shifts"
 import Store from "../store";
 import Tickets from "@components/tickets";
@@ -29,10 +29,10 @@ const Router = () => {
             <Switch>
                 <ProtectedRoute path="/" exact component={HomePage} />
                 {/*<ProtectedRoute path="/chat/:action" component={Chat} />*/}
+                <ProtectedRoute path="/access-lists/form/" component={AccessListsAddForm} />
                 <ProtectedRoute path="/access-lists/:action?/:id?" component={AccessLists} />
                 <ProtectedRoute path="/companies/:action?/:id?" component={Companies} />
                 <ProtectedRoute path="/menus/:action?/:id?" component={MenuContainer} />
-                <ProtectedRoute path="/samples/:action?/:id?" component={Samples} />
                 <ProtectedRoute path="/equipments/:action" component={EquipmentsContainer} />
                 <ProtectedRoute path="/mails-patterns/:action?/:id?" component={MailsPatterns} />
                 <ProtectedRoute path="/persons/:action" component={Persons} />

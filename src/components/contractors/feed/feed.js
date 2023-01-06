@@ -1,14 +1,14 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import {ButtonLazyLoad, Form} from "porabote/form";
-import {requestDicts} from "@components/dicts/store/dicts-actions";
+import {requestDicts} from "@components/dicts/ReduxStore/dicts-actions";
 import Grid from "porabote/grid";
 import FilterLeft from "./filter-left";
 import FeedTopPanel from "./feed-top-panel";
 import FilterTop from "./filter-top";
 import MenuIcon from "@material-ui/icons/Menu";
 import moment from "moment";
-import {updateFilters} from "@components/filters/store/filters-actions";
+import {updateFilters} from "@components/filters/ReduxStore/filters-actions";
 import FeedPreloader from "@components/feed/feed-preloader";
 
 const Feed = (props) => {

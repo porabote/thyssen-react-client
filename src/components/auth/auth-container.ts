@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import React, {useEffect} from "react";
+import {useDispatch, useSelector} from 'react-redux';
+// @ts-ignore
 import Api from "@services";
 import {
   authCheck,
@@ -7,17 +8,18 @@ import {
   loginRequest,
   loginSuccess,
 } from "./store/auth-actions";
-import { requestDicts } from "../dicts/store/dicts-actions";
-import LayoutContainer, { LoginLayout } from "@components/layout";
-import { LOGIN_API_URL } from "./constants";
+import {requestDicts} from "../dicts/store/dicts-actions";
+// @ts-ignore
+import LayoutContainer, {LoginLayout} from "@components/layout";
+import {LOGIN_API_URL} from "./constants";
 
-const AuthContainer = (props) => {
+const AuthContainer = (props: {}) => {
 
   const dispatch = useDispatch();
 
-  const { isAuth, dictsRequired } = useSelector(state => state.auth);
+  const {isAuth, dictsRequired} = useSelector((state: { auth: { isAuth: boolean, dictsRequired: [] } }) => state.auth);
 
-  const { dicts, components } = useSelector(state => state.dicts);
+  const {dicts, components} = useSelector((state: { dicts: { dicts: [], components: {auth: any} } }) => state.dicts);
 
   const isDictsLoaded = components.auth ? true : false;
 
@@ -26,7 +28,7 @@ const AuthContainer = (props) => {
     dispatch(requestDicts(dictsRequired, 'auth'));
   }, []);
 
-  if(isAuth) {
+  if (isAuth) {
     return React.createElement(LayoutContainer);
   }
 
@@ -38,13 +40,13 @@ const AuthContainer = (props) => {
     }
   }
 
-  const login: Function = (data) => {
+  const login: Function = (data: {}) => {
 
     dispatch(loginRequest());
 
     Api.post(LOGIN_API_URL, {
       body: data
-    }).then(resp => {
+    }).then((resp: { data: { jwtToken: any } }) => {
       const parsedData = setToken(resp.data.jwtToken);
       const {
         data,
@@ -55,7 +57,7 @@ const AuthContainer = (props) => {
     });
   }
 
-  const setToken = (tokens) => {
+  const setToken = (tokens: { access_token: string }) => {
 
     let data = {}
     let access_token = null
@@ -73,7 +75,7 @@ const AuthContainer = (props) => {
     localStorage.setItem('porabote_user', JSON.stringify(data));
   }
 
-  const parseJwt = token => {
+  const parseJwt = (token: string) => {
     var base64Url = token.split('.')[1];
 
     if (base64Url === undefined) return null;

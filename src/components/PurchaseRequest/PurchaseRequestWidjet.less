@@ -1,0 +1,124 @@
+.pr-widjet {
+  grid-area: pr_widjet;
+  background: #fff;
+  border-radius: 16px;
+  padding: 40px 40px;
+  color: #040415;
+  box-shadow: rgba(225,227,229,0.07);
+}
+
+.pr-widjet-empty-set {
+  color: #d6d8da;
+  padding-bottom: 20px;
+}
+
+.pr-widjet-title {
+  font-weight: 900;
+  font-size: 23px;
+  padding-bottom: 20px;
+  color: #d6d8da;
+}
+
+.pr-widjet-managers-manager-name {
+  font-size: 1.0rem;
+  font-weight: 300;
+  padding: 0.7rem 0;
+  letter-spacing: 1px;
+  color: #282828;
+  background-image: url("./svg/user.svg");
+  background-size: 20px;
+  background-repeat: no-repeat;
+  background-position: 0 50%;
+  padding-left: 30px;
+}
+
+.pr-widjet-nmcls-list {
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: 20px;
+}
+
+.pr-widjet-nmcls-list-link {
+  position: relative;
+  font-weight: 300;
+  font-size: 0.8rem;
+  padding: 4px 14px 4px 8px;
+  display: inline-block;
+  color: #1a1a1a;
+  margin: 2px 8px 12px 2px;
+  //display: flex;
+  //align-content: center;
+  //justify-content: center;
+  //align-items: center;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.pr-widjet-nmcls-list-link.regular {
+
+  //color: #fff;
+  //background: #96dcc6;
+  border: 1px solid #d5d4d4;
+  border: 1px solid #03a87c;
+}
+
+//.pr-widjet-nmcls-list-link.regular:hover {
+//  background: #03a87c;
+//}
+
+.pr-widjet-nmcls-list-link.overdue {
+
+}
+//.pr-widjet-nmcls-list-link.overdue:hover {
+//  background: #f90060;
+//  color: #fff;
+//}
+
+.pr-widjet-nmcls-list-link-nmcl-count {
+  position: absolute;
+  background: #fff;
+  width: 20px;
+  height: 20px;
+  right: -8px;
+  top: -10px;
+  border-radius: 50%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  font-size: 0.7rem;
+}
+
+.pr-widjet-nmcls-list-link.overdue {
+ // background: #fc3d80;
+  border: 1px solid #d5d4d4;
+  color: #000;
+  border: 1px solid #fc367b;
+}
+
+.pr-widjet-nmcls-list-link.overdue .pr-widjet-nmcls-list-link-nmcl-count {
+  //background: #f90060;
+  color: #fff;
+  background: #fc367b;
+ // color: #fc367b;
+}
+.pr-widjet-nmcls-list-link.regular .pr-widjet-nmcls-list-link-nmcl-count {
+  //background: #03a87c;
+  //color: #fff;
+  color: #03a87c;
+  border: 1px solid #03a87c;
+}
+.pr-widjet-nmcls-list-link.paused .pr-widjet-nmcls-list-link-nmcl-count {
+  background: #fcdf21;
+  color: #000;
+}
+
+.pr-widjet-nmcls-list-link.paused {
+  color: #adadad;
+  border: 1px solid #d5d4d4;
+}
+
+//.pr-widjet-nmcls-list-link-hash-tag {
+//  color: #d6d8da;
+//}

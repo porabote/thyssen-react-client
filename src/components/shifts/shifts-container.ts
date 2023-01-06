@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { useRouteMatch } from "react-router-dom";
 import { pushItemToModal, removeModalItem } from "porabote/modal/store/modal-actions";
-import Api from "@services/api-service";
+import Api from "@/services/api-service";
 import { requestDicts } from "../dicts/store/dicts-actions";
 import { fetchFeedData, updateFeedFilters } from "./store/actions";
 import View from "./view";
@@ -38,7 +37,7 @@ const ShiftsContainer = (props: IChildComponentProps) => {
   const updateFilters: Function = (values: Object) => {
     dispatch(updateFeedFilters(values));
   }
-  
+
   const add = (values) => {
     dispatch(pushItemToModal(React.createElement(Add, { dicts, addConfirm }),`Добавление вахты`));
   }
