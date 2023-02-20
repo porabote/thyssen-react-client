@@ -2,7 +2,7 @@ import React from 'react';
 import Router from '@src/routes/router';
 import Header from '@components/header';
 import Modal from 'porabote/modal';
-import ModalTS from '@app/Modal';
+import ModalTS from '@app/modal';
 import Confirm from "porabote/confirm";
 //import Styles from "../styles/styles";
 

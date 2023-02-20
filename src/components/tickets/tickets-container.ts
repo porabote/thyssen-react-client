@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import Api from "@/services/api-service";
 import {openConfirm} from "porabote/confirm";
 import {API_URL} from "@/configs"
-import { requestDicts } from "../dicts/store/dicts-actions";
+import { requestDicts } from "../dicts/redux-store/dicts-actions";
 import { pushItemToModal, removeModalItem } from "porabote/modal/store/modal-actions";
-import { fetchFeedData, updateFeedFilters } from "@/components/tickets/store/tickets-actions";
+import { fetchFeedData, updateFeedFilters } from "@/components/tickets/redux-store/tickets-actions";
 import View from "./view";
 import Feed from "./feed";
 import { useHistory } from 'react-router';

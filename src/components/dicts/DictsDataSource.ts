@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector, useStore} from 'react-redux';
-import { requestDicts } from "./store/dicts-actions";
+import { requestDicts } from "./redux-store/dicts-actions";
 
 const DictsDataSource = (componentName: string): [] => {
 

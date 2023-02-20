@@ -1,7 +1,5 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import React from "react";
 import DefaultLayout from "./default-layout";
-import AuthContainer from "@components/auth";
 
 const LayoutContainer = (props) => {
 

@@ -71,7 +71,9 @@ const Feed = (props) => {
                   <div linkTo={`/access-lists/view/${attrs.id}`} key={index}>
                     <div>{attrs.id}</div>
                     <div><b>{attrs.name}</b></div>
-                    <div>{rels.component.attributes && rels.component.attributes.description}</div>
+                    <div>
+                      {rels.component.attributes && rels.component.attributes.description}
+                    </div>
                   </div>
                 )
               })

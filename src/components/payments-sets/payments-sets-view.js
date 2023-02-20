@@ -5,8 +5,8 @@ import Api from '@services/api-service'
 import PaymentsSetsViewFiles from './payments-sets-view-files'
 import PaymentsSetsData from './payments-sets-data'
 import PaymentsSetsPayments from './payments-sets-payments'
-import History, { HistoryItem } from 'porabote/history'
-import Comments from 'porabote/comments'
+import History, { HistoryItem } from 'porabote/history';
+import Comments from 'porabote/comments';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import ArrowBackIosRoundedIcon from '@material-ui/icons/ArrowBackIosRounded';
 import ArrowRightRoundedIcon from '@material-ui/icons/ArrowRightRounded';

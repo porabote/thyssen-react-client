@@ -10,10 +10,12 @@ import HomePage from "@components/pages";
 import MailsPatterns from "@components/mails-patterns";
 import MenuContainer from "@components/menus";
 import Observers from "@components/observers";
+import Payments from "@components/payments";
 import PaymentsSetsContainer from "@components/payments-sets";
 import Persons from "@components/persons";
 import ProtectedRoute from "./protected-route";
 import Platforms from "@components/platforms";
+import PurchaseRequests from "@components/purchase-requests"
 import ReportsContainer from "@components/reports";
 import SparesContainer from "@components/spares";
 import Shifts from "@components/shifts"
@@ -21,7 +23,6 @@ import Store from "../store";
 import Tickets from "@components/tickets";
 import UsersContainer from "@components/users";
 import WorkflowContainer from "@components/workflow"
-// import Chat from "@components/chat";
 
 const Router = () => {
     return (
@@ -42,6 +43,8 @@ const Router = () => {
                 <ProtectedRoute path="/business-events/:action" component={BusinessEvents} />
                 <ProtectedRoute path="/platforms/:action" component={Platforms} />
                 <ProtectedRoute path="/payments-sets/:action" component={PaymentsSetsContainer} />
+                <ProtectedRoute path="/payments/:action/:id?" component={Payments} />
+                <ProtectedRoute path="/purchase-requests/:action/:id?" component={PurchaseRequests} />
                 <ProtectedRoute path="/tickets/:action/:id?" component={Tickets} />
                 <ProtectedRoute path="/users/:action/:id?" authAllow={['confirmInvitation']} component={UsersContainer} />
                 <ProtectedRoute path="/workflow/:action?/:id?" component={WorkflowContainer} />

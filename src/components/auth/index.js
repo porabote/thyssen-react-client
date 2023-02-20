@@ -1,3 +1,3 @@
-import AuthContainer from "./auth-container.ts";
+import AuthContainer from "./auth-container";
 
 export default AuthContainer;

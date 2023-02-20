@@ -1,8 +1,8 @@
 import React, { useEffect} from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { API_URL } from "@/services/constants";
-import { requestDicts } from "../dicts/store/dicts-actions";
-import { fetchFeedData, updateFeedFilters } from "@/components/equipments/store/equipments-actions";
+import { requestDicts } from "../dicts/redux-store/dicts-actions";
+import { fetchFeedData, updateFeedFilters } from "@/components/equipments/redux-store/equipments-actions";
 import View from "./view";
 import Feed from "./feed";
 

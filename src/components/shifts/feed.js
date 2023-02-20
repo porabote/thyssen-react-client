@@ -5,7 +5,7 @@ import { ButtonLazyLoad, Form } from "porabote/form";
 import Grid from "porabote/grid";
 import FilterLeft from "./filter-left";
 import FilterTop from "./filter-top";
-import {updateFilters} from "@components/filters/store/filters-actions";
+import {updateFilters} from "@components/filters/redux-store/filters-actions";
 import FeedPreloader from "@components/feed/feed-preloader";
 import MenuIcon from "@material-ui/icons/Menu";
 import FlagCircleIcon from '@mui/icons-material/FlagCircle';

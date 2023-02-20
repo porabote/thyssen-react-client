@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {pushItemToModal, removeModalItem} from "porabote/modal/store/modal-actions";
 import { openConfirm } from "porabote/confirm/store/confirm-actions";
-import { requestDicts } from "../dicts/store/dicts-actions";
+import { requestDicts } from "../dicts/redux-store/dicts-actions";
 import Api from "@services";
 import View from "./view";
 import ViewPreloader from "../view/view-preloader";

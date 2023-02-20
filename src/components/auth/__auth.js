@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import { checkAuth } from './store/auth-actions';
+import { checkAuth } from './redux-store/auth-actions';
 
 class Auth extends React.Component {
 

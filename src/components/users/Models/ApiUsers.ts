@@ -1,9 +1,9 @@
-import Model from "@/app/Models/Model";
+import Model from "@/app/models/model";
 
 class ApiUsers extends Model {
 
-  constructor(attributes = {}) {
-    super(attributes, "ApiUsers");
+  static get apiEntityName(): string {
+    return "ApiUsers";
   }
 
 }

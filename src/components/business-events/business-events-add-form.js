@@ -47,7 +47,7 @@ class BusinessEventsAddForm extends Component {
                         component_id: null,
                         name: '',
                     }}
-                    action="/api/business-events/add/"
+                    action="/api/business-events/method/add/"
                     submitFormAfter={(resp) => {
                         window.location = `/porabote/business-events/view/${resp.data.id}`
                     }}

@@ -1,6 +1,6 @@
 import React from "react";
 import "./HomePage.less";
-import PurchaseRequestWidjet from "../PurchaseRequest/PurchaseRequestWidjet";
+import PurchaseRequestWidjet from "../purchase-requests/PurchaseRequestWidjet";
 
 const HomePage = (props) => {
 

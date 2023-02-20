@@ -3,7 +3,7 @@ import {NavLink} from "react-router-dom";
 import moment from "moment";
 import {Tab, TabList, TabPanel, Tabs} from "porabote/tabs";
 import ArrowRightRoundedIcon from "@material-ui/icons/ArrowRightRounded";
-import Subscribers from "./Subscribers";
+import PickedList from "./PickedList";
 
 const View = (props) => {
 
@@ -26,7 +26,7 @@ const View = (props) => {
           <Tab>Список пользователей</Tab>
         </TabList>
         <TabPanel>
-          <Subscribers {...props}/>
+          <PickedList {...props}/>
         </TabPanel>
       </Tabs>
 

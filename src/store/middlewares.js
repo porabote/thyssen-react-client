@@ -1,19 +1,19 @@
 import createSagaMiddleware from "redux-saga";
 import thunkMiddleware from "redux-thunk";
 import { all } from 'redux-saga/effects';
-import authWatcher from '@components/auth/store/auth-saga';
-import dictsWatcher from '@components/dicts/store/dicts-saga';
-import companiesWatcher from '@components/companies/store/saga';
-import mailsPatternsWatcher from '@components/mails-patterns/store/saga';
-import menusWatcher from '@components/menus/store/saga';
-import reportsWatcher from "@components/reports/store/reports-saga.js";
-import sparesWatcher from '@components/spares/store/spares-saga';
-import equipmentsWatcher from '@components/equipments/store/equipments-saga';
-import platformsWatcher from '@components/platforms/store/platforms-saga';
-import shiftsWatcher from '@components/shifts/store/saga';
-import ticketsWatcher from '@components/tickets/store/tickets-saga';
-import usersWatcher from '@components/users/store/users-saga';
-import paymentsSetsWatcher from '@components/payments-sets/store/payments-sets-saga.js';
+import authWatcher from '@components/auth/redux-store/auth-saga';
+import dictsWatcher from '@components/dicts/redux-store/dicts-saga';
+import companiesWatcher from '@components/companies/redux-store/saga';
+import mailsPatternsWatcher from '@components/mails-patterns/redux-store/saga';
+import menusWatcher from '@components/menus/redux-store/saga';
+import reportsWatcher from "@components/reports/redux-store/reports-saga";
+import sparesWatcher from '@components/spares/redux-store/spares-saga';
+import equipmentsWatcher from '@components/equipments/redux-store/equipments-saga';
+import platformsWatcher from '@components/platforms/redux-store/platforms-saga';
+import shiftsWatcher from '@components/shifts/redux-store/saga';
+import ticketsWatcher from '@components/tickets/redux-store/tickets-saga';
+import usersWatcher from '@components/users/redux-store/users-saga';
+import paymentsSetsWatcher from '@components/payments-sets/redux-store/payments-sets-saga';
 
 let staticSagas = [
   authWatcher(),
@@ -45,4 +45,3 @@ const sagaMiddleware = createSagaMiddleware();
 
 
 export {createSaga, sagaMiddleware, thunkMiddleware};
-

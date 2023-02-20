@@ -1,4 +1,4 @@
-import requestDicts from "./store/dicts-actions";
+import requestDicts from "./redux-store/dicts-actions";
 import DictsDataSource from "./DictsDataSource";
 
 export {

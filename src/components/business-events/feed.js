@@ -128,7 +128,7 @@ class Feed extends React.Component {
                                     return(
                                         <div linkTo={`/business-events/view/${attrs.id}`} key={attrs.id}>
                                             <div>{attrs.id}</div>
-                                            <div>{rels.component.attributes.description}</div>
+                                            <div>{rels.component && rels.component.attributes.description}</div>
                                             <div>{attrs.name}</div>
                                         </div>
                                     )

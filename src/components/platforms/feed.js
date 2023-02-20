@@ -1,8 +1,8 @@
 import React from "react";
 import {connect} from "react-redux";
 import { Form, ButtonLazyLoad } from "porabote/form";
-import {updateFeedFilters} from "@components/filters/store/filters-actions";
-import {fetchFeedData} from "./store/platforms-actions";
+import {updateFeedFilters} from "@components/filters/redux-store/filters-actions";
+import {fetchFeedData} from "./redux-store/platforms-actions";
 import {feedWithData} from "@hocs";
 import Grid from "porabote/grid";
 import FilterLeft from "./filter-left";

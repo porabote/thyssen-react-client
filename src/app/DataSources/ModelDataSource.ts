@@ -1,20 +1,29 @@
-import IModel from "@/app/Models/IModel";
-
 export interface IModelDataSource {
   model: any;
-  constraints: {
-    where?: {}
-  };
-  dataPath: string;
+  constraints?: {
+    where?: {};
+    whereNotNull?: [];
+  } | undefined;
+  dataPath?: string | undefined;
+  limit: number;
 };
 
-const ModelDataSource = async ({model, constraints = {}, dataPath = "data"}: IModelDataSource) => {
+const ModelDataSource = async ({model, constraints = {}, dataPath = "data", limit = 500}: IModelDataSource) => {
 
   let modelInstance = new model({});
   if (constraints.where) {
     modelInstance.setWhere(constraints.where)
   }
 
+  if (constraints.where) {
+    modelInstance.setWhere(constraints.where)
+  }
+
+  if (constraints.whereNotNull) {
+    modelInstance.whereNotNull(constraints.whereNotNull)
+  }
+
+  modelInstance.setLimit(limit);
   let res = await modelInstance.get();
 
   let path = dataPath.split(".");

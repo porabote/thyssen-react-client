@@ -11,7 +11,7 @@
     // "disableReferencedProjectLoad": true,             /* Reduce the number of projects loaded automatically by TypeScript. */
 
     /* Language and Environment */
-    "target": "es9",
+    "target": "es6",
     /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
     "lib": [
       "DOM",
@@ -38,18 +38,25 @@
     // "rootDir": "./",                                  /* Specify the root folder within your source files. */
     "moduleResolution": "node",
     /* Specify how TypeScript looks up a file from a given module specifier. */
-    "baseUrl": "./",                                  /* Specify the base directory to resolve non-relative module names. */
+    "baseUrl": "./",
+    /* Specify the base directory to resolve non-relative module names. */
     "paths": {
-//      "@/*": ["src/*"],
-      "@/*": ["src/*"],
-//      "@src": path.resolve(__dirname, "../src/"),
-//      "@components": path.resolve(__dirname, "../src/components/"),
-//      "@hocs": path.resolve(__dirname, "../src/hocs/"),
-//      "@ReduxStore": path.resolve(__dirname, "../src/ReduxStore/"),
-//      "@services": path.resolve(__dirname, "../src/services/"),
-//      "@configs": path.resolve(__dirname, "../src/configs/"),
-//      "@styles": path.resolve(__dirname, "../src/styles/")
-    },                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
+      //      "@/*": ["src/*"],
+      "@/*": [
+        "src/*"
+      ],
+      "/app/*": [
+        "src/app/*"
+      ],
+      //      "@src": path.resolve(__dirname, "../src/"),
+      //      "@components": path.resolve(__dirname, "../src/components/"),
+      //      "@hocs": path.resolve(__dirname, "../src/hocs/"),
+      //      "@ReduxStore": path.resolve(__dirname, "../src/ReduxStore/"),
+      //      "@services": path.resolve(__dirname, "../src/services/"),
+      //      "@configs": path.resolve(__dirname, "../src/configs/"),
+      //      "@styles": path.resolve(__dirname, "../src/styles/")
+    },
+    /* Specify a set of entries that re-map imports to additional lookup locations. */
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     // "typeRoots": [],                                  /* Specify multiple folders that act like `./node_modules/@types`. */
     // "types": [],                                      /* Specify type package names to be included without being referenced in a source file. */
@@ -123,7 +130,9 @@
     "skipLibCheck": true
     /* Skip type checking all .d.ts files. */
   },
-  "include": ["./src/*"],
+  "include": [
+    "./src/*"
+  ],
   "exclude": [
     "lib-esm",
     "node_modules"

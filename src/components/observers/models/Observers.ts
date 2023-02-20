@@ -1,4 +1,4 @@
-import Model from "@/app/Models/Model";
+import Model from "../../../app/models/model";
 
 class Observers extends Model {
 

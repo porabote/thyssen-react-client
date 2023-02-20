@@ -1,8 +1,8 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import Api from "@/services";
-import {requestDicts} from "@/components/dicts/store/dicts-actions";
-import {fetchFeedData, updateFeedFilters} from "./store/actions";
+import {requestDicts} from "@/components/dicts/redux-store/dicts-actions";
+import {fetchFeedData, updateFeedFilters} from "./redux-store/actions";
 import ViewContainer from "./view/view-container";
 import Feed from "./feed/feed";
 import SortList from "./feed/sort-list";

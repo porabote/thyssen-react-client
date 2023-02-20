@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { pushItemToModal, removeModalItem } from "porabote/modal/store/modal-actions";
-import { requestDicts } from "../dicts/store/dicts-actions";
+import { requestDicts } from "../dicts/redux-store/dicts-actions";
 import Api from "@services/api-service";
 import AcceptListBuilding from "./accept-lists-building.jsx";
 import AcceptListSigning from "./accept-lists-signing.jsx";

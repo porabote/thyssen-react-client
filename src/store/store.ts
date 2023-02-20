@@ -1,42 +1,42 @@
-import { createStore, compose, applyMiddleware } from "redux";
+import {createStore, compose, applyMiddleware} from "redux";
 import {createSaga, sagaMiddleware, thunkMiddleware} from "./middlewares";
 import createReducer from "./root-reducer";
-import SagaTaskRegistry from "./SagaTaskRegistry";
+//import __SagaTaskRegistry from "./SagaTaskRegistry";
 
-function configureStore() {
 
-  const store = createStore(
-    createReducer(),
-    compose(
-      applyMiddleware(
-        thunkMiddleware,
-        sagaMiddleware,
-      )
-    ),
-  );
+const store = createStore(
+  createReducer(),
+  compose(
+    applyMiddleware(
+      thunkMiddleware,
+      sagaMiddleware,
+    )
+  ),
+);
 
-  store.asyncReducers = {};
-  store.asyncSagas = [];
-  store.asyncSagasReg = {};
+let asyncReducers: {[key: string]: any} = {};
+let asyncSagas: {[key: string]: any}[] = [];
+let asyncSagasReg: {[key: string]: any} = {};
 
-  const sagaTaskRegistry = new SagaTaskRegistry();
-  let sagaTask = sagaMiddleware.run(createSaga(store.asyncSagas));
+//const sagaTaskRegistry = new __SagaTaskRegistry();
+let sagaTask = sagaMiddleware.run(createSaga(asyncSagas));
 
-  store.injectReducer = (key, asyncReducer) => {
-    store.asyncReducers[key] = asyncReducer
-    store.replaceReducer(createReducer(store.asyncReducers))
-  }
-
-  store.injectSaga = (key, asyncSaga) => {
-    store.asyncSagas.push(asyncSaga());
-    if (!store.asyncSagasReg[key]) {
-      sagaTask = sagaMiddleware.run(createSaga(store.asyncSagas));
-      store.asyncSagasReg[key] = key;
-    }
-  }
-
-  return store;
+export let registrationReducer: (key: string, asyncReducer: any) => void = (key, asyncReducer) => {
+  asyncReducers[key] = asyncReducer
+  store.replaceReducer(createReducer(asyncReducers))
 }
 
+export let registrationSaga: (key: string, asyncSaga: any) => void = (key, asyncSaga) => {
+  asyncSagas.push(asyncSaga());
+  if (!asyncSagasReg[key]) {
+    sagaTask = sagaMiddleware.run(createSaga(asyncSagas));
+    asyncSagasReg[key] = key;
+  }
+}
 
-export default configureStore();
+// Infer the `RootState` and `AppDispatch` types from the redux-redux-redux-redux-redux-redux-redux-store itself
+export type RootState = ReturnType<typeof store.getState>;
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type AppDispatch = typeof store.dispatch;
+
+export default store;

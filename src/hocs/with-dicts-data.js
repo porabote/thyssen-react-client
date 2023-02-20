@@ -1,6 +1,6 @@
 import React from "react";
 import { connect, dispatch } from "react-redux";
-import { requestDicts } from "@components/dicts/store/dicts-actions";
+import { requestDicts } from "@components/dicts/redux-store/dicts-actions";
 import Loader from "porabote/loader";
 
 export default (Component, params) => {

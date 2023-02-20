@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useSelector} from "react-redux";
-import {fetchFeedData} from "./store/actions";
+import {fetchFeedData} from "./redux-store/actions";
 import Grid from 'porabote/grid'
 import {Form, ButtonLazyLoad} from 'porabote/form'
 import FilterLeft from './filter-left'

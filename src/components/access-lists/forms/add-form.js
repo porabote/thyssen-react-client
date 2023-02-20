@@ -1,31 +1,23 @@
 import React, { useState, useEffect } from "react";
 import AccessLists from "../models/AccessLists";
-import { Form, Field, Select, Input, Button } from "@app/Form";
-import Entity from "@/app/Models/Entity";
-import { ModelDataSource } from "@/app/DataSources";
-import Dict from "@/components/dicts/models/Dict";
+import { Form, Field, Select, Input, Button } from "/app/form";
+import Entity from "/app/models/entity";
+import { ModelDataSource } from "/app/DataSources";
+import Dicts from "@/components/dicts/models/Dicts";
 
 const AddForm = props => {
 
-  const [entity, setEntity] = useState(null);
-
-  useEffect(() => {
-    getEntity();
-  }, []);
-
-  const getEntity = async function () {
-    let entity = new Entity(new AccessLists(), {
-    //  id: 3,
-      component_id: 2,
-      name: "tanya",
+  const setEntity = () => {
+    return  AccessLists.createEntity({
+      component_id: "",
+      name: "",
     });
-    setEntity(entity);
   };
 
   return (
     <div>
       <Form
-        entity={entity}
+        setEntity={setEntity}
       >
 
         <div className="fieldset" style={{ gridTemplateColumns: "1fr" }}>
@@ -43,7 +35,7 @@ const AddForm = props => {
               label="Компонент"
               setData={async () => {
                 return await ModelDataSource({
-                  model: Dict,
+                  model: Dicts,
                   constraints: {
                     where: { assoc_table: "components" }
                   },
@@ -51,7 +43,7 @@ const AddForm = props => {
                 });
               }}
               optionValueKey="id"
-              optionTitle="description"
+              optionTitle={(record) => `${record.attributes.description}`}
             />
           </Field>
         </div>

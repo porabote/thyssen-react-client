@@ -27,6 +27,7 @@ module.exports = (webpackEnv) => {
       alias: {
         "@": path.resolve(__dirname, "../src/"),
         "@app": path.resolve(__dirname, "../src/app/"),
+        "/app": path.resolve(__dirname, "../src/app/"),
         "@src": path.resolve(__dirname, "../src/"),
         "@components": path.resolve(__dirname, "../src/components/"),
         "@hocs": path.resolve(__dirname, "../src/hocs/"),
@@ -116,6 +117,9 @@ module.exports = (webpackEnv) => {
         exclude: ["node_modules"],
       }),
     ],
+    // optimization: {
+    //   minimize: false,
+    // },
     devServer: {
       stats: "errors-only",
       historyApiFallback: true,
