@@ -42,10 +42,8 @@ const Container = (props: IChildComponentProps): JSX.Element => {
   }
 
   return React.createElement(Feed, {
-    isDictsLoaded: true,
     fetchData,
     updateFilters,
-    //dicts: dictsState,
   });
 
 }

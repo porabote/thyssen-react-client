@@ -87,7 +87,10 @@ class ReportData extends Component {
                 </StripedListRow>
                 <StripedListRow>
                     <StripedListCell>Создано</StripedListCell>
-                    <StripedListCell>{moment(data.attributes.date_created).format("DD/MM/YYYY")}</StripedListCell>
+                    <StripedListCell>
+                      {data.attributes.date_created && moment(data.attributes.date_created).format("DD/MM/YYYY")}
+                      {data.attributes.created_at && moment(data.attributes.created_at).format("DD/MM/YYYY")}
+                    </StripedListCell>
                 </StripedListRow>
             </StripedList>
         )

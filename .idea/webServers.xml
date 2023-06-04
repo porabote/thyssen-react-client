@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="1814ede0-67dc-4e5a-a2c4-72a99c68c8ce" name="thyssen24.client">
+        <fileTransfer rootFolder="/var/www/www-root/data/www/porabote.client" accessType="SFTP" host="thyssen24.ru" port="22" sshConfigId="2074db17-17ac-4f24-a7d8-009fe6f72cf6" sshConfig="prom@thyssen24.ru:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

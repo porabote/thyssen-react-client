@@ -7,11 +7,16 @@ import Comments from "@/app/components/comments";
 import ArrowRightRoundedIcon from "@material-ui/icons/ArrowRightRounded";
 import RecordView from "./record-view";
 import ScanCopies from "./scan-copies/scan-copies";
+import Payments from "../models/Payments";
 
 const View = (props) => {
 
   moment.lang("ru");
   const {data} = props;
+
+  if (data.length == 0) {
+    return <p>Запись не найдена</p>
+  }
 
   return (
     <div className="content" style={{padding: "40px"}}>
@@ -26,25 +31,24 @@ const View = (props) => {
 
       <Tabs {...props}>
         <TabList>
+          <Tab>Данные</Tab>
           <Tab>Скан-копия счёта</Tab>
-          {/* <Tab>Данные</Tab> */}
-          {/* <Tab>История</Tab> */}
-          {/* <Tab>Комментарии</Tab> */}
+          <Tab>История</Tab>
+          <Tab>Комментарии</Tab>
         </TabList>
 
         <TabPanel>
+          <RecordView {...props}/>
+        </TabPanel>
+        <TabPanel>
           <ScanCopies {...props}/>
         </TabPanel>
-        {/* <TabPanel> */}
-        {/*   <RecordView {...props}/> */}
-        {/* </TabPanel> */}
-
-        {/* <TabPanel> */}
-        {/*   <History where={{record_id: data.id, model_alias: "App.Payments"}}/> */}
-        {/* </TabPanel> */}
-        {/* <TabPanel> */}
-        {/*   <Comments where={{record_id: data.id, model_alias: "App.Payments"}} /> */}
-        {/* </TabPanel> */}
+        <TabPanel>
+          <History where={{record_id: data.id, model_alias: "payments"}}/>
+        </TabPanel>
+        <TabPanel>
+          <Comments model={Payments} where={{record_id: data.id, class_name: "Payments"}} />
+        </TabPanel>
       </Tabs>
 
     </div>

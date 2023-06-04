@@ -5,7 +5,7 @@ import {StripedList, StripedListCell, StripedListRow} from "porabote/striped-lis
 class HistoryItem extends React.Component {
 
     render() {
-
+      console.log(this.props.datetime);
       const diff = (this.props.diff && this.props.diff !== null && this.props.diff.length > 0) ? JSON.parse(this.props.diff) : {};
 
         return(

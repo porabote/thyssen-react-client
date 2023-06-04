@@ -4,11 +4,14 @@ import Entity, {IEntity} from "../models/entity";
 export interface FormContextInterface {
   entity?: IEntity | null;
   submit: (...args: any[]) => any;
+  setAttribute(name: string, number: number): void;
 };
 
 const FormContext = createContext<FormContextInterface>({
+  setAttribute(name: string, number: number): void {
+  },
   entity: null,
-  submit: () => {},
+  submit: () => {}
 });
 
 const { Provider: FormProvider, Consumer: FormConsumer } = FormContext;

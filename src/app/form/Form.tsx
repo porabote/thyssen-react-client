@@ -12,7 +12,7 @@ interface FormProps {
   onSubmit?: (entity: IEntity) => {};
 }
 
-const Form = ({model, setEntity, children, onSubmit, method = "POST"}: FormProps) => {
+const Form = ({model, initValues, setEntity, children, onSubmit, method = "POST"}: FormProps) => {
 
   const [entity, setFormEntity] = useState(null);
   const [formKey, setFormKey] = useState(null);
@@ -21,13 +21,24 @@ const Form = ({model, setEntity, children, onSubmit, method = "POST"}: FormProps
   //   setFormEntity(entity);
   // }
 
+
   try {
 
     useEffect(() => {
-      let entity = setEntity();
-      //entity.updateFormEntity = updateFormEntity;
-      setFormEntity(entity);
+      initEntity();
     }, []);
+
+    const initEntity = async () => {
+      let entity;
+      if (typeof setEntity == "function") {
+        entity = setEntity();
+      } else {
+        entity = new Entity(model, initValues);
+        await entity.loadRecord();
+      }
+
+      setFormEntity(entity);
+    }
 
     const submit = () => {
 
@@ -38,21 +49,24 @@ const Form = ({model, setEntity, children, onSubmit, method = "POST"}: FormProps
       }
     }
 
-    const setAttribute = (attributeName, value) => {
-      entity.setAttribute(attributeName, value);
+    const setAttribute = (attributeName, value, mode?: string) => {
+
+      if (!mode) mode = 'merge';
+
+      entity.setAttribute(attributeName, value, mode);
       setFormKey(Math.random() * 1000); // For form rerender
     }
 
-    if (!entity) return <p></p>;
+    if (!entity) return <span>Загрузка</span>;
 
     return (
       <FormProvider value={{
         entity,
         setAttribute,
-       // updateFormEntity,
+        // updateFormEntity,
         submit,
       }}>
-          {children}
+        {children}
       </FormProvider>
     );
   } catch (e) {

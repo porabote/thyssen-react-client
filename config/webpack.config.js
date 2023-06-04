@@ -31,7 +31,7 @@ module.exports = (webpackEnv) => {
         "@src": path.resolve(__dirname, "../src/"),
         "@components": path.resolve(__dirname, "../src/components/"),
         "@hocs": path.resolve(__dirname, "../src/hocs/"),
-        "@store": path.resolve(__dirname, "../src/ReduxStore/"),
+        "@store": path.resolve(__dirname, "../src/store"),
         "@services": path.resolve(__dirname, "../src/services/"),
         "@configs": path.resolve(__dirname, "../src/configs/"),
         "@styles": path.resolve(__dirname, "../src/styles/"),

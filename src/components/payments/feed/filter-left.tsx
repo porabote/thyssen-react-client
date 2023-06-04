@@ -13,6 +13,7 @@ const FilterLeft = () => {
   }, []);
 
   const onSelect = (newValue, formContext, elementProps) => {
+    formContext.entity.setAttribute('index_records_ids', [], 'replace');
     formContext.submit();
   }
 
@@ -46,13 +47,8 @@ const FilterLeft = () => {
           name="where.contractor_id"
           label="Поставщик:"
           setData={async () => {
-            return await ModelDataSource({
-              model: Contractors,
-              constraints: {
-                //where: { label: "object" }
-              },
-              //dataPath: "data.0.data",
-            });
+            let data = await new Contractors().setLimit(10000).get();
+            return data.data;
           }}
           optionValueKey="id"
           optionTitle={(record) => `${record.attributes.name}`}
@@ -65,13 +61,8 @@ const FilterLeft = () => {
           name="where.client_id"
           label="Плательщик:"
           setData={async () => {
-            return await ModelDataSource({
-              model: Contractors,
-              constraints: {
-                where: { type: "self" },
-                whereNotNull: [],
-              },
-            });
+            let data = await new Contractors().setWhere({type: "self"}).setLimit(100).get();
+            return data.data;
           }}
           optionValueKey="id"
           optionTitle={(record) => `${record.attributes.name}`}
@@ -79,16 +70,16 @@ const FilterLeft = () => {
       </Field>
 
       <Field>
-        <InputDate name="whereBetween.date_payment.value.0" onSelect={onSelect} label="В плане оплат с"/>
+        <InputDate name="whereBetween.date_payment.period.from" onSelect={onSelect} label="В плане оплат с"/>
       </Field>
       <Field>
-        <InputDate name="whereBetween.date_payment.value.1" onSelect={onSelect} label="В плане оплат по"/>
+        <InputDate name="whereBetween.date_payment.period.to" onSelect={onSelect} label="В плане оплат по"/>
       </Field>
 
       <Field>
         <Select
           onSelect={onSelect}
-          name="where.week_id"
+          name="where.pay_week"
           label="Неделя:"
           setData={() => DateSource.getWeeksList()}
           optionValueKey="number"

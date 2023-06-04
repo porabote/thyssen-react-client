@@ -177,7 +177,8 @@
 
 .form-item__textarea-wrap {
   position: relative;
-  font-family: 'Helvetica Neue';
+  font-family: 'Helvetica, Sans_Serif', serif;
+  font-weight: 800;
   display: flex;
   border: 1px solid #c7c9cc;
   border-radius: 0px;
@@ -189,20 +190,21 @@
   padding: 0;
   box-shadow: none;
   min-height: 100px;
+  margin: 8px 0;
 }
 
-.form-item__textarea {
+.form-textarea {
   padding: 4px 12px;
   font-size: 15px;
   color: #111;
   border: 0;
   min-width: 80px;
   width: 100%;
-  border: 2px solid #fff;
+  font-family: 'Roboto Regular', serif;
 }
 
 .button_lazy-load {
-  font-family: 'Roboto Regular';
+  font-family: 'Roboto Regular', serif;
   border: 1px solid #F7F7F7;
   color: #7A8185;
   font-size: 13px;
@@ -225,10 +227,18 @@
 
 .fieldset {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   grid-column-gap: 30px;
+  box-sizing: border-box;
 }
 
+.fieldset__title {
+  border-bottom: 1px solid #eef2f7;
+  padding-bottom: 5px;
+  padding-top: 14px;
+  font-size: 15px;
+  font-family: 'Roboto Medium';
+}
 
 .input_share__container {
   border-bottom: 1px solid #e3e3e3;

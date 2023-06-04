@@ -7,6 +7,13 @@ import {
   SET_ACTIVE_ITEM,
 } from "./types";
 
+export const open = (content: FC): {type: string, payload: any} => {
+  return store.dispatch({
+    type: PUSH_MODAL_ITEM,
+    payload: {content},
+  });
+}
+
 export const pushItemToModal = (content: FC): {type: string, payload: any} => {
   return store.dispatch({
     type: PUSH_MODAL_ITEM,
@@ -37,6 +44,7 @@ export const closeModal = () => {
 
 const Actions = () => {
   return ({
+    open,
     pushItemToModal,
     removeModalItem,
     setActiveItem,

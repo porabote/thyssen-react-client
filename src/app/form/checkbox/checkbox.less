@@ -1,5 +1,5 @@
 .Checkbox {
-  
+
 }
 
 .checkboxListShow {
@@ -40,7 +40,7 @@
 .form-item__checkbox:checked + label:before {
   content: '';
   width: 15px;
-  background-image: url('./svg/checkbox/checked.svg');
+ // background-image: url('./svg/checkbox/checked.svg');
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: 12px;
@@ -56,13 +56,13 @@
   border: 2px solid #d2d2d2;
 }
 .form-item__checkbox:disabled:checked + label:before {
-  background-image: url('./svg/checkbox/checked_grey.svg');
+  //background-image: url('./svg/checkbox/checked_grey.svg');
 }
 
 
 .form-item__checkbox.black:checked + label:before {
   border: 2px solid #000;
-  background-image: url('./svg/checkbox/checked_black.svg');
+  //background-image: url('./svg/checkbox/checked_black.svg');
 }
 
 
@@ -74,21 +74,21 @@
 
 }
 
-.checkboxToggle__wrap {
+.checkbox-toggle-wrap {
   padding-top: 5px;
 }
-.checkboxToggle {
+.checkbox-toggle {
   position: absolute;
   z-index: -1;
   opacity: 0;
   margin: 10px 0 0 20px;
 }
-.checkboxToggle + label {
+.checkbox-toggle + label {
   position: relative;
   padding: 0 0 0 60px;
   cursor: pointer;
 }
-.checkboxToggle + label:before {
+.checkbox-toggle + label:before {
   content: '';
   position: absolute;
   top: -4px;
@@ -100,7 +100,7 @@
   box-shadow: inset 0 2px 3px rgba(0,0,0,.2);
   transition: .2s;
 }
-.checkboxToggle + label:after {
+.checkbox-toggle + label:after {
   content: '';
   position: absolute;
   top: -3px;
@@ -112,15 +112,17 @@
   box-shadow: 0 2px 5px rgba(0,0,0,.3);
   transition: .2s;
 }
-.checkboxToggle:checked + label:before {
-  background: #66D6A5;
+.checkbox-toggle:checked + label:before {
+  background: #23a0f9;
 }
-.checkboxToggle:checked + label:after {
+.checkbox-toggle:checked + label:after {
   left: 15px;
 }
-.checkboxToggle:focus + label:before {
-  box-shadow: inset 0 2px 3px rgba(0,0,0,.2), 0 0 0 3px rgba(255,255,0,.7);
+.checkbox-toggle:focus + label:before {
+  box-shadow: inset 0 2px 3px rgba(0,0,0,.2), 0 0 0 3px rgba(180, 218, 255, 0.7);
 }
+
+
 
 .ids-checkboxes {
   padding: 10px 0;

@@ -4,16 +4,14 @@ const FilterTopStatuses = (props) => {
 
   let [statusId, setStatusId] = useState(props.formContext.entity.getAttribute("where.status_id"));
 
+  let clientId = props.formContext.entity.getAttribute("where.client_id");
+
   const changeStatus = (statusId) => {
 
     setStatusId(statusId);
-    if (statusId == 42 && !props.clientId) {
-      props.formContext.entity.setAttribute('where.client_id', 'stub');
-    } else {
-      props.formContext.entity.setAttribute('where.client_id', '');
-    }
-
     props.formContext.entity.setAttribute('where.status_id', statusId);
+    props.formContext.entity.setAttribute('index_records_ids', [], 'replace');
+    props.setAllChecked(false);
     props.formContext.submit();
   }
 
@@ -31,7 +29,7 @@ const FilterTopStatuses = (props) => {
         })}
       </div>
       <div>
-        {statusId == 42 && props.clientId == 'stub' &&
+        {statusId == 42 && !clientId &&
           <div className="feed-top-panel_statuses__notice">Для просмотра и отправки акцептованных платежей, пожалуйста выбрите плательщика.</div>
         }
       </div>

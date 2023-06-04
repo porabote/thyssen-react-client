@@ -15,7 +15,9 @@ const InputBare = (props) => {
           name={props.name}
           onChange={(e) => {
 
-            props.formContext.setAttribute(props.name, e.target.value)
+            if (props.formContext.entity) {
+              props.formContext.setAttribute(props.name, e.target.value);
+            }
 
             if (typeof props.onChange === "function") {
               props.onChange(e.target.value, props.formContext, props);

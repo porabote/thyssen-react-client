@@ -1,118 +1,122 @@
-import React, {useEffect, useState} from 'react';
-import {DoneIcon} from "/app/ui/icons";
+import React, {useEffect, useState, useRef} from 'react';
+import Icon, {DoneIcon} from "/app/ui/icons";
 import {Button} from "/app/form";
 import Payments from "../../models/Payments";
+import File from "@/app/components/files/models/file";
+import modal from "@/app/modal";
+import ScanCopiesScansSelectSignatories from "./scan-copies-scans-select-signatories";
+import DragAndDropArea from "@/app/drag-and-drop";
+import notice from "@app/notifications";
+import {API_URL} from "@configs";
 
 const ScanCopiesScans = (props) => {
 
-  const [scans, setScans] = useState([]);
+  const dragItem = useRef(null);
 
   useEffect(() => {
-    getScanFiles();
+    props.getScanFiles();
   }, []);
-
-  const getScanFiles = async () => {
-    let scans = await Payments.getScanFiles(props.record.id);
-    setScans(scans.data);
-  };
 
   const setPspTable = async (scanFileId) => {
     let scans = await Payments.setPspTable(scanFileId, props.record.id);
-    getScanFiles();
+    notice.push(<p>Таблица была обновлена</p>, {type: "OK"});
+    props.getScanFiles();
+  }
+
+  const setSignature = (scanFileId) => {
+    modal.open(<ScanCopiesScansSelectSignatories
+      title="Вставить/Обновить подпись"
+      scanFileId={scanFileId}
+      recordId={props.record.id}
+      getScanFiles={props.getScanFiles}
+    />);
+  }
+
+  const saveAxis = async (ev, top: number, left: number, elProps: {}) => {
+    let recordImg = await new File().get(elProps.id);
+
+    let imgEntity = File.createEntity(recordImg.attributes);
+    let dataJson = JSON.parse(imgEntity.getAttribute("data_json"));
+    if (!dataJson) dataJson = {};
+    dataJson['axis'] = {top, left};
+
+    imgEntity.setAttribute("data_json", JSON.stringify(dataJson));
+    imgEntity.save();
+
   }
 
   return (
     <div style={{width: "1000px", margin: "0 auto"}}>
 
-      {scans.map((scan) => {console.log(scan.child);
+      {props.scans.map((scan) => {
 
-        let scanUrl = `https://thyssen24.ru/${scan.uri}`;
+        let scanUrl = `${API_URL}/${scan.uri}`;
 
         let imgWidth = 0;
         let imgHeight = 0;
 
         const img = new Image();
         img.src = scanUrl;
-        img.onload = function() {
+        img.onload = function () {
           imgWidth = this.width;
           imgHeight = this.height;
         }
 
-        return(
+        return (
           <div key={scan.id} style={{padding: 0, position: "relative"}}>
 
             <div className="payment-file__panel">
 
               <div className="buttons-panel">
-                <Button onClick={() => setPspTable(scan.id)} key={0} label="Вставить/Обновить PSP таблицу" style={{width: "260px"}}>
-                  <DoneIcon style={{
-                    fill: "#9ba6b8",
-                    paddingRight: "10px",
-                    width: "24px",
-                    height: "24px",
-                  }}/>
+                <Button onClick={() => setPspTable(scan.id)} label="Вставить/Обновить PSP таблицу"
+                        style={{width: "260px"}}>
+                  <Icon>
+                    <DoneIcon style={{
+                      fill: "#9ba6b8",
+                      paddingRight: "10px",
+                      width: "24px",
+                      height: "24px",
+                    }}/>
+                  </Icon>
                 </Button>
 
-                <Button key={1} label="Вставить/Обновить подпись" style={{width: "240px"}}>
-                  <DoneIcon style={{
-                    fill: "#9ba6b8",
-                    paddingRight: "10px",
-                    width: "24px",
-                    height: "24px",
-                  }}/>
+                <Button onClick={() => setSignature(scan.id)} label="Вставить/Обновить подпись"
+                        style={{width: "240px"}}>
+                  <Icon>
+                    <DoneIcon style={{
+                      fill: "#9ba6b8",
+                      paddingRight: "10px",
+                      width: "24px",
+                      height: "24px",
+                    }}/>
+                  </Icon>
                 </Button>
               </div>
             </div>
 
             <div className="payment-file__list" style={{padding: 0, display: "inline-block"}}>
 
-              <div className="payment-file__list__img__wrap"
-                   id={`draggableArea${scan.id}`}
-                   style={{
-                     // width: `${imgWidth}px`,
-                     // height: `${imgHeight}px`,
-                     padding: 0,
-                     position: "relative",
-                     display: "inline-block",
-                     border: "1px solid red",
-              }}>
-                <img src={scanUrl} className="payment-file__list__img"/>
+              <DragAndDropArea className="payment-file__list__img__wrap" onStop={saveAxis}>
+
+                <img key={scan.id} src={scanUrl} className="payment-file__list__img"/>
 
                 {scan.child &&
-                  scan.child.map(img => {
-
-                    let scanUrl = `https://api.thyssen24.ru/${img.uri}`;
+                  scan.child.map((img) => {
 
                     let dataJson = img.data_json ? JSON.parse(img.data_json) : {};
-                    let topPosition = dataJson.axis ? dataJson.axis.top : 400;
-                    let leftPosition = dataJson.axis ? dataJson.axis.left : 50;
 
                     return <img
-                      src={scanUrl}
-                      className="payment-file__list__img"
-                      style={{
-                        position: 'absolute',
-                        top: `${topPosition}px`,
-                        left: `${leftPosition}px`,
-                        border: "1px solid red"
-                      }} />;
+                      top={dataJson.axis ? dataJson.axis.top : 400}
+                      left={dataJson.axis ? dataJson.axis.left : 50}
+                      draggable={true}
+                      key={img.id}
+                      src={`https://api.thyssen24.ru/${img.uri}`}
+                      id={img.id}
+                    />;
                   })
                 }
 
-
-              {/*  //echo '<div style="position: relative;">';*/}
-              {/*  echo $this->OnHtml->display('image', [*/}
-              {/*  'url' => $child['uri'],*/}
-              {/*  'style' => 'margin: 0;',*/}
-              {/*  'id' => 'draggable' . $child['id'],*/}
-              {/*  'class' => 'draggable',*/}
-              {/*  'record-id' => $child['id'],*/}
-
-              {/*  ]);*/}
-              {/*  // echo '</div>';*/}
-
-
-              </div>
+              </DragAndDropArea>
             </div>
 
 

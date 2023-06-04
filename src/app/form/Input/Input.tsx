@@ -18,7 +18,7 @@ const Input = (props: InputProps) => {
 
   let context = useContext(FormContext);
 
-  const [name, setName] = useState(props.name || "");
+  const [name] = useState(props.name || "");
 
   const inputType = props.type || 'string';
   const htmlFor = `${inputType}-${Math.random()}`;
@@ -29,6 +29,8 @@ const Input = (props: InputProps) => {
   let disabled = false;
   if (typeof props.disabled === "function") {
     disabled = props.disabled(props.formContext);
+  } else if (typeof props.disabled != "undefined") {
+    disabled = props.disabled;
   }
 
   const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -41,10 +43,9 @@ const Input = (props: InputProps) => {
 
     switch (inputType) {
       case "float": value = FloatType(rawValue);
-      case "string": value = value ? value : "";
     }
 
-    return value;
+    return value || "";
   }
 
   return (
@@ -61,6 +62,11 @@ const Input = (props: InputProps) => {
           className={props.class || 'form_item__text'}
           autoComplete="off"
           onChange={onChangeInput}
+          onInput={(e) => {
+            if (typeof props.onInput == "function") {
+              props.onInput(e.target.value, {...props});
+            }
+          }}
         />
       </div>
     </div>

@@ -47,7 +47,7 @@
 }
 
 .comments__form__input-couple__textarea__label {
-  height: 100px;
+  min-height: 100px;
   display: flex;
   alignItems: stretch;
 }
@@ -69,6 +69,10 @@
 .comments__form__input-couple__item.div {
   overflow: auto;
   max-height: 90px;
+}
+
+.comments__form__input-couple__item.div:empty:not(:focus):before {
+  content: attr(data-text)
 }
 
 .comments__form__input-couple__item:focus {

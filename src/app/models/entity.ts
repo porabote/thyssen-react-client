@@ -22,11 +22,24 @@ class Entity implements IEntity {
   constructor(model: IModel, attributes:{[key: string]: any} = {}) {
     this.#model = new model();
     this.isNew = (typeof attributes[this.primaryKey] != "undefined" && attributes[this.primaryKey]) ? false : true;
-    this.setAttributes(attributes);
+    this.setAttributes(attributes, true);
   }
 
-  setAttributes(attributes: {}) {
+  async setAttributes(attributes: {}, isInit = false) {
     this.attributes = attributes;
+  }
+
+  loadRecord = async () => {
+    let record = null;
+    let primaryKeyValue = ArrayMapper.getValueByPath(this.getPrimaryKey(), this.attributes);
+
+    if(primaryKeyValue) {
+      record = await this.#model.get(primaryKeyValue);
+      if (typeof record.attributes != "undefined") {
+        this.attributes = Object.assign(this.attributes, record.attributes);
+      }
+    }
+    return this.attributes;
   }
 
   getAttribute(name: string): any {
@@ -79,7 +92,7 @@ class Entity implements IEntity {
   async save(): Promise<any> {
 
     let result = null;
-console.log(this.#model);
+
     let primaryKeyValue = this.getPrimaryKeyValue();
 
     if (primaryKeyValue) {

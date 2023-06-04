@@ -9,10 +9,10 @@ import UsersRequests from "./users-requests";
 import moment from "moment";
 import ArrowRightRoundedIcon from "@material-ui/icons/ArrowRightRounded";
 import ShiftWorkers from "./shift-workers";
+import Facsimiles from "./view/facsimiles";
 
 const View = (props) => {
 
-  moment.lang("ru");
   const {data} = props;
 
   return (
@@ -33,6 +33,7 @@ const View = (props) => {
           {props.isCanViewTabs && <Tab>Права</Tab>}
           {props.isCanViewTabs && <Tab>Запросы</Tab>}
           {props.isCanViewTabs && <Tab>Сменщики</Tab>}
+          {props.isCanViewTabs && <Tab>Факсимиле</Tab>}
         </TabList>
 
 
@@ -52,6 +53,11 @@ const View = (props) => {
         {props.isCanEdit &&
           <TabPanel>
             <ShiftWorkers user={data} {...props}/>
+          </TabPanel>
+        }
+        {props.isCanEdit &&
+          <TabPanel>
+            <Facsimiles user={data} {...props}/>
           </TabPanel>
         }
       </Tabs>

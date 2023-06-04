@@ -1,3 +1,3 @@
-import AcceptListsContainer from "./accept-lists-container.ts";
+import Container from "./container.ts";
 
-export default AcceptListsContainer;
+export default Container;

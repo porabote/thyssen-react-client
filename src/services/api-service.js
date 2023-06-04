@@ -36,7 +36,7 @@ class Api {
       const error = (data && data.message) || response.statusText;
       return Promise.reject(error);
     }
-    
+
     return { ...data, ...{ response: { status: response.status } } };
   }
 
@@ -85,7 +85,7 @@ class Api {
     const str = [];
     Object.keys(obj).map((key) => {
       const k = prefix ? `${prefix}[${key}]` : key;
-      const v = obj[key];
+      const v = obj[key] ? obj[key] : "";
       str.push((v !== null && typeof v === "object")
         ? this.objectToQuerystring(v, k)
         : `${encodeURIComponent(k)}=${encodeURIComponent(v)}`);

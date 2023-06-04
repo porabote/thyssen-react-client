@@ -1,106 +1,86 @@
-import React from 'react'
-import { Form, Field, Textarea, InputBare, Button } from 'porabote/form'
+import React, {useState} from "react"
+import {Form, Field, TextArea, InputBare, Button} from "@/app/form";
+import CommentsModel from "./models/Comments";
 
-class AnswerForm extends React.Component {
+const AnswerForm = (props) => {
 
-    state = {
-        isSubmitReady: true,
-        txtHeight: '50',
-        auth: this.props.auth,
-        answerTo: `${this.props.parentMsg.user.name}`,
-        values: {
-            parent_id: this.props.parentMsg.id,
-            record_id: this.props.parentMsg.record_id,
-            class_name: this.props.parentMsg.class_name,
-            msg: ''
-        }
-    }
+  const [answerTo, setAnswerTo] = useState(props.parentMsg.user.name);
+  const [isSubmitReady, setIsSubmitReady] = useState(true);
 
-    saveComment = () => {
+  const initValues = {
+    ...props.where,
+    parent_id: props.parentMsg.id,
+    msg: "",
+    name: props.auth.user.name,
+  };
 
-    }
+  const submit = async (entity) => {
+    const model = new props.model(entity.attributes);
 
-    render() {
+    setIsSubmitReady(true);
 
-        const { values } = this.state
-        let addUrl = this.props.addUrl || '/api/comments/add/';
+    let newEntity = CommentsModel.createEntity(entity.attributes);
+    let res = await newEntity.save();
 
-        return(
-            <Form
-                action={addUrl}
-                values={values}
-                submitFormAfter={(response, formContext) => {
-                    this.setState({
-                        isSubmitReady: true
-                    })
+    props.fetchData();
+  }
 
-                    formContext.setFieldValue('msg', '')
-                    this.props.fetchComments()
+  return (
+    <Form
+      model={CommentsModel}
+      initValues={initValues}
+      onSubmit={submit}
+    >
+      <div
+        className={!props.isAnswerFormActive ? "comments__sub-form hide" : "comments__sub-form"}
+      >
+        <div className="comments__form__input-couple__wrap">
+          <label className="comments__form__input-couple__item__label first">
+            <span className="comments__form__listener-fio">{answerTo}</span>
+          </label>
+          <label>
+            <Field>
+              <TextArea
+                clear={true}
+                name="msg"
+                placeholder="Напишите ваш комментарий"
+                className="comments__form__input-couple__item"
+              />
+            </Field>
+          </label>
 
-                }}
-            >
-                <div
-                    className={!this.props.isAnswerFormActive ? 'comments__sub-form hide' : 'comments__sub-form'}
-                >
-                    <div className="comments__form__input-couple__wrap">
-                        <label className="comments__form__input-couple__item__label first">
-                            <span className="comments__form__listener-fio">{this.state.answerTo}</span>
-                        </label>
-                        <label>
-                            <Field>
-                                <Textarea
-                                    clear={true}
-                                    name="msg"
-                                    placeholder="Напишите ваш комментарий"
-                                    className="comments__form__input-couple__item"
-                                ></Textarea>
-                            </Field>
-                        </label>
-
-                    </div>
+        </div>
 
 
-                    <div className="comments__form__button-panel">
+        <div className="comments__form__button-panel">
 
-                        <div className="comments__form__button-panel__buttons">
-                            <Field>
-                                <Button
-                                    type="submit"
-                                    disabled={this.state.isSubmitReady ? false : true}
-                                    className="comments__form__button-panel__button send"
-                                    onClick={(e) => {
-                                        this.setState({
-                                            isSubmitReady: false
-                                        })
-                                    }}
-                                >
-                                    Отправить
-                                </Button>
-                            </Field>
-                            <Field>
-                                <Button
-                                    type="button"
-                                    disabled={this.state.isSubmitReady ? false : true}
-                                    className="comments__form__button-panel__button cancel"
-                                    onClick={(e) => {
-                                        this.setState({
-                                            isSubmitReady: false
-                                        })
-                                    }}
-                                >
-                                    Отменить
-                                </Button>
-                            </Field>
+          <div className="comments__form__button-panel__buttons">
+            <Field>
+              <Button
+                type="submit"
+                label="Отправить"
+                disabled={isSubmitReady ? false : true}
+                className="comments__form__button-panel__button send"
+              />
+            </Field>
 
-                        </div>
+              <Button
+                label="Отменить"
+                type="button"
+                disabled={isSubmitReady ? false : true}
+                className="comments__form__button-panel__button cancel"
+              />
 
-                    </div>
-                </div>
-            </Form>
-        )
-    }
+
+          </div>
+
+        </div>
+      </div>
+    </Form>
+  );
+
 }
 
-export default AnswerForm
+export default AnswerForm;
 
 

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import React, {useState, useEffect} from "react";
+import {useAppSelector} from "@/app/hooks/hooks";
 import CommentForm from "./comment-form";
 import CommentList from "./comment-list";
 import "./comments.less";
@@ -16,7 +16,7 @@ const Comments = (props: CommentsProps) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const auth = useSelector(state => state.auth);
+  const auth = useAppSelector(state => state.auth);
 
   useEffect(() => {
     fetchData();
@@ -27,10 +27,10 @@ const Comments = (props: CommentsProps) => {
     setLoading(true);
 
     try {
-      let data = await new CommentsModel().setWith(["user"]).setWhere({
-        record_id: props.recordId,
-        class_name: props.modelName,
-      }).get();
+      let data = await new CommentsModel()
+        .setWith(["user"])
+        .setWhere({...props.where})
+        .get();
       setData(data.data);
       setLoading(false);
     } catch (e) {
@@ -41,12 +41,18 @@ const Comments = (props: CommentsProps) => {
 
   return (
     <div className="comments">
-      <CommentForm auth={auth} {...props}/>
-      {/* <CommentList */}
-      {/*   auth={auth} */}
-      {/*   data={data} */}
-      {/*   loading={loading} */}
-      {/* /> */}
+
+      <div className="comments__title">Комментарии (0)</div>
+
+      <CommentForm auth={auth} {...props} fetchData={fetchData}/>
+       <CommentList
+         where={props.where}
+         auth={auth}
+         data={data}
+         loading={loading}
+         model={props.model}
+         fetchData={fetchData}
+       />
     </div>
   );
 

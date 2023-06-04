@@ -3,9 +3,9 @@ import React from 'react'
 const GridCell = (props) => {
 
     return (
-        <span className="grid__item">
+        <div onClick={() => props.routeTo(props.noRoute)} style={props.style || {}} className="prb-grid__item">
             {props.children}
-        </span>
+        </div>
     )
 }
 

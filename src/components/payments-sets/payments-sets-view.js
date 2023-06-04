@@ -62,7 +62,7 @@ class PaymentsSetsView extends React.Component {
                         <React.Fragment>
                             {this.state.data.id} / {this.state.data.date_created} -
                             <span style={{color: '#bababa'}}>
-                                Неделя {this.state.data.week}
+                                Неделя {this.state.data.attributes.week}
                             </span>
                         </React.Fragment>
                     }

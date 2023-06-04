@@ -5,6 +5,7 @@ import Input from "./Input/Input";
 import InputDate from "./Input/InputDate";
 import InputBare from "./Input/InputBare";
 import Select from "./Select/Select";
+import TextArea from "./textarea/TextArea";
 import Button from "./button/Button";
 import ButtonLazyLoad from "./button/ButtonLazyLoad";
 
@@ -16,6 +17,7 @@ export {
   InputDate,
   InputBare,
   Select,
+  TextArea,
   Button,
   ButtonLazyLoad,
 };

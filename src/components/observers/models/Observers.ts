@@ -1,9 +1,9 @@
-import Model from "../../../app/models/model";
+import Model from "@/app/models/model";
 
 class Observers extends Model {
 
-  constructor(attributes = {}) {
-    super(attributes, "Observers");
+  static get apiEntityName(): string {
+    return "Observers";
   }
 
 }

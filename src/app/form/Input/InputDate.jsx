@@ -10,7 +10,11 @@ const InputDate = (props) => {
   const [startDate, setStartDate] = useState(new Date());
 
   useEffect(() => {
-    setStartDate(props.value);
+    let value = props.value;
+    if (typeof props.value == "string") {
+      value = new Date(props.value);
+    }
+    setStartDate(value);
   }, []);
 
   const convertDate = (inputFormat) => {
@@ -29,10 +33,11 @@ const InputDate = (props) => {
         <label className="form_item__label">{props.label}</label>
 
         <DatePicker
-          format="d.MM.yy"
+          format="dd.MM.yy"
           selected={startDate}
           value={startDate}
           onChange={(date) => {
+
             let dateFormated = (date) ? convertDate(date) : null;
             if (context.entity) {
               context.setAttribute(props.name, dateFormated);

@@ -13,12 +13,12 @@ type SelectTagsProps = {
 
 const SelectTags = (props: SelectTagsProps) => {
 
-  useEffect(() => {
-    console.log(props.dataStorage);
-  }, []);
+  // useEffect(() => {
+  //   //console.log(props.dataStorage);
+  // }, []);
 
   const removeTag = (tagValue: number | string) => {
-    props.value.delete(tagValue);console.log(props.value);
+    props.value.delete(tagValue);
     props.formContext.entity?.setAttribute(props.name, props.value, "replace")
   }
 
@@ -26,30 +26,32 @@ const SelectTags = (props: SelectTagsProps) => {
 
     let tagsElements: any[] = [];
 
-    props.value.forEach((
-      itemvalue: string | number,
-      valueAgain: string | number,
-      set: Set<string | number>
-    ) => {
-      let element = (typeof props.setTagTitle == "function") ?
-        props.setTagTitle(itemvalue, props.dataStorage, props.dataStorageMap)
-        : itemvalue;
-      tagsElements.push(
-        <SelectTag
-          child={element}
-          removeTag={removeTag}
-          value={itemvalue}
-          key={itemvalue}
-        />
-      )
-    });
+    if (props.value) {
+      props.value.forEach((
+        itemvalue: string | number,
+        valueAgain: string | number,
+        set: Set<string | number>
+      ) => {
+        let element = (typeof props.setTagTitle == "function") ?
+          props.setTagTitle(itemvalue, props.dataStorage, props.dataStorageMap)
+          : itemvalue;
+        tagsElements.push(
+          <SelectTag
+            child={element}
+            removeTag={removeTag}
+            value={itemvalue}
+            key={itemvalue}
+          />
+        )
+      });
+    }
 
     return tagsElements;
   }
 
   return (
     <div>
-      <div className={props.value.size ? "select-tags active" : "select-tags"}>
+      <div className={props.value && props.value.size ? "select-tags active" : "select-tags"}>
         {getTags().map((item: any) => item)}
       </div>
     </div>

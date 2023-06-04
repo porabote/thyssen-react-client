@@ -30,7 +30,7 @@ const History = (props) => {
               key={index}
               msg={item.attributes.msg}
               user={item.attributes.user_name}
-              datetime={moment(item.attributes.created_at)
+              datetime={moment(item.attributes.created_at || item.attributes.date_created)
                 .format("DD MMM YYYY HH:mm")}
             />
           );

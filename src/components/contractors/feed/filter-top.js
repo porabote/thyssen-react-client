@@ -1,29 +1,39 @@
-import React from 'react'
-import {Field, InputBare} from 'porabote/form'
-import SearchIcon from '@material-ui/icons/Search';
+import React, { useEffect, useState } from "react";
+//import { Field, InputBare } from "porabote/form";
+import { Field, InputBare } from "@/app/form";
+import SearchIcon from "@material-ui/icons/Search";
+import Statuses from "@/components/statuses/models/Statuses";
+import { ModelDataSource } from "../../../app/DataSources";
+import "./top-panel.less";
 
 const FilterTop = (props) => {
 
   return (
-    <div className="fast-find__item">
-      <SearchIcon style={{color: '#888', fontSize: 22, padding: '4px 8px'}}/>
-      <Field>
-        <InputBare
-          placeholder="Поиск по названию"
-          type="text"
-          name="seekString"
-          className="fast-find__item__input"
-          onKeyUp={(e, params) => {
-            let value = e.target.value;
-            params.formContext.setFieldValue('orWhereGrouped.0.name.value', value);
-            params.formContext.submitForm();
-          }}
-        />
-      </Field>
-      <div className="fast-find__item__thumbler"></div>
-    </div>
+    <>
+      <div className="fast-find__item">
+        <SearchIcon style={{
+          color: "#888",
+          fontSize: 22,
+          padding: "4px 8px"
+        }}/>
+        <Field>
+          <InputBare
+            placeholder="Поиск по инн"
+            type="text"
+            name="orWhereGrouped.0.inn.value"
+            className="fast-find__item__input"
+            onChange={(newValue, formContext, params) => {
+              formContext.setAttribute("orWhereGrouped.0.name.value", newValue);
+              formContext.submit();
+            }}
+          />
+        </Field>
+        <div className="fast-find__item__thumbler"></div>
+      </div>
+
+    </>
   );
 
-}
+};
 
-export default FilterTop
+export default FilterTop;

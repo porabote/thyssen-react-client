@@ -1,9 +1,10 @@
 import React, {useState, useEffect, useRef, MutableRefObject, MouseEvent, ChangeEvent, MouseEventHandler} from "react";
+import ArrayMapper from "@/app/Collections/ArrayMapper";
 import Option, {OptionProps} from "./Option";
 import {FormContextInterface} from "../FormContext";
 import SelectTags from "./SelectTags";
 
-type setData = () => {[key: string]: any;}[];
+type setData = () => { [key: string]: any; }[];
 
 export interface ISelect {
   dataStorage: any[];
@@ -14,32 +15,43 @@ export interface ISelect {
   value: string | number | number[] | null;
   label: string;
   name: string;
-  options: {props: OptionProps}[] | [];
+  options: { props: OptionProps }[] | [];
   optionValueKey: string | number;
-  optionTitle: (record: {attributes: {}}) => string;
+  optionTitle: (record: { attributes: {}, relationships: {} }) => string;
   setData: setData;
   isMiltiple?: boolean | undefined;
   setTagTitle?: (value: number | string, dataStorage: any[], dataStorageMap: {}) => string;
   buttons?: [];
-  onSelect?: (newValue: any, formContext: FormContextInterface, props: ISelect) => void | null | undefined; // TODO
+  onSelect?: (
+    newValue: any,
+    formContext: FormContextInterface,
+    props: ISelect,
+    dataStorage: any[],
+    dataStorageMap: any[]
+  ) => void | null | undefined; // TODO
 };
 
 const Select = (props: ISelect) => {
 
   const initValue = () => {
-    let value: any = props.value || null;
+    let value: any = props.value || "";
     if (props.isMiltiple && Array.isArray(props.value)) value = new Set(props.value);
+
+    if (props.formContext.entity) {
+      props.formContext.entity.setAttribute(props.name, value);
+    }
+
     return value;
   }
 
   const [isDataStorageLoaded, setIsDataStorageLoaded] = useState(false);
   const [dataStorage, setDataStorage] = useState<{}[]>([]);
   const [dataStorageMap, setDataStorageMap] = useState({});
-  const [options, setOptions] = useState<{props: OptionProps}[] | []>([]);
-  const [value, setValue] = useState(() => initValue());
+  const [options, setOptions] = useState<{ props: OptionProps }[] | []>([]);
+  const [value, setValue] = useState(null);
   const [name, setName] = useState(props.name || "");
   const [optionValueKey, setOptionValueKey] = useState(props.optionValueKey || "id");
-  const [optionTitle, setOptionTitle] = useState(() => props.optionTitle);
+  const [optionTitle] = useState(() => props.optionTitle);
   const [label, setLabel] = useState(props.label || "");
   const [isDisabled, setIsDIsabled] = useState(false);
   const [isEmpty, setIsEmpty] = useState(props.isEmpty || true);
@@ -52,6 +64,7 @@ const Select = (props: ISelect) => {
   const [isOpened, setIsOpened] = useState(false);
   const [buttons] = useState(props.buttons || []);
   const [onSelect] = useState(() => props.onSelect || null);
+  const [isInputFocus, setIsInputFocus] = useState(false);
 
   const wrap = useRef() as MutableRefObject<HTMLDivElement>;
   const toggle = useRef() as MutableRefObject<HTMLDivElement>;
@@ -60,6 +73,7 @@ const Select = (props: ISelect) => {
 
   useEffect(() => {
 
+    setValue(initValue());
     setData();
 
     setDropPanelWidth();
@@ -70,7 +84,7 @@ const Select = (props: ISelect) => {
       //clearDataStorage([]);
     };
 
-  }, [isDataStorageLoaded]);
+  }, [isDataStorageLoaded, props.value]);
 
   const setData = async () => {
 
@@ -83,8 +97,8 @@ const Select = (props: ISelect) => {
 
     setDataStorage([...data]);
 
-    let dataStorageMap: {[key: number]: number} = {};
-    data.map((item: any, index: number) => dataStorageMap[item[optionValueKey]] = index);
+    let dataStorageMap: { [key: number]: number } = {};
+    data.map((item: any, index: number) => dataStorageMap[ArrayMapper.getValueByPath(optionValueKey, item)] = index);
     setDataStorageMap(dataStorageMap);
 
     setIsDataStorageLoaded(true);
@@ -100,20 +114,24 @@ const Select = (props: ISelect) => {
 
     let selectedOptionTitle: string | null = null;
 
-    let optionsList: any[] = dataStorage.map((item: {[key: string]: any;}, index: number): {} => {
+    let optionsList: any[] = dataStorage.map((item: { [key: string]: any; }, index: number): {} => {
 
-      let itemTitle: string = optionTitle({attributes: item.attributes || item});
-      let isSelected = (value == item[optionValueKey]) ? true : false;
+      let optionValue = ArrayMapper.getValueByPath(optionValueKey, item);
+
+      let itemTitle: string = optionTitle({attributes: item.attributes || item, relationships: item.relationships});
+      let isSelected = (value == optionValue) ? true : false;
       if (isSelected) selectedOptionTitle = itemTitle;
 
       return (
         <Option
-          key={item[optionValueKey]}
-          value={item[optionValueKey]}
+          key={optionValue}
+          value={optionValue}
           selected={isSelected}
           onSelect={onSelectAction}
           onSelectMultiple={onSelectMultiple}
           isMultiple={isMultiple}
+          dataStorage={dataStorage}
+          dataStorageMap={dataStorageMap}
         >
           {itemTitle}
         </Option>
@@ -122,13 +140,38 @@ const Select = (props: ISelect) => {
 
     if (selectedOptionTitle && !isMultiple) setInputValue(selectedOptionTitle);
 
-    setOptions(optionsList);
+    let emptyOption = setEmptyOption();
+
+    setOptions([emptyOption,...optionsList]);
   }
 
-  const onSelectAction = (newValue: any, optionProps: OptionProps, e: MouseEvent<HTMLDivElement>) => {//e
+  const setEmptyOption = () => {
+    return (
+      <Option
+        key={`emptyKey`}
+        value=""
+        selected={!value ? true : false}
+        onSelect={onSelectAction}
+        onSelectMultiple={onSelectMultiple}
+        isMultiple={isMultiple}
+        dataStorage={dataStorage}
+        dataStorageMap={dataStorageMap}
+      >
+        {emptyTitle}
+      </Option>
+    );
+  }
+
+  const onSelectAction = (
+    newValue: any,
+    title: string,
+    e: MouseEvent<HTMLDivElement>,
+    dataStorage: any[],
+    dataStorageMap: any[]
+  ) => {
 
     setValue(newValue);
-    setInputValue(optionProps.children);
+    setInputValue(title);
     setIsOpened(false);
 
     setSeekValue("");
@@ -144,7 +187,7 @@ const Select = (props: ISelect) => {
     //e.preventDefault();
   }
 
-  const onSelectMultiple = (newValue: any, optionProps: OptionProps, e: MouseEvent<HTMLDivElement>) => {//e
+  const onSelectMultiple = (newValue: any, optionProps: OptionProps, e: MouseEvent<HTMLDivElement>) => {
 
     if (!newValue) return;
 
@@ -181,12 +224,27 @@ const Select = (props: ISelect) => {
   }
 
   const showDropPanel = () => {
-    dropPanel.current.style.zIndex = 1000
+    dropPanel.current.style.zIndex = String(1000)
     setIsOpened(true);
   }
 
+  const handleOnFocus = () => {
+    showDropPanel();
+    setIsInputFocus(true);
+  }
+
+  const handleOnBlur = () => {
+    hideDropPanel();
+    if (!inputValue.length && value) {
+      onSelectAction(value, optionTitle(dataStorage[dataStorageMap[value]]), null,dataStorage, dataStorageMap );
+      setIsInputFocus(false);
+      // console.log(dataStorage);
+      // console.log(dataStorage[dataStorageMap[value]]);
+    }
+  }
+
   const hideDropPanel = () => {//e: ChangeEvent<HTMLInputElement>
-    dropPanel.current.style.zIndex = 10
+    dropPanel.current.style.zIndex = String(10);
     setIsOpened(false);
   }
 
@@ -205,11 +263,11 @@ const Select = (props: ISelect) => {
 
       if (!checkOnSeek(option.props.children || "")) return;
 
-     // let onSelect = clickByOption;
+      // let onSelect = clickByOption;
       // if (mode === "tags") afterSelectCallback = clickByOptionTagsMode
 
       return option;
-     // return React.cloneElement(option, {...option.props, onSelect})
+      // return React.cloneElement(option, {...option.props, onSelect})
     })
 
   }
@@ -257,9 +315,9 @@ const Select = (props: ISelect) => {
                 type="text"
                 onChange={onChangeInput}
                 onClick={onClickByInput}
-                onFocus={showDropPanel}
-                onBlur={hideDropPanel}
-                value={(inputValue) ? inputValue || "" : emptyTitle}
+                onFocus={handleOnFocus}
+                onBlur={handleOnBlur}
+                value={(inputValue) ? inputValue : (isInputFocus) ? inputValue : emptyTitle}
               />
 
               <span

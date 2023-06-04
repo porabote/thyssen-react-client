@@ -10,6 +10,7 @@ import Files from "./files";
 import { Button } from "porabote/form";
 import Upload, {FileInput, InputFileCustom} from "porabote/upload";
 import {API_URL} from "@configs";
+import ExportHandlerBuilder from "@app/export-handler";
 
 class RecordData extends Component {
 
@@ -222,8 +223,13 @@ class RecordData extends Component {
             <Button
               className="on-button grey-stroke_x_yellow-fill icon-excel__grey_x_white"
               type="button"
-              onClick={() => {
-                window.open(`https://api.thyssen24.ru/api/equipments/method/exportToExcel/?id=${attrs.id}`, 'target=_blank')
+              onClick={async () => {
+                await new ExportHandlerBuilder()
+                  .setUri("/api/equipments/method/exportToExcel/")
+                  .setData({
+                    id: attrs.id,
+                  })
+                  .download();
               }}
             >Выгрузка РЭП Excel
             </Button>

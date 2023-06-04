@@ -4,11 +4,9 @@ import PickedListAddForm from "./PickedListAddForm";
 import PickedListAttachContractorForm from "./picked-list-attach-contractor-form";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
-import Grid from "porabote/grid";
+import Grid from "@app/grid";
+import modal from "@/app/modal";
 import AccessListsUsers from "../models/AccessListsUsers";
-import { modalActions } from "@/app/modal";
-import AccessListsUsersContractors from "../models/AccessListsUsersContractors";
-import AccessListsUsersDefault from "../models/AccessListsUsers";
 
 const PickedList = props => {
 
@@ -38,19 +36,20 @@ const PickedList = props => {
   };
 
   const openAddModal = () => {
-    modalActions.pushItemToModal(
+    modal.open(
       <PickedListAddForm
         entity_id={props.data.id}
+        title="Прикрепить пользователя"
         //event_ids={props.businessEventIds}
-      />,
-      "Прикрепить пользователя",
+      />
     );
   };
 
   const openAttachContractorModal = (nodeId) => {
-    modalActions.pushItemToModal(
+    modal.pushItemToModal(
       <PickedListAttachContractorForm
         node_id={nodeId}
+        title="Закрепить организацию за пользователем"
       />,
       "Закрепить организацию за пользователем",
     );
@@ -103,7 +102,7 @@ const PickedList = props => {
                 <div key={index}>
                   {api_user.attributes.name}
                 </div>
-                <div>
+                <div style={{maxHeight: '1000px'}}>
                   <AddIcon onClick={() => openAttachContractorModal(node.id)} style={{ marginRight: "3px" }}/>
                   {contractors.map((item) => {
                     return <div key={item.id}>{item.relationships.contractor.attributes.name}</div>;
@@ -112,7 +111,7 @@ const PickedList = props => {
                 <div className="grid_list__item center">
                   <RemoveCircleIcon
                     className="link_with_icon grey"
-                    onClick={(e) => AccessListsUsersDefault.delete(node.id)}
+                    onClick={(e) => new AccessListsUsers().delete(node.id)}
                   />
                 </div>
               </div>

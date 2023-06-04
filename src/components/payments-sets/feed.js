@@ -107,7 +107,10 @@ const Feed = (props) => {
                       {Stringer.toSummaFormat(summaRur)}
                     </div>
                     <div>{objects}</div>
-                    <div>{moment(attrs.date_created).format("DD/MM/YYYY")}</div>
+                    <div>
+                      {attrs.created_at && moment(attrs.created_at).format("DD/MM/YYYY")}
+                      {attrs.date_created && moment(attrs.date_created).format("DD/MM/YYYY")}
+                    </div>
                   </div>
                 )
               })

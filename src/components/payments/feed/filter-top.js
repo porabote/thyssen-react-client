@@ -5,7 +5,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import Statuses from "@/components/statuses/models/Statuses";
 import FilterTopStatuses from "./filter-top-statuses";
 import { ModelDataSource } from "../../../app/DataSources";
-import "./feed-top-panel.less";
+import "./top-panel.less";
 
 const FilterTop = (props) => {
 
@@ -37,13 +37,12 @@ const FilterTop = (props) => {
         }}/>
         <Field>
           <InputBare
-            placeholder="Поиск по названию"
+            placeholder="Поиск по номеру счёта"
             type="text"
-            name="seekString"
+            name="where.bill_number.value"
             className="fast-find__item__input"
-            onChange={(value, context, params) => {
-              console.log(value);
-              console.log(context.entity);
+            onChange={(value, formContext, params) => {
+              formContext.submit();
             }}
           />
         </Field>
@@ -51,7 +50,7 @@ const FilterTop = (props) => {
       </div>
 
       <Field>
-        <FilterTopStatuses clientId={clientId} key="filterStatuses" data={statuses}/>
+        <FilterTopStatuses setAllChecked={props.setAllChecked} clientId={clientId} key="filterStatuses" data={statuses}/>
       </Field>
 
     </>

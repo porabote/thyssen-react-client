@@ -8,6 +8,8 @@ export type OptionProps = {
   isMultiple:  boolean;
   onSelect?: (value: any, props: OptionProps, mouseEvent: React.MouseEvent<HTMLDivElement>) => any;
   onSelectMultiple?: (value: any, props: OptionProps, mouseEvent: React.MouseEvent<HTMLDivElement>) => any;
+  dataStorage: any[];
+  dataStorageMap: any[];
 };
 
 export type IOption = (props: OptionProps) => JSX.Element;
@@ -19,9 +21,9 @@ const Option: IOption = (props: OptionProps) => {
   const onMouseDown = (e: MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     if (!props.isMultiple && typeof props.onSelect == "function") {
-      props.onSelect(value, props, e);
+      props.onSelect(value, props.children, e, props.dataStorage, props.dataStorageMap);
     } else if (props.isMultiple && typeof props.onSelectMultiple == "function") {
-      props.onSelectMultiple(value, props, e);
+      props.onSelectMultiple(value, props, e, props.dataStorage, props.dataStorageMap);
     }
   }
 

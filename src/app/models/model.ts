@@ -7,21 +7,29 @@ class Model implements IModel {
   page: number = 1;
   _apiEntityName: string;
   method: string = "get";
+  queryParams: {} = {};
+  httpMethod = "GET";
 
   constraints = {
     where: {},
     whereIn: {},
+    orWhereGrouped: {},
     whereBetween: {},
     whereNotNull: [],
   };
 
   constructor() {
     this._apiEntityName = this.constructor.apiEntityName;
-
   }
 
   setMethod = (methodName: string) => {
     this.method = methodName;
+    return this;
+  }
+
+  seHttpMethod = (methodName: string) => {
+    this.httpMethod = methodName;
+    return this;
   }
 
   clearConstraints = () => {
@@ -29,7 +37,13 @@ class Model implements IModel {
       where: {},
       whereIn: {},
       whereBetween: {},
+      orWhereGrouped: {},
     };
+  }
+
+  setQueryParams = (params: { [key: string]: any }) => {
+    this.queryParams = Object.assign(this.queryParams, params);
+    return this;
   }
 
   setWhere = (params: { [key: string]: any }) => {
@@ -44,6 +58,11 @@ class Model implements IModel {
 
   setWhereBetween  = (params: { [key: string]: any }) => {
     this.constraints.whereBetween = Object.assign(this.constraints.whereBetween, params);
+    return this;
+  }
+
+  setOrWhereGrouped = (params: { [key: string]: any }) => {
+    this.constraints.orWhereGrouped = Object.assign(this.constraints.orWhereGrouped, params);
     return this;
   }
 
@@ -74,26 +93,54 @@ class Model implements IModel {
     return this;
   }
 
-  post = () => {
-    this.method = "POST";
-    this.get();
+  post = async (apiMethod: string, params: {body: any} = {}) => {
+    //this.get();
+    let uri = `/api/${this._apiEntityName}/method/${apiMethod}`;
+
+    let response = await Api.post(uri, {
+        body: params.body || {},
+      }
+    );
+    return response;
   }
 
   async get(id?: number | string) {
+
+    // if (this.httpMethod == "POST") {
+    //   return this.post("get", {
+    //     body: {
+    //       ...this.queryParams,
+    //       ...this.constraints,
+    //       include: {...this.with},
+    //       limit: this._limit,
+    //       page: this.page,
+    //     }
+    //   });
+    // }
 
     let primaryKeyValue = (id) ? id : '';
 
     let uri = `/api/${this._apiEntityName}/get/${primaryKeyValue}`;
     if (this.method != "get") `/api/${this._apiEntityName}/method/${this.method}/${primaryKeyValue}`;
 
-    let response = await Api.get(uri, {
-      query: {
-        ...this.constraints,
-        include: {...this.with},
-        limit: this._limit,
-        page: this.page,
-      }
-    });
+    const requestData = {
+      ...this.queryParams,
+      ...this.constraints,
+      include: {...this.with},
+      limit: this._limit,
+      page: this.page,
+    };
+
+    let response = [];
+    if (this.httpMethod == "GET") {
+      response = await Api.get(uri, {
+        query: requestData,
+      });
+    } else if (this.httpMethod == "POST") {
+      response = await Api.post(uri, {
+        body: requestData,
+      });
+    }
 
     if (id) {
       return this.entity = {
@@ -127,14 +174,14 @@ class Model implements IModel {
     });
   }
 
-  static async save(records: IEntity[]) {console.log(this.apiEntityName);
+  static async save(records: IEntity[]) {
     return await Api.post(`/api/${this.apiEntityName}/save/`, {
       body: {records},
     });
   }
 
-  static async delete(primaryKeyValue) {
-    return await Api.get(`/api/${this.constructor.apiEntityName}/method/delete/${primaryKeyValue}`); // TODO
+  async delete(primaryKeyValue) {
+    return await Api.get(`/api/${this._apiEntityName}/delete/${primaryKeyValue}`); // TODO
   }
 
   static createEntity(attributes: {}) {

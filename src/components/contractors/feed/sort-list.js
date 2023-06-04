@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from "react-redux";
 import Api from "@services";
 import FeedPreloader from "@components/feed/feed-preloader";
-import DragAndDropList from "@components/common/drag-and-drop-list";
+import DragAndDropList from "@components/drag-and-drop-list";
 
 const SortList = (props) => {
 

@@ -1,5 +1,6 @@
 import Model from "@/app/models/model";
 import Api from "@/services";
+import notify from "@app/notifications";
 
 class Payments extends Model {
 
@@ -7,14 +8,16 @@ class Payments extends Model {
     return "Payments";
   }
 
-  static setAccept = async (recordId: number, status) => {
+  static setAccept = async (recordId: number, status: boolean) => {
     const result = await Api.get(`/api/payments/method/setAccept/${recordId}/`, {
-      query: {status: + status}
+      query: {status: +status}
     });
     if (result.error) {
-      alert(result.error);
+      notify.push(result.error);
+      return status ? false : true;
     } else {
-      alert("Статус успешно изменен.");
+      notify.push("Статус успешно изменен.");
+      return status;
     }
   }
 
@@ -39,6 +42,44 @@ class Payments extends Model {
     }
 
     return result.data;
+  }
+
+  static createFacsimileTable = async (userId, scanId, paymentId, attributes) => {
+
+    try {
+      const result = await Api.get(`/api/payments/method/createFacsimileTableImage/`, {
+        query: {userId, scanId, paymentId, ...attributes}
+      });
+      if (result.error) {
+        alert(result.error);
+      } else {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      console.log(e);
+    }
+
+  }
+
+  static updateScanFiles = async (recordId: number, billFileId: number) => {
+
+    try {
+
+      const result = await Api.get(`/api/payments/method/updateScanFiles/`, {
+        query: {
+          recordId,
+          billFileId,
+        }
+      });
+      if (result.error) {
+        alert(result.error);
+      }
+
+      return result;
+    } catch (e) {
+      console.log(e);
+    }
   }
 
 }

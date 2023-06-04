@@ -32,7 +32,7 @@ const initialState = {
     "statuses",
   ],
   relationships: [
-    "payments"
+    "payments.object"
     // "comments",
     // "files",
     // "history",

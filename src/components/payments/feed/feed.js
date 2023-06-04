@@ -1,51 +1,79 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import moment from "moment";
 import { ButtonLazyLoad, Form, Field, Checkbox, Button } from "@/app/form";
 import { useAppDispatch, useAppSelector } from "@/app/hooks/hooks";
-import Grid from "porabote/grid";
+import Grid from "@/app/grid";
 import FilterLeft from "./filter-left.tsx";
 import FilterTop from "./filter-top";
+import TopPanel from "./top-panel";
 import MenuIcon from "@material-ui/icons/Menu";
 import FeedPreloader from "@components/feed/feed-preloader";
 import Payments from "../models/Payments";
 import { updateFeedFilters } from "../redux-store/actions";
-import PreviewSendPayments from "./dialogs/preview-send-payments";
-import { modalActions } from "@app/modal";
-import Api from "@/services";
+import ExportHandlerBuilder from "@app/export-handler";
 
 const Feed = (props) => {
+
+  const [isAccessLoaded, setIsAccessLoaded] = useState(false);
+  const [isCanAccept, setIsCanAccept] = useState(false);
+  const [contractors, setContractors] = useState(new Set());
+  const [allChecked, setAllChecked] = useState(false);
+
+  useEffect(() => {
+    getAccessData();
+  }, []);
+
+  const getAccessData = async () => {
+    let res = await new Payments().post('checkButtonAccess');
+    setIsCanAccept(res.data.isCanAccept);
+
+    let contractors = new Set();
+    res.data.contractors.forEach(contractor => {
+      contractors.add(contractor.id);
+    });
+    setContractors(contractors);
+    setIsAccessLoaded(true);
+  }
 
   const {
     title,
     filter,
     data,
-    meta
+    meta,
+    loading,
   } = useAppSelector(state => state.payments);
 
-  // const submitForm = (values) => {
-  //   props.fetchData();
-  // };
-
-  // if (!props.isDictsLoaded) {
-  //   return <FeedPreloader title={title}/>;
-  // }
+  if (loading && !meta.count && !isAccessLoaded) {
+    return <FeedPreloader title={title}/>;
+  }
 
   const save = (entity) => {
-    //console.log(entity.attributes);
     updateFeedFilters(entity.attributes);
   };
+
+  const downloadPaymentScan = (recordId) => {
+
+    new ExportHandlerBuilder()
+      .setUri("/api/payments/method/getScansAsPdf/")
+      .setData({
+        payment_id: recordId,
+      })
+      .download();
+
+  }
 
   return (
 
     <Form
-      setEntity={() => Payments.createEntity({ ...filter, checkbox_check_all: 0 })}
+      model={Payments}
+      initValues={{ ...filter, checkbox_check_all: 0 }}
       onSubmit={save}
     >
       <div className="content feed">
 
         <div className="content__top-filter">
           <Field>
-            <FilterTop/>
+            <FilterTop setAllChecked={setAllChecked}/>
           </Field>
         </div>
 
@@ -63,58 +91,10 @@ const Feed = (props) => {
         </div>
 
         <div className="content__tools_panel">
-          {/* <FeedTopPanel */}
-          {/*   dicts={props.dicts} */}
-          {/*   fetchData={props.fetchData} */}
-          {/*   addRecord={props.addRecord} */}
-          {/* /> */}
+          <TopPanel />
         </div>
 
         <div className="content__body">
-
-
-          <div className="buttons-panel">
-            <Field>
-              <Button
-                label="Просмотр и отправка"
-                onClick={(props) => {
-                  modalActions.pushItemToModal(
-                    <PreviewSendPayments
-                      title="Просмотр и отправка платежей."
-                      payments_ids={props.formContext.entity.attributes.index_records_ids}
-                    />,
-                  );
-                }}
-              />
-            </Field>
-            <Field>
-              <Button
-                label="Просмотреть выбранное"
-                onClick={(props) => {
-                  console.log(props);
-                }}
-              />
-            </Field>
-
-            <Field>
-              <Button
-                label="Скачать скан-копии"
-                onClick={(props) => {
-                  console.log(props);
-                }}
-              />
-            </Field>
-
-            <Field>
-              <Button
-                label="Назначить GUIDS"
-                onClick={(props) => {
-                  Api.get("/api/GuidsSchneider/method/assignContractors/");
-                }}
-              />
-            </Field>
-
-          </div>
 
           <Grid grid-template-columns="50px 90px 200px 180px 200px 270px 170px 220px 220px">
 
@@ -122,16 +102,19 @@ const Feed = (props) => {
               <div>
                 <Field>
                   <Checkbox
+                    checked={allChecked}
                     name={`checkbox_check_all`}
                     onSelect={(status, context) => {
-                      data.map((item) => {
-                        context.setAttribute(`index_records_ids.${item.id}`, status ? 1 : 0);
-                        context.setAttribute(`checkbox_check_all`, status ? 1 : 0);
-                      });
+
+                      let ids = context.entity.getAttribute('index_records_ids');
+
+                      for (const id in ids) {
+                        context.setAttribute(`index_records_ids.${id}`, status ? 1 : 0);
+                      }
+                      //setAllChecked(status);
                     }}
                   />
                 </Field>
-                <sup className="grid_list__item sup">Check</sup>
               </div>
               <div>
                 Акцепт/Id
@@ -182,58 +165,75 @@ const Feed = (props) => {
 
               return (
                 <div linkTo={`/payments/view/${recordData.id}`} key={recordData.id}>
-                  <div>
-                    <Field>
-                      <Checkbox name={`index_records_ids.${recordData.id}`}/>
-                    </Field>
-                  </div>
-                  <div>
+                  <div noRoute>
                     <Field>
                       <Checkbox
-                        checked={recordData.acceptor_id ? true : false}
+                        //checked={allChecked ? true : false}
+                        name={`index_records_ids.${recordData.id}`}
+                      />
+                    </Field>
+                  </div>
+                  <div noRoute>
+                    <Field>
+                      <Checkbox
+                        // disabled={() => {
+                        //   return contractors.has(parseInt(recordData.client_id)) ? false : true;
+                        // }}
+                        value={recordData.acceptor_id ? 1 : 0}
                         name={`accepted.${recordData.id}`}
-                        onSelect={(status) => {
-                          Payments.setAccept(recordData.id, status);
+                        className="checkbox-toggle"
+                        // responseDependent={true}
+                        // onClick={() => {
+                        //   alert(88);
+                        // }}
+                        onSelect={async (status) => {
+                          return {
+                            status: await Payments.setAccept(recordData.id, status),
+                          };
                         }}
                       />
                     </Field>
                     {recordData.id}
                   </div>
-                  <div>
-                    {bill.attributes &&
+                  <div noRoute>
+                    {bill && bill.attributes &&
                       <span><b>{bill.attributes.number}</b>
                       <br></br>от {moment(bill.attributes.date)
                           .format("DD.MM.Y")}</span>
                     }
                     {bill && bill.attributes.file_of_bill &&
-                      <a className="grid_list__icon link-arrow-blank left" target="blank"
-                         href={`https://thyssen24.ru/payments/getScansAsPdf/${record.id}/`}>Скан
-                        PDF</a>
+                      <a
+                        onClick={() => downloadPaymentScan(record.id)}
+                        className="grid_list__icon link-arrow-blank left"
+                        target="blank">
+                        Скан PDF
+                      </a>
                     }
                   </div>
                   <div>
-                    {status.attributes &&
+                    {status && status.attributes &&
                       <span><b>{status.attributes.name}</b><br></br>
                       <i>план {moment(recordData.date_payment)
-                        .format("DD.MM.Y")}</i></span>
+                        .format("DD.MM.Y")}</i> ({recordData.pay_week})
+                      </span>
                     }
                   </div>
                   <div>
-                    <b>{object.attributes && object.attributes.name}</b><br></br>
+                    <b>{object && object.attributes && object.attributes.name}</b><br></br>
                     {Array.isArray(data_json) && data_json.map((item, index) => {
                       return <p key={index}>{item.summa} | {item.psp}</p>;
                     })}
                   </div>
                   <div>
-                    <b>{client.attributes && client.attributes.name}</b><br></br>
-                    {contractor.attributes && contractor.attributes.name}
+                    <b>{client && client.attributes && client.attributes.name}</b><br></br>
+                    {contractor && contractor.attributes && contractor.attributes.name}
                   </div>
                   <div>
                     <b>{recordData.summa} <u>{recordData.currency}</u></b><br></br>
                     <i>{recordData.pay_type} ({recordData.percent_of_bill}%)</i>
                   </div>
                   <div>
-                    {bill.attributes.comment}<br></br>
+                    {bill && bill.attributes.comment}<br></br>
                     <i>{recordData.comment}</i>
                   </div>
                   <div>{recordData.purpose}</div>
@@ -244,9 +244,7 @@ const Feed = (props) => {
           </Grid>
           <ButtonLazyLoad fetchData={props.fetchData} {...meta}/>
 
-
         </div>
-
 
       </div>
     </Form>

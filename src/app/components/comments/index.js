@@ -1,3 +1,3 @@
 import Comments from "./comments";
 
-export default Comments
+export default Comments;

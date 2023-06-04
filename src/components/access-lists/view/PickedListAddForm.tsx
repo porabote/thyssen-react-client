@@ -65,9 +65,8 @@ const PickedListAddForm = (props: PickedListProps) => {
               return `${record.attributes.name} - ${record.attributes.post_name}`
             }}
             setData={async () => {
-              return await ModelDataSource({
-                model: ApiUsers,
-              });
+              let records = await new ApiUsers().setLimit(10000).get();
+              return records.data;
             }}
             setTagTitle={(tagValue: number, dataStorage: any[], dataStorageMap: any[]) => {
               let dataIndex = dataStorageMap[tagValue];

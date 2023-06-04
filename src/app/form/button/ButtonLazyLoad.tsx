@@ -17,9 +17,11 @@ const ButtonLazyLoad = (props: ButtonLazyLoadProps) => {
   return (
     <div>
       <div
-        className={isActive ? "button_lazy-load" : "button_lazy-load hidden"}
+        className={isActive ? "button_lazy-load" : "button_lazy-load non-active"}
         onClick={() => {
-          props.fetchData();
+          if (isActive) {
+            props.fetchData();
+          }
         }}
       >
         <span key="showed" className="">Показано

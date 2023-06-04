@@ -11,7 +11,6 @@ export type modalItemProps = {
 
 const ModalItem = (props: modalItemProps) => {
 
-
   return (
     <div className={props.activeItemKey == props.itemkey ? "modal-tabs-block active" : "modal-tabs-block"}>
       <div className="modal-box">
